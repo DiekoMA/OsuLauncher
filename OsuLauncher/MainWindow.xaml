@@ -17,14 +17,17 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
             <Button Name="PlayButton" Content="Play" Foreground="White" Background="#eb69a3" HorizontalAlignment="Left" Height="50" Width="100" hc:BorderElement.CornerRadius="0" Margin="4"/>
-            <StackPanel>
-                <TextBlock Name="UsernameText" FontSize="12"/>
-                <TextBlock Name="PPRankText" FontSize="12"/>
-                <TextBlock Name="OsuInstallVerifyText" FontSize="12"/>
-                <TextBlock Name="OsuVersionNumber" FontSize="12"/>
-                <TextBlock Name="OsuAPIStatusText" FontSize="12"/>
-                <TextBlock Name="ConnectionStateText" FontSize="12"/>
-            </StackPanel>
+            <Border BorderThickness="2" BorderBrush="Black">
+                <StackPanel Orientation="Horizontal">
+                    <hc:ImageBlock Width="35" Height="35" />
+                    <StackPanel>
+                        <TextBlock Name="UsernameText" FontSize="10"/>
+                        <TextBlock Name="AccuracyText" FontSize="10"/>
+                        <TextBlock Name="PPRankText" FontSize="10"/>
+                        <TextBlock Name="LevelText" FontSize="10"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
         </StackPanel>
         <Frame Name="MainFrame" NavigationUIVisibility="Hidden"/>
     </DockPanel>

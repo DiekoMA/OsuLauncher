@@ -28,27 +28,19 @@ namespace OsuLauncher
             {
                 _client = new OsuClient(File.ReadAllText(tokenLocation));
             }
-
-            //db = OsuDb.Read(stream);
             if (_client != null && _client.IsAuthenticated())
             {
                 UsernameText.Text = $"Player Name: {_client.GetAuthenticatedUser()?.Username}";
                 PPRankText.Text =  $"PP Count: {_client.GetAuthenticatedUser()?.UserStats.PP.ToString()}";
+                AccuracyText.Text = $"Accuracy: {_client.GetAuthenticatedUser().UserStats.HitAccuracy}";
+                LevelText.Text = $"Lv {_client.GetAuthenticatedUser().UserStats.Level.Current}";
             }
             else
             {
-                UsernameText.Text = $"Player Name: Unavailabe";
-                PPRankText.Text = $"PP Count: Unavailable";
-            }
-            switch (AppUtils.CheckForInternetConnection())
-            {
-                case true:
-                    ConnectionStateText.Text = "Internet Connected";
-                    break;
-                
-                case false:
-                    ConnectionStateText.Text = "Internet Disconnected";
-                    break;
+                UsernameText.Text = $"Player Name: Unavailable please log in";
+                PPRankText.Text = $"PP Count: Unavailable please log in";
+                AccuracyText.Text = $"Accuracy: Unavailable please log in";
+                LevelText.Text = $"Lv Unavailable please log in";
             }
             PlayButton.Click += PlayButtonOnClick;
             NewsNavButton.Click += (sender, args) => MainFrame.Content = new NewsPage();;

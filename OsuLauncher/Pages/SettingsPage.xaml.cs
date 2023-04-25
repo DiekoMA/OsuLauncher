@@ -51,19 +51,9 @@ public partial class SettingsPage : Page
     {
         OsuHelper.EditIntSetting(osuCfg, Convert.ToDouble(e.NewValue), "VolumeUniversal = ");
     }
-
-    private async void TestButtonOnClick(object sender, RoutedEventArgs e)
-    {
-        
-    }
-
+    
     private void InitAuthButtonOnClick(object sender, RoutedEventArgs e)
     {
         DialogHelper.ShowDialog(typeof(AuthDialog));
-    }
-
-    private void StartAuth()
-    {
-        
     }
 }

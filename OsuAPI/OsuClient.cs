@@ -31,6 +31,18 @@ public class OsuClient
         }
     }
 
+    public News GetNews(string slug)
+    {
+        var request = new RestRequest($"/api/v2/news/{slug}");
+        request.AddHeader("Content-Type", "application/json");
+        request.AddHeader("Accept", "application/json");
+        /*request.AddHeader("Authorization", $"Bearer {_token}");*/
+        
+        RestResponse response = _restClient.Execute(request);
+        var newsResponse = JsonConvert.DeserializeObject<News>(response.Content ?? throw new InvalidOperationException());
+        return newsResponse;
+    }
+    
     public User GetAuthenticatedUser()
     {
         var request = new RestRequest($"/api/v2/me/osu");
