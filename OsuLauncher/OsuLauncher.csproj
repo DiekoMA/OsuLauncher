@@ -5,6 +5,25 @@
         <TargetFramework>net6.0-windows</TargetFramework>
         <Nullable>enable</Nullable>
         <UseWPF>true</UseWPF>
+        <PublishSingleFile>true</PublishSingleFile>
+        <SelfContained>true</SelfContained>
+        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="DotNetOpenAuth.Core" Version="4.3.4.13329" />
+      <PackageReference Include="HandyControls" Version="3.4.5" />
+      <PackageReference Include="HoLLy.osu.DatabaseReader" Version="3.0.0" />
+      <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
+      <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1722.45" />
+      <PackageReference Include="RestSharp" Version="110.2.0" />
+      <PackageReference Include="Serilog" Version="2.12.0" />
+      <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+      <PackageReference Include="sharpconfig" Version="3.2.9.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\OsuAPI\OsuAPI.csproj" />
+    </ItemGroup>
 
 </Project>

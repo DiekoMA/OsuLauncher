@@ -1,0 +1,18 @@
+﻿<Window x:Class="OsuLauncher.Dialogs.AuthCodeDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:OsuLauncher.Dialogs"
+        xmlns:hc="https://handyorg.github.io/handycontrol"
+        mc:Ignorable="d"
+        Title="Enter Code" Height="200" Width="400">
+    <StackPanel VerticalAlignment="Center">
+        <TextBlock Text="Enter the code from the website here to authenticate &#x0a;The code has been copied to your clipboard." Margin="5"/>
+        <TextBox Name="CodeBox" hc:BorderElement.CornerRadius="1" Margin="5"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Content="Cancel" hc:BorderElement.CornerRadius="1"/>
+            <Button Name="TokenSwapButton" Content="Submit" hc:BorderElement.CornerRadius="1"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

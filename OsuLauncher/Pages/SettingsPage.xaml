@@ -5,8 +5,40 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:OsuLauncher.Pages"
       mc:Ignorable="d"
-      Title="SettingsPage" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+      xmlns:hc="https://handyorg.github.io/handycontrol"
+      Title="SettingsPage" MinHeight="450" MinWidth="800">
+    <DockPanel>
+        <hc:ScrollViewer>
+            <StackPanel Margin="3">
+                <TextBlock Text="App Settings" FontWeight="Bold"/>
+                <hc:TextBox Name="GameDirectoryBox" hc:InfoElement.Title="Game Directory" hc:InfoElement.TitlePlacement="Left" hc:InfoElement.Placeholder="C:\Users\Dieko\AppData\Local\osu!" Margin="4"/>
+                <hc:TextBox Name="SongsDirectoryBox" hc:InfoElement.Title="Songs Directory" hc:InfoElement.TitlePlacement="Left" hc:InfoElement.Placeholder="C:\Users\Dieko\AppData\Local\osu!\Songs" Margin="4"/>
+                <CheckBox Name="UpdateCB" Content="Check for updates on launch" Margin="4"/>
+                <TextBlock Text="Account Settings" FontWeight="Bold"/>
+                <StackPanel>
+                    <Button Name="InitAuthButton" Content="Login" hc:BorderElement.CornerRadius="1" HorizontalAlignment="Left"/>
+                </StackPanel>
+                <TextBlock Text="Osu Settings" FontWeight="Bold"/>
+                <hc:ElementGroup Margin="4">
+                    <TextBlock Text="Master Volume"/>
+                    <Slider Name="MasterVolumeSlider" Maximum="100" />
+                </hc:ElementGroup>
+                <hc:ElementGroup Margin="4">
+                    <TextBlock Text="Effects Volume"/>
+                    <Slider Name="EffectsVolumeSlider" Maximum="100" Ticks="1,2,3,4,5"/>
+                </hc:ElementGroup>
+                <hc:ElementGroup Margin="4">
+                    <TextBlock Text="Music Volume"/>
+                    <Slider Name="MusicVolumeSlider" Maximum="100"/>
+                </hc:ElementGroup>
+                <hc:ElementGroup Margin="4">
+                    <TextBlock Text="Current Skin"/>
+                    <hc:ComboBox Margin="4" hc:BorderElement.CornerRadius="1">
+                
+                    </hc:ComboBox>
+                </hc:ElementGroup>
+                
+            </StackPanel>
+        </hc:ScrollViewer>
+    </DockPanel>
 </Page>

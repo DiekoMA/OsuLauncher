@@ -1,6 +1,6 @@
 ﻿namespace OsuLauncher.Helpers;
 
-public class OsuConfigHelper
+public class ApiHelper
 {
     
 }

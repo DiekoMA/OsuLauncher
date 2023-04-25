@@ -1,12 +1,11 @@
-﻿$HEADER$using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
-namespace $NAMESPACE$
+namespace OsuLauncher.Pages;
+
+public partial class BeatmapPage : Page
 {
-    public partial class $CLASS$ : Page
+    public BeatmapPage()
     {
-        public $CLASS$()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }
