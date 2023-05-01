@@ -31,15 +31,26 @@ public class OsuClient
         }
     }
 
-    public News GetNews(string slug)
+    public Wiki GetWikiPage(string locale, string path)
     {
-        var request = new RestRequest($"/api/v2/news/{slug}");
+        var request = new RestRequest($"/api/v2/wiki/{locale}/{path}");
         request.AddHeader("Content-Type", "application/json");
         request.AddHeader("Accept", "application/json");
-        /*request.AddHeader("Authorization", $"Bearer {_token}");*/
-        
+
         RestResponse response = _restClient.Execute(request);
-        var newsResponse = JsonConvert.DeserializeObject<News>(response.Content ?? throw new InvalidOperationException());
+        var wikiResponse = JsonConvert.DeserializeObject<Wiki>(response.Content ?? throw new InvalidOperationException());
+        return wikiResponse;
+    }
+    
+    
+    public List<News>? GetNewsListings()
+    {
+        var request = new RestRequest($"/api/v2/news");
+        request.AddHeader("Content-Type", "application/json");
+        request.AddHeader("Accept", "application/json");
+
+        RestResponse response = _restClient.Execute(request);
+        var newsResponse = JsonConvert.DeserializeObject<List<News>>(response.Content ?? throw new InvalidOperationException());
         return newsResponse;
     }
     

@@ -15,6 +15,7 @@
       <PackageReference Include="HandyControls" Version="3.4.5" />
       <PackageReference Include="HoLLy.osu.DatabaseReader" Version="3.0.0" />
       <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
+      <PackageReference Include="MdXaml" Version="1.18.1" />
       <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1722.45" />
       <PackageReference Include="RestSharp" Version="110.2.0" />
       <PackageReference Include="Serilog" Version="2.12.0" />

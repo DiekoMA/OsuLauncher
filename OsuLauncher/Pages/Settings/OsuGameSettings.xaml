@@ -1,0 +1,36 @@
+﻿<Page x:Class="OsuLauncher.Pages.Settings.OsuGameSettings"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:OsuLauncher.Pages.Settings"
+      mc:Ignorable="d"
+      xmlns:hc="https://handyorg.github.io/handycontrol"
+      MinHeight="450" MinWidth="800">
+    <StackPanel>
+        <TextBlock Text="Osu Settings" FontWeight="Bold"/>
+        <hc:ElementGroup Margin="4">
+            <TextBlock Text="Master Volume"/>
+            <Slider Name="MasterVolumeSlider" Maximum="100" />
+        </hc:ElementGroup>
+        <hc:ElementGroup Margin="4">
+            <TextBlock Text="Effects Volume"/>
+            <Slider Name="EffectsVolumeSlider" Maximum="100"/>
+        </hc:ElementGroup>
+        <hc:ElementGroup Margin="4">
+            <TextBlock Text="Music Volume"/>
+            <Slider Name="MusicVolumeSlider" Maximum="100"/>
+        </hc:ElementGroup>
+        <hc:ElementGroup Margin="4">
+            <TextBlock Text="Current Skin"/>
+            <hc:ComboBox Margin="4" hc:BorderElement.CornerRadius="1">
+                
+            </hc:ComboBox>
+        </hc:ElementGroup>
+        <hc:ElementGroup Margin="4">
+            <TextBlock Text="Mouse Sensitivity"/>
+            <Slider Name="MouseSensitivitySlider" Maximum="100"/>
+        </hc:ElementGroup>
+        <CheckBox Name="DiscordRpcCB" Content="Discord Rich Presence"/>
+    </StackPanel>
+</Page>

@@ -47,6 +47,7 @@ public partial class AuthCodeDialog : Window
                 MessageBox.Show(tokenResponse.access_token.ToString());
                 
                 File.WriteAllText(Path.Combine(Directory.GetCurrentDirectory(), "token.secret"), tokenResponse.access_token.ToString());
+                MessageBox.Show("The app will now restart");
                 this.Close();
             }
         }

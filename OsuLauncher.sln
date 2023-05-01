@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OsuAPI", "OsuAPI\OsuAPI.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API Test App", "API Test App\API Test App.csproj", "{4965BA37-B6CC-44D7-AEF0-5E25A64F9B38}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OsuParsersLibrary", "OsuParsersLibrary\OsuParsersLibrary.csproj", "{BAE4AD08-86B9-497B-AD43-F7EDCDC16418}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{4965BA37-B6CC-44D7-AEF0-5E25A64F9B38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4965BA37-B6CC-44D7-AEF0-5E25A64F9B38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4965BA37-B6CC-44D7-AEF0-5E25A64F9B38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAE4AD08-86B9-497B-AD43-F7EDCDC16418}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAE4AD08-86B9-497B-AD43-F7EDCDC16418}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAE4AD08-86B9-497B-AD43-F7EDCDC16418}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAE4AD08-86B9-497B-AD43-F7EDCDC16418}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

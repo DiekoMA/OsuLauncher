@@ -21,7 +21,16 @@ namespace OsuLauncher
         protected override void OnStartup(StartupEventArgs e)
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
+            var log = new LoggerConfiguration()
+                .WriteTo.File("log.txt")
+                .CreateLogger();
             var configFile = Path.Combine(Directory.GetCurrentDirectory(), "settings.cfg");
+            var defaultOsuDir =
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "osu!");
+            if (Directory.Exists(defaultOsuDir))
+            {
+                ConfigHelper.SaveStringItem("preferences", "gamedir",defaultOsuDir); 
+            }
             if (!File.Exists(configFile))
             {
                 try
@@ -38,7 +47,7 @@ namespace OsuLauncher
 
         private void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            MessageBox.Show(e.ToString() + e.ExceptionObject.ToString());
+            Log.Error(e.ExceptionObject.ToString());
         }
     }
 }

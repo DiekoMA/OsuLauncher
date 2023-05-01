@@ -3,6 +3,7 @@ using System.IO;
 using System.Windows.Controls;
 using HandyControl.Controls;
 using osu_database_reader.BinaryFiles;
+using osu_database_reader.Components.Beatmaps;
 using osu_database_reader.TextFiles;
 using OsuLauncher.Helpers;
 
@@ -22,9 +23,9 @@ public partial class CollectionsPage : Page
             
             foreach (var collection in db.Collections)
             {
-                
-                CollectionsList.Items.Add(collection);
+                CollectionsList.Items.Add(collection.Name);
             }
+
             //CollectionsList.ItemsSource = db.Collections;
         }
         catch (Exception e)

@@ -2,7 +2,7 @@
 
 namespace OsuAPI.Objects;
 
-public class News
+public class NewsPost
 {
     [JsonProperty("id")]
     public int ID { get; set; }
@@ -28,7 +28,6 @@ public class News
     [JsonProperty("title")]
     public string Title { get; set; }
     
-    [JsonProperty("preview")]
-    public string Preview { get; set; }
+    [JsonProperty("content")]
+    public string Content { get; set; }
 }
-
