@@ -48,8 +48,9 @@ namespace OsuLauncher
             NewsNavButton.Click += (sender, args) => MainFrame.Content = new NewsPage();
             WikiNavButton.Click += (sender, args) => MainFrame.Content = new WikiPage(); 
             BeatmapNavButton.Click += (sender, args) => MainFrame.Content = new BeatmapPage();
-            CollectionsNavButton.Click += (sender, args) => MainFrame.Content = new CollectionsPage();
-            ReplaysNavButton.Click += (sender, args) => MainFrame.Content = new ReplaysPage();
+            MoreGameOptions.Click += (sender, args) => MoreOptionsPopup.IsOpen = true;
+            /*CollectionsNavButton.Click += (sender, args) => MainFrame.Content = new CollectionsPage();*/
+            /*ReplaysNavButton.Click += (sender, args) => MainFrame.Content = new ReplaysPage();*/
         }
 
         private void PlayButtonOnClick(object sender, RoutedEventArgs e)

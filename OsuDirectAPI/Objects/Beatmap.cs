@@ -4,7 +4,7 @@ namespace OsuDirectAPI.Objects;
 
 public class BeatmapSet
 {
-    [JsonProperty("SetID")]
+    [JsonProperty("SetId")]
     public int SetID { get; set; }
     
     [JsonProperty("Title")]
@@ -102,4 +102,10 @@ public class Beatmap
     
     [JsonProperty("DifficultyRating")]
     public float DifficultyRating { get; set; }
+}
+
+public class BeatmapResponse
+{
+    [JsonProperty("data")]
+    public List<BeatmapSet> Data { get; set; }
 }
