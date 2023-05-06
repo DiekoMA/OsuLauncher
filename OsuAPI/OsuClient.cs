@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using OsuAPI.Objects;
+using Refit;
 using RestSharp;
 
 namespace OsuAPI;
@@ -8,73 +10,52 @@ public class OsuClient
 {
     private RestClient _restClient;
     private string _token;
+    private readonly IOsuClient _client;
+    public static RefitSettings Settings = new RefitSettings()
+    {
+        ContentSerializer = new NewtonsoftJsonContentSerializer(new JsonSerializerSettings
+        {
+            ContractResolver = new DefaultContractResolver()
+            {
+                NamingStrategy = new SnakeCaseNamingStrategy()
+            }
+        })
+    };
     
-    public OsuClient(string token)
+    public OsuClient(string token = "")
     {
         _token = token;
-        var options = new RestClientOptions("https://osu.ppy.sh")
-        {
-            MaxTimeout = -1,
-        };
-        _restClient = new RestClient(options);
+        _client = RestService.For<IOsuClient>("https://osu.ppy.sh/api/v2", Settings);
     }
 
     public bool IsAuthenticated()
     {
-        if (GetAuthenticatedUser() != null)
-        {
+        if (GetAuthenticatedUserAsync() != null)
             return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    public Wiki GetWikiPage(string locale, string path)
-    {
-        var request = new RestRequest($"/api/v2/wiki/{locale}/{path}");
-        request.AddHeader("Content-Type", "application/json");
-        request.AddHeader("Accept", "application/json");
-
-        RestResponse response = _restClient.Execute(request);
-        var wikiResponse = JsonConvert.DeserializeObject<Wiki>(response.Content ?? throw new InvalidOperationException());
-        return wikiResponse;
+        return false;
     }
     
-    
-    public List<News>? GetNewsListings()
+    /// <summary>
+    /// Does not require Authentication
+    /// </summary>
+    /// <returns></returns>
+    public async Task<NewsResponse> GetNewsListingsAsync()
     {
-        var request = new RestRequest($"/api/v2/news");
-        request.AddHeader("Content-Type", "application/json");
-        request.AddHeader("Accept", "application/json");
+        return await _client.GetNewsListingsAsync();
+    }
 
-        RestResponse response = _restClient.Execute(request);
-        var newsResponse = JsonConvert.DeserializeObject<List<News>>(response.Content ?? throw new InvalidOperationException());
-        return newsResponse;
+    public async Task<User> GetUserAsync(int userId)
+    {
+        return await _client.GetUserAsync(_token, userId);
+    }
+
+    public async Task<User> GetAuthenticatedUserAsync()
+    {
+        return await _client.GetAuthenticatedUserAsync(_token);
     }
     
-    public User GetAuthenticatedUser()
+    public async Task<Wiki> GetWikiAsync(string locale, string path)
     {
-        var request = new RestRequest($"/api/v2/me/osu");
-        request.AddHeader("Content-Type", "application/json");
-        request.AddHeader("Accept", "application/json");
-        request.AddHeader("Authorization", $"Bearer {_token}");
-        
-        RestResponse response = _restClient.Execute(request);
-        var authenticatedUserResponse = JsonConvert.DeserializeObject<User>(response.Content ?? throw new InvalidOperationException());
-        return authenticatedUserResponse;
-    }
-    
-    public User GetUser(int userID)
-    {
-        var request = new RestRequest($"/api/v2/users/{userID}/osu?key=maxime");
-        request.AddHeader("Content-Type", "application/json");
-        request.AddHeader("Accept", "application/json");
-        request.AddHeader("Authorization", $"Bearer {_token}");
-
-        RestResponse response = _restClient.Execute(request);
-        var userResponse = JsonConvert.DeserializeObject<User>(response.Content ?? throw new InvalidOperationException());
-        return userResponse;
+        return await _client.GetWikiAsync(_token, locale, path);
     }
 }

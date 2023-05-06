@@ -32,3 +32,8 @@ public class News
     public string Preview { get; set; }
 }
 
+public class NewsResponse
+{
+    [JsonProperty("news_posts")]
+    public List<News> Data { get; set; }
+}

@@ -8,6 +8,9 @@
 
     <ItemGroup>
       <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+      <PackageReference Include="Refit" Version="6.3.2" />
+      <PackageReference Include="Refit.HttpClientFactory" Version="6.3.2" />
+      <PackageReference Include="Refit.Newtonsoft.Json" Version="6.3.2" />
       <PackageReference Include="RestSharp" Version="110.2.0" />
     </ItemGroup>
 

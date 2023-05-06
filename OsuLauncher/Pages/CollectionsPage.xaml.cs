@@ -2,9 +2,6 @@
 using System.IO;
 using System.Windows.Controls;
 using HandyControl.Controls;
-using osu_database_reader.BinaryFiles;
-using osu_database_reader.Components.Beatmaps;
-using osu_database_reader.TextFiles;
 using OsuLauncher.Helpers;
 
 namespace OsuLauncher.Pages;
@@ -16,7 +13,7 @@ public partial class CollectionsPage : Page
         InitializeComponent();
         try
         {
-            CollectionDb db;
+            /*CollectionDb db;
 
             var stream = Path.Combine(ConfigHelper.GetStringItem("preferences", "gamedir"), "collection.db");
             db = CollectionDb.Read(stream);
@@ -25,6 +22,7 @@ public partial class CollectionsPage : Page
             {
                 CollectionsList.Items.Add(collection.Name);
             }
+            */
 
             //CollectionsList.ItemsSource = db.Collections;
         }

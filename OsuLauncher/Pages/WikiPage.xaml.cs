@@ -19,10 +19,10 @@ public partial class WikiPage : Page
             _client = new OsuClient(File.ReadAllText(tokenLocation));
         }
 
-        var wikitest = _client.GetWikiPage("en", "Game_mode_osu!");
+        var wikitest = _client.GetWikiAsync("en", "Game_mode_osu!");
         Markdown engine = new Markdown();
 
-        FlowDocument document = engine.Transform(wikitest.Content);
+        FlowDocument document = engine.Transform(wikitest.Result.Content);
 
         WikiViewer.Document = document;
     }

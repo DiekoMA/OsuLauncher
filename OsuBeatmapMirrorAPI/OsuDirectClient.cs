@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
-using OsuDirectAPI.Objects;
+using OsuBeatmapMirrorAPI.Objects;
 using RestSharp;
 
-namespace OsuDirectAPI;
+namespace OsuBeatmapMirrorAPI;
 
 public class OsuDirectClient
 {

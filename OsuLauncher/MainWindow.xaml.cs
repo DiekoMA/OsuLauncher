@@ -1,9 +1,7 @@
-﻿using System;
-using System.Diagnostics;
+﻿ using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using HandyControl.Controls;
-using osu_database_reader.BinaryFiles;
 using OsuLauncher.Helpers;
 using OsuLauncher.Pages;
 using OsuAPI;
@@ -19,7 +17,6 @@ namespace OsuLauncher
     /// </summary>
     public partial class MainWindow
     {
-        private OsuDb db;
         private OsuClient _client;
         public MainWindow()
         {
@@ -32,10 +29,11 @@ namespace OsuLauncher
             }
             if (_client != null && _client.IsAuthenticated())
             {
-                UsernameText.Text = $"Player Name: {_client.GetAuthenticatedUser()?.Username}";
-                PPRankText.Text =  $"PP Count: {_client.GetAuthenticatedUser()?.UserStats.PP.ToString()}";
-                AccuracyText.Text = $"Accuracy: {_client.GetAuthenticatedUser().UserStats.HitAccuracy}";
-                LevelText.Text = $"Lv {_client.GetAuthenticatedUser().UserStats.Level.Current}";
+                var authedUser = _client.GetAuthenticatedUserAsync();
+                UsernameText.Text = $"Player Name: {authedUser?.Result.Username}";
+                PPRankText.Text =  $"PP Count: {authedUser?.Result?.UserStats.PP.ToString()}";
+                AccuracyText.Text = $"Accuracy: {authedUser?.Result.UserStats.HitAccuracy}";
+                LevelText.Text = $"Lv {authedUser?.Result.UserStats.Level.Current}";
             }
             else
             {

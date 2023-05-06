@@ -11,10 +11,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="CollectionManager" Version="1.0.8" />
       <PackageReference Include="DotNetOpenAuth.Core" Version="4.3.4.13329" />
       <PackageReference Include="Downloader" Version="3.0.4" />
       <PackageReference Include="HandyControls" Version="3.4.5" />
-      <PackageReference Include="HoLLy.osu.DatabaseReader" Version="3.0.0" />
       <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
       <PackageReference Include="MdXaml" Version="1.18.1" />
       <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1722.45" />
@@ -26,8 +26,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\OsuAPI\OsuAPI.csproj" />
-      <ProjectReference Include="..\OsuDirectAPI\OsuDirectAPI.csproj" />
-      <ProjectReference Include="..\OsuParsersLibrary\OsuParsersLibrary.csproj" />
+      <ProjectReference Include="..\OsuBeatmapMirrorAPI\OsuBeatmapMirrorAPI.csproj" />
     </ItemGroup>
 
 </Project>

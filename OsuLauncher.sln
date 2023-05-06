@@ -2,13 +2,11 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OsuLauncher", "OsuLauncher\OsuLauncher.csproj", "{2F505462-1802-468D-8B7C-35964DE55291}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OsuDirectAPI", "OsuDirectAPI\OsuDirectAPI.csproj", "{A1143E65-AF6D-4A5A-8CDD-7EE79A8F7673}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OsuBeatmapMirrorAPI", "OsuBeatmapMirrorAPI\OsuBeatmapMirrorAPI.csproj", "{A1143E65-AF6D-4A5A-8CDD-7EE79A8F7673}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OsuAPI", "OsuAPI\OsuAPI.csproj", "{2966AE18-4950-41E9-8681-F3803348F7B3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API Test App", "API Test App\API Test App.csproj", "{4965BA37-B6CC-44D7-AEF0-5E25A64F9B38}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OsuParsersLibrary", "OsuParsersLibrary\OsuParsersLibrary.csproj", "{BAE4AD08-86B9-497B-AD43-F7EDCDC16418}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,9 +30,5 @@ Global
 		{4965BA37-B6CC-44D7-AEF0-5E25A64F9B38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4965BA37-B6CC-44D7-AEF0-5E25A64F9B38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4965BA37-B6CC-44D7-AEF0-5E25A64F9B38}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BAE4AD08-86B9-497B-AD43-F7EDCDC16418}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BAE4AD08-86B9-497B-AD43-F7EDCDC16418}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BAE4AD08-86B9-497B-AD43-F7EDCDC16418}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BAE4AD08-86B9-497B-AD43-F7EDCDC16418}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
