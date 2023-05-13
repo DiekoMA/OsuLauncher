@@ -23,9 +23,14 @@ namespace OsuLauncher
             InitializeComponent();
             SettingsTitleAreaButton.Click += (sender, args) => DialogHelper.ShowDialog(typeof(SettingsDialog));
             var tokenLocation = Path.Combine(Directory.GetCurrentDirectory(), "token.secret");
-            if (File.Exists(tokenLocation))
+            /*if (File.Exists(tokenLocation))
             {
-                _client = new OsuClient(File.ReadAllText(tokenLocation));
+                //File.ReadAllText(tokenLocation)
+                _client = new OsuClient(new ClientConfigurationOptions()
+                {
+                    ClientID = "",
+                    ClientSecret = ""
+                });
             }
             if (_client != null && _client.IsAuthenticated())
             {
@@ -41,7 +46,7 @@ namespace OsuLauncher
                 PPRankText.Text = $"PP Count: Unavailable please log in";
                 AccuracyText.Text = $"Accuracy: Unavailable please log in";
                 LevelText.Text = $"Lv Unavailable please log in";
-            }
+            }*/
             PlayButton.Click += PlayButtonOnClick;
             NewsNavButton.Click += (sender, args) => MainFrame.Content = new NewsPage();
             WikiNavButton.Click += (sender, args) => MainFrame.Content = new WikiPage(); 

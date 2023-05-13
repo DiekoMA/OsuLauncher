@@ -6,3 +6,7 @@ riderModule.iml
 OsuLauncher/Dialogs/AuthCodeDialog.xaml.cs
 .idea
 API Test App
+
+OsuLauncher/Pages/WikiPage.xaml
+
+OsuLauncher/Pages/WikiPage.xaml.cs
