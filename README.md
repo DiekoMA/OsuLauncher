@@ -3,8 +3,11 @@
 
 <p align="center">
   <a href="https://discord.gg/S46VwpjFpG"><img src="https://discordapp.com/api/guilds/1100507525520048180/widget.png?style=shield"></a>
-  
+
+# Support
   <noscript><a href="https://liberapay.com/DiekoMA/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a></noscript>
+  
+  <noscript><a href="https://revolut.me/diekodng6"><img alt="Donate using Revolut" style="width:32px;height:32px;margin-right:1rem;" src="https://svgur.com/i/Zry.svg"></a></noscript>
   
 </p>
 
