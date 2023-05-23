@@ -7,9 +7,20 @@
         mc:Ignorable="d"
         xmlns:hc="https://handyorg.github.io/handycontrol"
         WindowStartupLocation="CenterScreen"
-        Title="MainWindow" Height="600" Width="1066">
+        Height="600" Width="1066">
     <hc:Window.NonClientAreaContent>
-        <Button Name="SettingsTitleAreaButton" Content="Settings" HorizontalAlignment="Right" hc:BorderElement.CornerRadius="1" Height="35" Width="80" Style="{StaticResource ButtonCustom}"/>
+        <DockPanel>
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                <Button Name="BeatmapNavButton" Content="Content" hc:BorderElement.CornerRadius="1" Height="35" Width="80" Style="{StaticResource ButtonCustom}"/>
+                <Button Name="CollectionsNavButton" Content="Collections" hc:BorderElement.CornerRadius="1" Height="35" Width="80" Style="{StaticResource ButtonCustom}"/>
+                <!-- ReSharper disable once Xaml.StaticResourceNotResolved -->
+                <Button Name="NewsNavButton" Content="News" hc:BorderElement.CornerRadius="1" Height="35" Width="80" Style="{StaticResource ButtonCustom}"/>
+                <Button Name="WikiNavButton" Content="Wiki" hc:BorderElement.CornerRadius="1" Height="35" Width="80" Style="{StaticResource ButtonCustom}"/>
+                <!-- ReSharper disable once IdentifierTypo -->
+                <!--<Button Name="ReplaysNavButton" Content="Replays" hc:BorderElement.CornerRadius="1" Height="35" Width="80" Style="{StaticResource ButtonCustom}"/>-->
+                <Button Name="SettingsTitleAreaButton" Content="Settings" HorizontalAlignment="Right" hc:BorderElement.CornerRadius="1" Height="35" Width="80" Style="{StaticResource ButtonCustom}"/>
+            </StackPanel>
+        </DockPanel>
     </hc:Window.NonClientAreaContent>
      
     <DockPanel>
@@ -20,15 +31,6 @@
                 <MenuItem Header="Dunno"/>
             </StackPanel>
         </Popup>
-        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
-            <!-- ReSharper disable once Xaml.StaticResourceNotResolved -->
-            <Button Name="NewsNavButton" Content="News" hc:BorderElement.CornerRadius="1" Height="35" Width="80" Style="{StaticResource ButtonCustom}"/>
-            <Button Name="WikiNavButton" Content="Wiki" hc:BorderElement.CornerRadius="1" Height="35" Width="80" Style="{StaticResource ButtonCustom}"/>
-            <!-- ReSharper disable once IdentifierTypo -->
-            <Button Name="BeatmapNavButton" Content="Content" hc:BorderElement.CornerRadius="1" Height="35" Width="80" Style="{StaticResource ButtonCustom}"/>
-            <Button Name="CollectionsNavButton" Content="Collections" hc:BorderElement.CornerRadius="1" Height="35" Width="80" Style="{StaticResource ButtonCustom}"/>
-            <!--<Button Name="ReplaysNavButton" Content="Replays" hc:BorderElement.CornerRadius="1" Height="35" Width="80" Style="{StaticResource ButtonCustom}"/>-->
-        </StackPanel>
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
             
             <StackPanel Orientation="Horizontal">

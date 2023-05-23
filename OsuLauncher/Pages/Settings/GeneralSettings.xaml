@@ -8,9 +8,10 @@
       xmlns:hc="https://handyorg.github.io/handycontrol"
       MinHeight="450" MinWidth="800">
     <StackPanel>
-        <TextBlock Text="App Settings" FontWeight="Bold"/>
-        <hc:TextBox Name="GameDirectoryBox" hc:InfoElement.Title="Game Directory" hc:InfoElement.TitlePlacement="Left" hc:InfoElement.Placeholder="C:\Users\Dieko\AppData\Local\osu!" Margin="4"/>
-        <hc:TextBox Name="SongsDirectoryBox" hc:InfoElement.Title="Songs Directory" hc:InfoElement.TitlePlacement="Left" hc:InfoElement.Placeholder="C:\Users\Dieko\AppData\Local\osu!\Songs" Margin="4"/>
+        <TextBlock Text="App Settings" FontWeight="Bold" Margin="3"/>
+        <hc:TextBox Name="GameDirectoryBox" hc:InfoElement.Title="Game Directory" hc:InfoElement.TitlePlacement="Left" hc:InfoElement.Placeholder="C:\Users\AppData\Local\osu!" Margin="4"/>
+        <hc:TextBox Name="SongsDirectoryBox" hc:InfoElement.Title="Songs Directory" hc:InfoElement.TitlePlacement="Left" hc:InfoElement.Placeholder="C:\Users\AppData\Local\osu!\Songs" Margin="4"/>
+        <hc:TextBox Name="MCOsuDirectoryBox" hc:InfoElement.Title="Songs Directory" hc:InfoElement.TitlePlacement="Left" hc:InfoElement.Placeholder="C:\Program Files (x86)\Steam\steamapps\common\McOsu" Margin="4"/>
         <CheckBox Name="UpdateCB" Content="Check for updates on launch" Margin="4"/>
     </StackPanel>
 </Page>

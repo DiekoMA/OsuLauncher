@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace OsuBeatmapMirrorAPI.Objects;
+namespace API.Objects;
 
 public class BeatmapSet
 {

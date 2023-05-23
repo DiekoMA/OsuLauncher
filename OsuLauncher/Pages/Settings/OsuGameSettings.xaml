@@ -8,21 +8,21 @@
       xmlns:hc="https://handyorg.github.io/handycontrol"
       MinHeight="450" MinWidth="800">
     <StackPanel>
-        <TextBlock Text="Osu Settings" FontWeight="Bold"/>
+        <TextBlock Text="Osu Settings" FontWeight="Bold" Margin="3"/>
         <hc:ElementGroup Margin="4">
-            <TextBlock Text="Master Volume"/>
+            <TextBlock Text="Master Volume" VerticalAlignment="Center"/>
             <Slider Name="MasterVolumeSlider" Maximum="100" />
         </hc:ElementGroup>
         <hc:ElementGroup Margin="4">
-            <TextBlock Text="Effects Volume"/>
+            <TextBlock Text="Effects Volume" VerticalAlignment="Center"/>
             <Slider Name="EffectsVolumeSlider" Maximum="100"/>
         </hc:ElementGroup>
         <hc:ElementGroup Margin="4">
-            <TextBlock Text="Music Volume"/>
+            <TextBlock Text="Music Volume" VerticalAlignment="Center"/>
             <Slider Name="MusicVolumeSlider" Maximum="100"/>
         </hc:ElementGroup>
         <hc:ElementGroup Margin="4">
-            <TextBlock Text="Current Skin"/>
+            <TextBlock Text="Current Skin" VerticalAlignment="Center"/>
             <hc:ComboBox Margin="4" hc:BorderElement.CornerRadius="1">
                 
             </hc:ComboBox>
@@ -31,6 +31,19 @@
             <TextBlock Text="Mouse Sensitivity"/>
             <Slider Name="MouseSensitivitySlider" Maximum="100"/>
         </hc:ElementGroup>
-        <CheckBox Name="DiscordRpcCB" Content="Discord Rich Presence"/>
+        <CheckBox Name="DiscordRpcCB" Content="Discord Rich Presence" Margin="4"/>
+        <TextBlock Text="Keybindings" FontWeight="SemiBold" Margin="6"/>
+        <DockPanel Margin="4" LastChildFill="False">
+            <TextBlock Text="Left Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Button Name="LeftClickKeybindButton" Width="150" hc:BorderElement.CornerRadius="1" DockPanel.Dock="Right"/>
+        </DockPanel>
+        <DockPanel Margin="4" LastChildFill="False">
+            <TextBlock Text="Right Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Button Name="RightClickKeybindButton" Width="150" hc:BorderElement.CornerRadius="1" DockPanel.Dock="Right"/>
+        </DockPanel>
+        <DockPanel Margin="4" LastChildFill="False">
+            <TextBlock Text="Smoke" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Button Name="SmokeKeybindButton" Width="150" hc:BorderElement.CornerRadius="1" DockPanel.Dock="Right"/>
+        </DockPanel>
     </StackPanel>
 </Page>

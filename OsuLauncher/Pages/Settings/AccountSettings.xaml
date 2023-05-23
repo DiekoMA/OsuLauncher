@@ -8,6 +8,18 @@
       xmlns:hc="https://handyorg.github.io/handycontrol"
       MinHeight="450" MinWidth="800">
     <StackPanel>
-        <Button Name="InitAuthButton" Content="Login" hc:BorderElement.CornerRadius="1" HorizontalAlignment="Left"/>
+        <Button Name="InitAuthButton" Content="Login" hc:BorderElement.CornerRadius="1" HorizontalAlignment="Left" Margin="5"/>
+        <Border Margin="5" BorderThickness="2" BorderBrush="Black">
+            <StackPanel Orientation="Horizontal">
+                <hc:ImageBlock/>
+                <StackPanel>
+                    <TextBlock Name="UsernameText" FontSize="10"/>
+                    <TextBlock Name="AccuracyText" FontSize="10"/>
+                    <!-- ReSharper disable once InconsistentNaming -->
+                    <TextBlock Name="PPRankText" FontSize="10"/>
+                    <TextBlock Name="LevelText" FontSize="10"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
     </StackPanel>
 </Page>

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace OsuAPI.Objects;
+namespace API.Objects;
 
 public class News
 {

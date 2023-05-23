@@ -1,11 +1,6 @@
-﻿using System;
-using System.Windows;
-using OsuLauncher.Helpers;
-using OsuLauncher.Pages.Settings;
+﻿namespace OsuLauncher.Dialogs;
 
-namespace OsuLauncher.Dialogs;
-
-public partial class SettingsDialog : Window
+public partial class SettingsDialog
 {
     public SettingsDialog()
     {

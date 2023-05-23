@@ -1,7 +1,7 @@
-﻿using OsuAPI.Objects;
+﻿using API.Objects;
 using Refit;
 
-namespace OsuAPI;
+namespace API;
 
 [Headers("Content-Type: application/json", "Accept: application/json")]
 public interface IOsuClient

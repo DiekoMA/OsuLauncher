@@ -113,6 +113,11 @@ public static class OsuHelper
             Console.WriteLine("Error editing osu!.cfg file: " + ex.Message);
         }
     }
+
+    public static string ReadStringSetting(string configPath, string key)
+    {
+        return "";
+    }
     
     public static bool ReadBoolSetting(string configPath, string key)
     {

@@ -21,6 +21,9 @@ public partial class OsuGameSettings : Page
         EffectsVolumeSlider.Value = OsuHelper.ReadIntSetting(osuCfg, "VolumeEffect");
         MusicVolumeSlider.Value = OsuHelper.ReadIntSetting(osuCfg, "VolumeMusic");
         MouseSensitivitySlider.Value = OsuHelper.ReadFloatSetting(osuCfg, "MouseSpeed");
+        LeftClickKeybindButton.Content = OsuHelper.ReadStringSetting(osuCfg, "");
+        RightClickKeybindButton.Content = OsuHelper.ReadStringSetting(osuCfg, "");
+        SmokeKeybindButton.Content = OsuHelper.ReadStringSetting(osuCfg,"");
         switch (OsuHelper.ReadBoolSetting(osuCfg, "DiscordRichPresence"))
         {
             case true:

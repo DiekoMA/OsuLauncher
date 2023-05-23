@@ -6,8 +6,8 @@
       xmlns:local="clr-namespace:OsuLauncher.Pages"
       mc:Ignorable="d"
       xmlns:hc="https://handyorg.github.io/handycontrol"
-      xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
       MinHeight="450" MinWidth="800">
-    <hc:Carousel Name="NewsCarousel"/>
-        <!--<wv2:WebView2 Name="NewsBrowser" Source="https://osu.ppy.sh/home/news"/>-->
+    <ListBox Name="NewsListBox">
+        
+    </ListBox>
 </Page>

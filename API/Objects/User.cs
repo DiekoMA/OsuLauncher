@@ -1,21 +1,20 @@
-﻿using System.Text.Json.Serialization;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace OsuAPI.Objects;
+namespace API.Objects;
 
 public class User
 {
     [JsonProperty("avatar_url")]
-    public string AvatarURL { get; set; }
-    
+    public string AvatarUrl { get; set; } = null!;
+
     [JsonProperty("country_code")]
-    public string CountryCode { get; set; }
-    
+    public string CountryCode { get; set; } = null!;
+
     [JsonProperty("default_group")]
-    public string DefaultGroup { get; set; }
-    
+    public string DefaultGroup { get; set; } = null!;
+
     [JsonProperty("id")]
-    public int ID { get; set; }
+    public int Id { get; set; }
     
     [JsonProperty("is_active")]
     public bool IsActive { get; set; }
@@ -36,17 +35,17 @@ public class User
     public bool PmFriendsOnly { get; set; }
     
     [JsonProperty("profile_colour")]
-    public string ProfileColour { get; set; }
-    
+    public string ProfileColour { get; set; } = null!;
+
     [JsonProperty("username")]
-    public string Username { get; set; }
-    
+    public string Username { get; set; } = null!;
+
     [JsonProperty("cover_url")]
-    public string CoverUrl { get; set; }
-    
+    public string CoverUrl { get; set; } = null!;
+
     [JsonProperty("discord")]
-    public string Discord { get; set; }
-    
+    public string Discord { get; set; } = null!;
+
     [JsonProperty("has_supported")]
     public bool HasSupported { get; set; }
     
@@ -57,8 +56,8 @@ public class User
     public Kudosu Kudosu { get; set; }
     
     [JsonProperty("location")]
-    public string Location { get; set; }
-    
+    public string Location { get; set; } = null!;
+
     [JsonProperty("max_blocks")]
     public int MaxBlocks { get; set; }
     
@@ -66,29 +65,29 @@ public class User
     public int MaxFriends { get; set; }
     
     [JsonProperty("occupation")]
-    public string Occupation { get; set; }
-    
+    public string Occupation { get; set; } = null!;
+
     [JsonProperty("playmode")]
-    public string Playmode { get; set; }
-    
+    public string Playmode { get; set; } = null!;
+
     [JsonProperty("playstyle")]
-    public string[] Playstyle { get; set; }
-    
+    public string[] Playstyle { get; set; } = null!;
+
     [JsonProperty("post_count")]
     public int PostCount { get; set; }
     
     [JsonProperty("profile_order")]
-    public string[] ProfileOrder { get; set; }
-    
+    public string[] ProfileOrder { get; set; } = null!;
+
     [JsonProperty("title")]
-    public string Title { get; set; }
-    
+    public string Title { get; set; } = null!;
+
     [JsonProperty("title_url")]
-    public string TitleUrl { get; set; }
-    
+    public string TitleUrl { get; set; } = null!;
+
     [JsonProperty("twitter")]
-    public string Twitter { get; set; }
-    
+    public string Twitter { get; set; } = null!;
+
     [JsonProperty("country")]
     public Country Country { get; set; }
     
@@ -126,7 +125,7 @@ public struct Cover
     public string Url { get; set; }
     
     [JsonProperty("id")]
-    public int ID { get; set; }
+    public int Id { get; set; }
 }
 
 public struct Statistics

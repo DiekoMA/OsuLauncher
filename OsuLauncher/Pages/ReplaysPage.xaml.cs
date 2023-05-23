@@ -1,6 +1,4 @@
-﻿using System.Windows.Controls;
-
-namespace OsuLauncher.Pages;
+﻿namespace OsuLauncher.Pages;
 
 public partial class ReplaysPage : Page
 {

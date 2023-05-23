@@ -1,4 +1,4 @@
-﻿namespace OsuAPI.Objects;
+﻿namespace API.Objects;
 
 public enum Playmode
 {

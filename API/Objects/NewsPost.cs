@@ -1,21 +1,21 @@
 ﻿using Newtonsoft.Json;
 
-namespace OsuAPI.Objects;
+namespace API.Objects;
 
 public class NewsPost
 {
     [JsonProperty("id")]
-    public int ID { get; set; }
+    public int Id { get; set; }
     
     [JsonProperty("author")]
-    public string Author { get; set; }
-    
+    public string Author { get; set; } = null!;
+
     [JsonProperty("edit_url")]
-    public string EditUrl { get; set; }
-    
+    public string EditUrl { get; set; } = null!;
+
     [JsonProperty("first_image")]
-    public string FirstImageUrl { get; set; }
-    
+    public string FirstImageUrl { get; set; } = null!;
+
     [JsonProperty("published_at")]
     public DateTime PublishedAt { get; set; }
     
@@ -23,11 +23,11 @@ public class NewsPost
     public DateTime UpdatedAt { get; set; }
     
     [JsonProperty("slug")]
-    public string Slug { get; set; }
-    
+    public string Slug { get; set; } = null!;
+
     [JsonProperty("title")]
-    public string Title { get; set; }
-    
+    public string Title { get; set; } = null!;
+
     [JsonProperty("content")]
-    public string Content { get; set; }
+    public string Content { get; set; } = null!;
 }

@@ -1,16 +1,4 @@
-﻿ using System.Diagnostics;
-using System.IO;
-using System.Windows;
-using HandyControl.Controls;
-using OsuLauncher.Helpers;
-using OsuLauncher.Pages;
-using OsuAPI;
-using OsuLauncher.Dialogs;
-using MessageBox = System.Windows.MessageBox;
-using Path = System.IO.Path;
-using Window = System.Windows.Window;
-
-namespace OsuLauncher
+﻿namespace OsuLauncher
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -23,14 +11,9 @@ namespace OsuLauncher
             InitializeComponent();
             SettingsTitleAreaButton.Click += (sender, args) => DialogHelper.ShowDialog(typeof(SettingsDialog));
             var tokenLocation = Path.Combine(Directory.GetCurrentDirectory(), "token.secret");
-            /*if (File.Exists(tokenLocation))
+            if (File.Exists(tokenLocation))
             {
-                //File.ReadAllText(tokenLocation)
-                _client = new OsuClient(new ClientConfigurationOptions()
-                {
-                    ClientID = "",
-                    ClientSecret = ""
-                });
+                _client = new OsuClient(File.ReadAllText(tokenLocation));
             }
             if (_client != null && _client.IsAuthenticated())
             {
@@ -46,13 +29,23 @@ namespace OsuLauncher
                 PPRankText.Text = $"PP Count: Unavailable please log in";
                 AccuracyText.Text = $"Accuracy: Unavailable please log in";
                 LevelText.Text = $"Lv Unavailable please log in";
-            }*/
+            }
             PlayButton.Click += PlayButtonOnClick;
             NewsNavButton.Click += (sender, args) => MainFrame.Content = new NewsPage();
-            WikiNavButton.Click += (sender, args) => MainFrame.Content = new WikiPage(); 
-            BeatmapNavButton.Click += (sender, args) => MainFrame.Content = new BeatmapPage();
+            /*WikiNavButton.Click += (sender, args) => MainFrame.Content = new WikiPage(); */
+            BeatmapNavButton.Click += (sender, args) =>
+            {
+                if (ConfigHelper.GetBoolItem("User_Preference", "beatmapmirroroptin"))
+                {
+                    MainFrame.Content = new BeatmapPage();   
+                }
+                else
+                {
+                    Growl.Info("This has been disabled for your safety, you can reenable it in the settings");
+                }
+            };
             MoreGameOptions.Click += (sender, args) => MoreOptionsPopup.IsOpen = true;
-            /*CollectionsNavButton.Click += (sender, args) => MainFrame.Content = new CollectionsPage();*/
+            CollectionsNavButton.Click += (sender, args) => MainFrame.Content = new CollectionsPage();
             /*ReplaysNavButton.Click += (sender, args) => MainFrame.Content = new ReplaysPage();*/
         }
 
@@ -66,6 +59,11 @@ namespace OsuLauncher
             {
                 Process.Start(Path.Combine(ConfigHelper.GetStringItem("preferences", "gamedir"), "osu!.exe"));
             }
+        }
+
+        private void MainWindow_OnGotFocus(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Focus received");
         }
     }
 }

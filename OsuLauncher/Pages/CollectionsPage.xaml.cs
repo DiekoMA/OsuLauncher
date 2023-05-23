@@ -1,16 +1,11 @@
-﻿using System;
-using System.IO;
-using System.Windows.Controls;
-using HandyControl.Controls;
-using OsuLauncher.Helpers;
-
-namespace OsuLauncher.Pages;
+﻿namespace OsuLauncher.Pages;
 
 public partial class CollectionsPage : Page
 {
     public CollectionsPage()
     {
         InitializeComponent();
+        
         try
         {
             /*CollectionDb db;
@@ -30,5 +25,10 @@ public partial class CollectionsPage : Page
         {
             MessageBox.Show(e.Message);
         }
+    }
+
+    private void CollectionsPage_OnLoaded(object sender, RoutedEventArgs e)
+    {
+        MessageBox.Show("This has been loaded");
     }
 }
