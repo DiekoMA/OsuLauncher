@@ -31,7 +31,10 @@
             <TextBlock Text="Mouse Sensitivity"/>
             <Slider Name="MouseSensitivitySlider" Maximum="100"/>
         </hc:ElementGroup>
+        <CheckBox Name="DisableMouseWheelCB" Content="Disable mouse buttons" Margin="4"/>
+        <CheckBox Name="DisableMouseBtnCB" Content="Disable mouse wheel" Margin="4"/>
         <CheckBox Name="DiscordRpcCB" Content="Discord Rich Presence" Margin="4"/>
+        <CheckBox Name="ShowFPSCB" Content="Show FPS" Margin="4"/>
         <TextBlock Text="Keybindings" FontWeight="SemiBold" Margin="6"/>
         <DockPanel Margin="4" LastChildFill="False">
             <TextBlock Text="Left Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>

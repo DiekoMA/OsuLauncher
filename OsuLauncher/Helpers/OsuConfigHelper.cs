@@ -1,119 +1,83 @@
-﻿using System.IO;
-using System.Linq;
-
-namespace OsuLauncher.Helpers;
+﻿namespace OsuLauncher.Helpers;
 
 public class OsuConfigHelper
 {
-    private string filePath;
+    private string _osuConfigPath = string.Empty;
 
-    public OsuConfigHelper(string filePath)
+    public OsuConfigHelper(string osuConfigPath)
     {
-        this.filePath = filePath;
+        _osuConfigPath = osuConfigPath;
     }
-
-    public int GetIntValue(string key)
+    
+    public int ReadInt(string key, int defaultValue = 0)
     {
-        string value = GetValue(key);
-        if (int.TryParse(value, out int intValue))
+        string value = ReadValue(key);
+        int result;
+        if (!int.TryParse(value, out result))
         {
-            return intValue;
+            result = defaultValue;
         }
-        else
+        return result;
+    }
+    
+    public float ReadFloat(string key, float defaultValue = 0f)
+    {
+        string value = ReadValue(key);
+        float result;
+        if (!float.TryParse(value, out result))
         {
-            throw new InvalidDataException($"Failed to parse int value for key '{key}'");
+            result = defaultValue;
         }
+        return result;
     }
-
-    public float GetFloatValue(string key)
+    
+    public double ReadDouble(string key, float defaultValue = 0f)
     {
-        string value = GetValue(key);
-        if (float.TryParse(value, out float floatValue))
+        string value = ReadValue(key);
+        double result;
+        if (!double.TryParse(value, out result))
         {
-            return floatValue;
+            result = defaultValue;
         }
-        else
+        return result;
+    }
+
+    public string ReadString(string key, string defaultValue = "")
+    {
+        string value = ReadValue(key);
+        if (value == null || value.Length == 0)
         {
-            throw new InvalidDataException($"Failed to parse float value for key '{key}'");
+            value = defaultValue;
         }
+        return value;
     }
 
-    public bool GetBooleanValue(string key)
+    public bool ReadBool(string key, bool defaultValue = false)
     {
-        string value = GetValue(key);
-        if (value == "1" || value == "true")
+        string value = ReadValue(key);
+        bool result;
+        if (!bool.TryParse(value, out result))
         {
-            return true;
+            result = defaultValue;
         }
-        else if (value == "0" || value == "false")
+        return result;
+    }
+
+    private string ReadValue(string key)
+    {
+        string result = null;
+        using (StreamReader reader = new StreamReader(_osuConfigPath))
         {
-            return false;
-        }
-        else
-        {
-            throw new InvalidDataException($"Failed to parse boolean value for key '{key}'");
-        }
-    }
-
-    public string GetStringValue(string key)
-    {
-        return GetValue(key);
-    }
-
-    public void SetIntValue(string key, int value)
-    {
-        SetValue(key, value.ToString());
-    }
-
-    public void SetFloatValue(string key, float value)
-    {
-        SetValue(key, value.ToString());
-    }
-
-    public void SetBooleanValue(string key, bool value)
-    {
-        SetValue(key, value ? "1" : "0");
-    }
-
-    public void SetStringValue(string key, string value)
-    {
-        SetValue(key, value);
-    }
-
-    private string GetValue(string key)
-    {
-        string[] lines = File.ReadAllLines(filePath);
-        string line = lines.FirstOrDefault(l => l.StartsWith($"{key} = "));
-        if (line != null)
-        {
-            return line.Substring(key.Length + 1).Trim();
-        }
-        else
-        {
-            throw new InvalidDataException($"Key '{key}' not found in osu!.User.cfg file");
-        }
-    }
-
-    private void SetValue(string key, string value)
-    {
-        string[] lines = File.ReadAllLines(filePath);
-        int index = -1;
-        for (int i = 0; i < lines.Length; i++)
-        {
-            if (lines[i].StartsWith($"{key} = "))
+            while (!reader.EndOfStream)
             {
-                index = i;
-                break;
+                string line = reader.ReadLine();
+                if (line.StartsWith(key))
+                {
+                    result = line.Substring(line.IndexOf('=') + 1).Trim();
+                    break;
+                }
             }
         }
-        if (index != -1)
-        {
-            lines[index] = $"{key} = {value}";
-        }
-        else
-        {
-            lines = lines.Append($"{key} = {value}").ToArray();
-        }
-        File.WriteAllLines(filePath, lines);
+        return result;
     }
 }

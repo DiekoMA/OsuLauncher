@@ -1,53 +1,85 @@
-﻿using System;
-using System.IO;
-using System.Windows;
-using System.Windows.Controls;
-using OsuLauncher.Helpers;
+﻿namespace OsuLauncher.Pages.Settings;
 
-namespace OsuLauncher.Pages.Settings;
-
-public partial class OsuGameSettings : Page
+public partial class OsuGameSettings
 {
-    private string osuCfg;
     public OsuGameSettings()
     {
         InitializeComponent();
-        osuCfg = Path.Combine(ConfigHelper.GetStringItem("preferences", "gamedir"),
-            $"osu!.{Environment.UserName}.cfg");
-        MasterVolumeSlider.ValueChanged += MasterVolumeSliderOnValueChanged;
-        EffectsVolumeSlider.ValueChanged += EffectsVolumeSliderOnValueChanged;
-        MusicVolumeSlider.ValueChanged += MusicVolumeSliderOnValueChanged;
-        MasterVolumeSlider.Value = OsuHelper.ReadIntSetting(osuCfg, "VolumeUniversal");
-        EffectsVolumeSlider.Value = OsuHelper.ReadIntSetting(osuCfg, "VolumeEffect");
-        MusicVolumeSlider.Value = OsuHelper.ReadIntSetting(osuCfg, "VolumeMusic");
-        MouseSensitivitySlider.Value = OsuHelper.ReadFloatSetting(osuCfg, "MouseSpeed");
-        LeftClickKeybindButton.Content = OsuHelper.ReadStringSetting(osuCfg, "");
-        RightClickKeybindButton.Content = OsuHelper.ReadStringSetting(osuCfg, "");
-        SmokeKeybindButton.Content = OsuHelper.ReadStringSetting(osuCfg,"");
-        switch (OsuHelper.ReadBoolSetting(osuCfg, "DiscordRichPresence"))
+        try
         {
-            case true:
-                DiscordRpcCB.IsChecked = true;
-                break;
+            var osuCfg = Path.Combine(ConfigHelper.GetStringItem("preferences", "gamedir"),
+                $"osu!.{Environment.UserName}.cfg");
+            var configHelper = new OsuConfigHelper(osuCfg);
+            MasterVolumeSlider.ValueChanged += MasterVolumeSliderOnValueChanged;
+            EffectsVolumeSlider.ValueChanged += EffectsVolumeSliderOnValueChanged;
+            MusicVolumeSlider.ValueChanged += MusicVolumeSliderOnValueChanged;
+            MasterVolumeSlider.Value = configHelper.ReadInt("VolumeUniversal");
+            EffectsVolumeSlider.Value = configHelper.ReadInt("VolumeEffect");
+            MusicVolumeSlider.Value = configHelper.ReadInt("VolumeMusic");
+            MouseSensitivitySlider.Value = configHelper.ReadDouble("MouseSpeed");
+            LeftClickKeybindButton.Content = configHelper.ReadString("keyOsuLeft");
+            RightClickKeybindButton.Content = configHelper.ReadString("keyOsuRight");
+            SmokeKeybindButton.Content = configHelper.ReadString("keyOsuSmoke");
+            switch (configHelper.ReadInt("MouseDisableButtons"))
+            {
+                case 0:
+                    DisableMouseWheelCB.IsChecked = false;
+                    break;
             
-            case false:
-                DiscordRpcCB.IsChecked = false;
-                break;
+                case 1:
+                    DisableMouseWheelCB.IsChecked = true;
+                    break;
+            }
+            switch (configHelper.ReadInt("MouseDisableWheel"))
+            {
+                case 0:
+                    DisableMouseBtnCB.IsChecked = false;
+                    break;
+            
+                case 1:
+                    DisableMouseBtnCB.IsChecked = true;
+                    break;
+            }
+            switch (configHelper.ReadInt("DiscordRichPresence"))
+            {
+                case 0:
+                    DiscordRpcCB.IsChecked = false;
+                    break;
+            
+                case 1:
+                    DiscordRpcCB.IsChecked = true;
+                    break;
+            }
+            switch (configHelper.ReadInt("FpsCounter"))
+            {
+                case 0:
+                    ShowFPSCB.IsChecked = false;
+                    break;
+            
+                case 1:
+                    ShowFPSCB.IsChecked = true;
+                    break;
+            }
+        }
+        catch (Exception e)
+        {
+            Growl.Error(e.Message);
+            File.WriteAllText(@"C:\Users\ihate\Desktop\errors", e.Message);
         }
     }
     
     private void MusicVolumeSliderOnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
-        OsuHelper.EditIntSetting(osuCfg, Convert.ToDouble(e.NewValue), "VolumeMusic = ");
+        //OsuHelper.EditIntSetting(osuCfg, Convert.ToDouble(e.NewValue), "VolumeMusic = ");
     }
 
     private void EffectsVolumeSliderOnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
-        OsuHelper.EditIntSetting(osuCfg, Convert.ToDouble(e.NewValue), "VolumeEffect = ");
+        //OsuHelper.EditIntSetting(osuCfg, Convert.ToDouble(e.NewValue), "VolumeEffect = ");
     }
 
     private void MasterVolumeSliderOnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
-        OsuHelper.EditIntSetting(osuCfg, Convert.ToDouble(e.NewValue), "VolumeUniversal = ");
+        //OsuHelper.EditIntSetting(osuCfg, Convert.ToDouble(e.NewValue), "VolumeUniversal = ");
     }
 }
