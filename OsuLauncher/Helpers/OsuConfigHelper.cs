@@ -63,6 +63,25 @@ public class OsuConfigHelper
         return result;
     }
 
+    public void EditValue(string key, string value)
+    {
+        // Read all lines of the USER.cfg file
+        string[] lines = File.ReadAllLines(_osuConfigPath);
+
+        // Find the line with the key and update its value
+        for (int i = 0; i < lines.Length; i++)
+        {
+            if (lines[i].StartsWith(key))
+            {
+                lines[i] = $"{key} = {value}";
+                break;
+            }
+        }
+
+        // Write the updated lines back to the USER.cfg file
+        File.WriteAllLines(_osuConfigPath, lines);
+    }
+
     private string ReadValue(string key)
     {
         string result = null;

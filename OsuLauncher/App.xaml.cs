@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Net.Http;
-using System.Text.RegularExpressions;
-using System.Windows;
-using HandyControl.Controls;
-using OsuLauncher.Helpers;
-using Serilog;
-
-namespace OsuLauncher
+﻿namespace OsuLauncher
 {
     /// <summary>
     /// Interaction logic for App.xaml
@@ -21,13 +11,12 @@ namespace OsuLauncher
             {
                 Application.Current.Shutdown();
                 var code = e.Args[0];
-                var tokenRegex = new Regex("(?<=code=)(.*)(?=&state)");
-                if (!tokenRegex.IsMatch(code))
-                    return;
-                var authCode = tokenRegex.Match(code).Value;
-                InitiateTokenSwap(authCode);
-                //MessageBox.Show(authCode);
-                
+                // var tokenRegex = new Regex("(?<=code=)(.*)(?=&state)");
+                // if (!tokenRegex.IsMatch(code))
+                //     return;
+                // var authCode = tokenRegex.Match(code).Value;
+                InitiateTokenSwap(code);
+
             }
             AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
             var log = new LoggerConfiguration()
@@ -38,7 +27,7 @@ namespace OsuLauncher
                 Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "osu!");
             if (Directory.Exists(defaultOsuDir))
             {
-                ConfigHelper.SaveStringItem("preferences", "gamedir",defaultOsuDir); 
+                AppUtils.Config.SaveStringItem("preferences", "gamedir",defaultOsuDir); 
             }
             if (!File.Exists(configFile))
             {
@@ -73,7 +62,7 @@ namespace OsuLauncher
                         { "client_secret", "CDMaHyAmbtex7f5Oxl3iUA7POwPESfCjkoP1fG3D" },
                         { "code", code },
                         { "grant_type", "authorization_code" },
-                        { "redirect_uri", "OsuLauncher://localhost:7040" }
+                        { "redirect_uri", "http://localhost:7040/callback" }
                     };
 
                     request.Content = new FormUrlEncodedContent(formData);
@@ -92,7 +81,6 @@ namespace OsuLauncher
                 
                     File.WriteAllText(Path.Combine(Directory.GetCurrentDirectory(), "token.secret"), tokenResponse.access_token.ToString());
                     MessageBox.Show("The app will now restart");
-                    // Application.Current.Shutdown();
                 }
             }
             catch (Exception e)

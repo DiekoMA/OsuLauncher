@@ -1,7 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-
-namespace OsuLauncher.Pages;
+﻿namespace OsuLauncher.Pages;
 
 public partial class BeatmapPage : Page
 {

@@ -8,7 +8,7 @@
         xmlns:hc="https://handyorg.github.io/handycontrol"
         WindowState="Normal"
         WindowStyle="ToolWindow"
-        WindowStartupLocation="CenterOwner"
+        WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         Title="SettingsDialog" Height="548" Width="926">
     <DockPanel>

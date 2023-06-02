@@ -41,13 +41,13 @@ public class BeatmapSet
     public bool DownloadUnavailable { get; set; }
 
     [JsonProperty("ApprovedDate")]
-    public DateTime ApprovedDate { get; set; }
+    public string ApprovedDate { get; set; }
 
     [JsonProperty("LastUpdate")]
-    public DateTime LastUpdate { get; set; }
+    public string LastUpdate { get; set; }
 
     [JsonProperty("LastChecked")]
-    public DateTime LastChecked { get; set; }
+    public string LastChecked { get; set; }
 
     [JsonProperty("ChildrenBeatmaps")]
     public Beatmap[] Beatmaps { get; set; }

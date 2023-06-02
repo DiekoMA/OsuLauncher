@@ -1,12 +1,31 @@
-﻿<Window x:Class="OsuLauncher.Dialogs.KeySelectDialog"
+﻿<hc:Window x:Class="OsuLauncher.Dialogs.KeySelectDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:OsuLauncher.Dialogs"
+        Background="{x:Null}"
+        AllowsTransparency="True"
+        xmlns:hc="https://handyorg.github.io/handycontrol"
         mc:Ignorable="d"
-        Title="KeySelectDialog" Height="450" Width="800">
+        BorderBrush="Transparent"
+        BorderThickness="0"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Normal"
+        ResizeMode="NoResize"
+        ShowCloseButton="False"
+        ShowTitle="False"
+        ShowIcon="False"
+        ShowMaxButton="False"
+        ShowMinButton="False"
+        ShowNonClientArea="False"
+        ShowInTaskbar="False"
+        Height="450" Width="800">
     <Grid>
-        
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock Name="KeynameText" Foreground="White" VerticalAlignment="Center"/>
+            <TextBlock Text="Press any key to change the binding... &#x0a;Hit ESC to cancel" Foreground="Gold" FontSize="30" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </StackPanel>
     </Grid>
-</Window>
+</hc:Window>

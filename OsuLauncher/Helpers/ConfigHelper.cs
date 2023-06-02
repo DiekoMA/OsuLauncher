@@ -1,6 +1,4 @@
-﻿using SharpConfig;
-
-namespace OsuLauncher.Helpers;
+﻿namespace OsuLauncher.Helpers;
 
 public static class ConfigHelper
 {

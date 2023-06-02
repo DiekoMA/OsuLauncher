@@ -13,5 +13,6 @@
         <hc:TextBox Name="SongsDirectoryBox" hc:InfoElement.Title="Songs Directory" hc:InfoElement.TitlePlacement="Left" hc:InfoElement.Placeholder="C:\Users\AppData\Local\osu!\Songs" Margin="4"/>
         <hc:TextBox Name="MCOsuDirectoryBox" hc:InfoElement.Title="Songs Directory" hc:InfoElement.TitlePlacement="Left" hc:InfoElement.Placeholder="C:\Program Files (x86)\Steam\steamapps\common\McOsu" Margin="4"/>
         <CheckBox Name="UpdateCB" Content="Check for updates on launch" Margin="4"/>
+        <CheckBox Name="DialogOptCB" Content="Use 3rd party beatmap sites" Checked="DialogOptCB_OnChecked" Unchecked="DialogOptCB_OnUnchecked" Margin="4"/>
     </StackPanel>
 </Page>

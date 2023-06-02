@@ -9,7 +9,7 @@
         public MainWindow()
         {
             InitializeComponent();
-            SettingsTitleAreaButton.Click += (sender, args) => DialogHelper.ShowDialog(typeof(SettingsDialog));
+            SettingsTitleAreaButton.Click += (sender, args) => AppUtils.Dialog.ShowDialog(typeof(SettingsDialog));
             var tokenLocation = Path.Combine(Directory.GetCurrentDirectory(), "token.secret");
             if (File.Exists(tokenLocation))
             {
@@ -35,7 +35,7 @@
             /*WikiNavButton.Click += (sender, args) => MainFrame.Content = new WikiPage(); */
             BeatmapNavButton.Click += (sender, args) =>
             {
-                if (ConfigHelper.GetBoolItem("User_Preference", "beatmapmirroroptin"))
+                if (AppUtils.Config.GetBoolItem("User_Preference", "beatmapmirroroptin"))
                 {
                     MainFrame.Content = new BeatmapPage();   
                 }
@@ -51,13 +51,13 @@
 
         private void PlayButtonOnClick(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(ConfigHelper.GetStringItem("preferences", "gamedir")))
+            if (string.IsNullOrEmpty(AppUtils.Config.GetStringItem("preferences", "gamedir")))
             {
                 Growl.Error("Osu Game path is not set!");
             }
             else
             {
-                Process.Start(Path.Combine(ConfigHelper.GetStringItem("preferences", "gamedir"), "osu!.exe"));
+                Process.Start(Path.Combine(AppUtils.Config.GetStringItem("preferences", "gamedir"), "osu!.exe"));
             }
         }
 
