@@ -1,4 +1,6 @@
-﻿namespace OsuLauncher.Helpers;
+﻿using Configuration = SharpConfig.Configuration;
+
+namespace OsuLauncher.Helpers;
 
 public static class AppUtils
 {
@@ -36,7 +38,23 @@ public static class AppUtils
         {
             config = Configuration.LoadFromFile("settings.cfg");
         }
-    
+
+        public static void LoadEnv(string filePath)
+        {
+            if (File.Exists(filePath))
+                return;
+
+            foreach (var line in File.ReadLines(filePath))
+            {
+                var parts = line.Split('=', StringSplitOptions.RemoveEmptyEntries);
+                
+                if (parts.Length != 2)
+                    continue;
+                
+                Environment.SetEnvironmentVariable(parts[0], parts[1]);
+            }
+        }
+        
         public static void SaveStringItem(string section,string key, string value)
         {
             config[section][key].StringValue = value; 

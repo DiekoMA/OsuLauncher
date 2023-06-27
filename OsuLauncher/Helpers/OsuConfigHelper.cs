@@ -1,4 +1,6 @@
-﻿namespace OsuLauncher.Helpers;
+﻿using System.Linq;
+
+namespace OsuLauncher.Helpers;
 
 public class OsuConfigHelper
 {
@@ -7,6 +9,12 @@ public class OsuConfigHelper
     public OsuConfigHelper(string osuConfigPath)
     {
         _osuConfigPath = osuConfigPath;
+    }
+
+    public DirectoryInfo[] GetSkins()
+    {
+        var skinDirectory = new DirectoryInfo(Path.Combine(ConfigHelper.GetStringItem("preferences", "gamedir"), "Skins"));
+        return skinDirectory.GetDirectories();
     }
     
     public int ReadInt(string key, int defaultValue = 0)

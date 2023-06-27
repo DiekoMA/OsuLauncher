@@ -1,8 +1,10 @@
-﻿namespace OsuLauncher.Dialogs;
+﻿using System.Windows.Controls;
 
-public partial class SettingsDialog
+namespace OsuLauncher.Pages;
+
+public partial class SettingsPage : Page
 {
-    public SettingsDialog()
+    public SettingsPage()
     {
         InitializeComponent();
         GeneralLbItem.Selected += (sender, args) => SettingsFrame.Content = new GeneralSettings();

@@ -1,26 +1,27 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace API.Objects;
 
 public class BeatmapSet
 {
     [JsonProperty("SetId")]
-    public int SetID { get; set; }
+    public int SetId { get; set; }
     
     [JsonProperty("Title")]
-    public string Title { get; set; }
+    public string? Title { get; set; }
     
     [JsonProperty("Artist")]
-    public String Artist { get; set; }
+    public String? Artist { get; set; }
     
     [JsonProperty("Creator")]
-    public string Creator { get; set; }
+    public string? Creator { get; set; }
 
     [JsonProperty("Source")]
-    public string Source { get; set; }
+    public string? Source { get; set; }
     
     [JsonProperty("Tags")]
-    public string Tags { get; set; }
+    public string? Tags { get; set; }
     
     [JsonProperty("RankedStatus")]
     public int RankedStatus { get; set; }
@@ -41,25 +42,25 @@ public class BeatmapSet
     public bool DownloadUnavailable { get; set; }
 
     [JsonProperty("ApprovedDate")]
-    public string ApprovedDate { get; set; }
+    public string? ApprovedDate { get; set; }
 
     [JsonProperty("LastUpdate")]
-    public string LastUpdate { get; set; }
+    public string? LastUpdate { get; set; }
 
     [JsonProperty("LastChecked")]
-    public string LastChecked { get; set; }
+    public string? LastChecked { get; set; }
 
     [JsonProperty("ChildrenBeatmaps")]
-    public Beatmap[] Beatmaps { get; set; }
+    public Beatmap[]? Beatmaps { get; set; }
 }
 
 public class Beatmap
 {
     [JsonProperty("ParentSetID")]
-    public int ParentSetID { get; set; }
+    public int ParentSetId { get; set; }
     
     [JsonProperty("BeatmapID")]
-    public int BeatmapID { get; set; }
+    public int BeatmapId { get; set; }
     
     [JsonProperty("TotalLength")]
     public int TotalLength { get; set; }
@@ -68,10 +69,10 @@ public class Beatmap
     public int HitLength { get; set; }
     
     [JsonProperty("DiffName")]
-    public string DifficultyName { get; set; }
+    public string? DifficultyName { get; set; }
     
     [JsonProperty("FileMD5")]
-    public string FileMD5 { get; set; }
+    public string? FileMd5 { get; set; }
     
     [JsonProperty("CS")]
     public float CS { get; set; }
@@ -83,19 +84,19 @@ public class Beatmap
     public float HP { get; set; }
     
     [JsonProperty("OD")]
-    public float OD { get; set; }
+    public float OverallDifficulty { get; set; }
     
     [JsonProperty("Mode")]
     public float Mode { get; set; }
     
     [JsonProperty("BPM")]
-    public float BPM { get; set; }
+    public float Bpm { get; set; }
     
     [JsonProperty("Playcount")]
-    public int Playcount { get; set; }
+    public int PlayCount { get; set; }
     
     [JsonProperty("Passcount")]
-    public int Passcount { get; set; }
+    public int PassCount { get; set; }
     
     [JsonProperty("MaxCombo")]
     public int MaxCombo { get; set; }
@@ -107,5 +108,5 @@ public class Beatmap
 public class BeatmapResponse
 {
     [JsonProperty("data")]
-    public List<BeatmapSet> Data { get; set; }
+    public List<BeatmapSet>? Data { get; set; }
 }

@@ -25,9 +25,9 @@
             <TextBlock Text="Current Skin" VerticalAlignment="Center"/>
             <hc:ElementGroup VerticalAlignment="Center">
                 <TextBlock Name="CurrentSkinText" VerticalAlignment="Center"/>
-                <hc:ComboBox Margin="4" hc:BorderElement.CornerRadius="1">
-                
-                </hc:ComboBox>
+                <ComboBox Name="SkinCB" Margin="4" hc:BorderElement.CornerRadius="1" ToolTip="Select your favourite skin!">
+                    
+                </ComboBox>
             </hc:ElementGroup>
         </hc:ElementGroup>
         <!-- <hc:ElementGroup Margin="4"> -->
@@ -38,6 +38,16 @@
         <CheckBox Name="DisableMouseWheelCB" Content="Disable mouse wheel" Margin="4"/>
         <CheckBox Name="DiscordRpcCB" Content="Discord Rich Presence" Margin="4"/>
         <CheckBox Name="ShowFPSCB" Content="Show FPS" Margin="4"/>
+        <CheckBox Name="OsuLauncherRPCB" Content="Use Osulauncher RPC" ToolTip="Use OsuLaunchers Rich presence instead of osu's" Margin="4"/>
+        <CheckBox Name="StartFullscreenCB" Content="Start in fullscreen" Margin="4"/>
+        
+        <!-- <hc:ElementGroup VerticalAlignment="Center"> -->
+        <!--     <TextBlock VerticalAlignment="Center"/> -->
+        <!--     <ComboBox Name="ResolutionBox" Margin="4" hc:BorderElement.CornerRadius="1" ToolTip="Select your favourite skin!"> -->
+        <!--              -->
+        <!--     </ComboBox> -->
+        <!-- </hc:ElementGroup> -->
+        
         <TextBlock Text="Keybindings" FontWeight="SemiBold" Margin="6"/>
         <DockPanel Margin="4" LastChildFill="False">
             <TextBlock Text="Left Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>

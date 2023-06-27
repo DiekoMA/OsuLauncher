@@ -10,3 +10,5 @@ API Test App
 OsuLauncher/Pages/WikiPage.xaml
 
 OsuLauncher/Pages/WikiPage.xaml.cs
+
+OsuLauncher/Pages/Settings/AccountSettings.xaml.cs

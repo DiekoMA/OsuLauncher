@@ -5,7 +5,6 @@ public partial class CollectionsPage : Page
     public CollectionsPage()
     {
         InitializeComponent();
-        
         try
         {
             /*CollectionDb db;
@@ -25,10 +24,5 @@ public partial class CollectionsPage : Page
         {
             MessageBox.Show(e.Message);
         }
-    }
-
-    private void CollectionsPage_OnLoaded(object sender, RoutedEventArgs e)
-    {
-        MessageBox.Show("This has been loaded");
     }
 }

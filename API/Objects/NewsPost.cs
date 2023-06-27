@@ -2,7 +2,7 @@
 
 namespace API.Objects;
 
-public class NewsPost
+public class News
 {
     [JsonProperty("id")]
     public int Id { get; set; }

@@ -11,16 +11,30 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Autoupdater.NET.Official" Version="1.8.2" />
       <PackageReference Include="CollectionManager" Version="1.0.8" />
+      <PackageReference Include="DiscordRichPresence" Version="1.1.3.18" />
       <PackageReference Include="Downloader" Version="3.0.4" />
       <PackageReference Include="HandyControls" Version="3.4.5" />
       <PackageReference Include="MdXaml" Version="1.18.1" />
+      <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="7.0.0" />
+      <PackageReference Include="Onova" Version="2.6.9" />
+      <PackageReference Include="OsuMemoryDataProvider" Version="0.10.0" />
       <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
       <PackageReference Include="sharpconfig" Version="3.2.9.1" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\API\API.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Page Update="Pages\AccountPage.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
     </ItemGroup>
 
 </Project>

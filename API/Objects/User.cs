@@ -1,224 +1,225 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace API.Objects;
 
 public class User
 {
-    [JsonProperty("avatar_url")]
+    [JsonPropertyName("avatar_url")]
     public string AvatarUrl { get; set; } = null!;
 
-    [JsonProperty("country_code")]
+    [JsonPropertyName("country_code")]
     public string CountryCode { get; set; } = null!;
 
-    [JsonProperty("default_group")]
+    [JsonPropertyName("default_group")]
     public string DefaultGroup { get; set; } = null!;
 
-    [JsonProperty("id")]
+    [JsonPropertyName("id")]
     public int Id { get; set; }
     
-    [JsonProperty("is_active")]
+    [JsonPropertyName("is_active")]
     public bool IsActive { get; set; }
     
-    [JsonProperty("is_bot")]
+    [JsonPropertyName("is_bot")]
     public bool IsBot { get; set; }
     
-    [JsonProperty("is_online")]
+    [JsonPropertyName("is_online")]
     public bool IsOnline { get; set; }
     
-    [JsonProperty("is_supporter")]
+    [JsonPropertyName("is_supporter")]
     public bool IsSupporter { get; set; }
     
-    [JsonProperty("last_visit")]
+    [JsonPropertyName("last_visit")]
     public DateTime LastVisit { get; set; }
     
-    [JsonProperty("pm_friends_only")]
+    [JsonPropertyName("pm_friends_only")]
     public bool PmFriendsOnly { get; set; }
     
-    [JsonProperty("profile_colour")]
+    [JsonPropertyName("profile_colour")]
     public string ProfileColour { get; set; } = null!;
 
-    [JsonProperty("username")]
+    [JsonPropertyName("username")]
     public string Username { get; set; } = null!;
 
-    [JsonProperty("cover_url")]
+    [JsonPropertyName("cover_url")]
     public string CoverUrl { get; set; } = null!;
 
-    [JsonProperty("discord")]
+    [JsonPropertyName("discord")]
     public string Discord { get; set; } = null!;
 
-    [JsonProperty("has_supported")]
+    [JsonPropertyName("has_supported")]
     public bool HasSupported { get; set; }
     
-    [JsonProperty("join_date")]
+    [JsonPropertyName("join_date")]
     public DateTime JoinDate { get; set; }
     
-    [JsonProperty("kudosu")]
+    [JsonPropertyName("kudosu")]
     public Kudosu Kudosu { get; set; }
     
-    [JsonProperty("location")]
+    [JsonPropertyName("location")]
     public string Location { get; set; } = null!;
 
-    [JsonProperty("max_blocks")]
+    [JsonPropertyName("max_blocks")]
     public int MaxBlocks { get; set; }
     
-    [JsonProperty("max_friends")]
+    [JsonPropertyName("max_friends")]
     public int MaxFriends { get; set; }
     
-    [JsonProperty("occupation")]
+    [JsonPropertyName("occupation")]
     public string Occupation { get; set; } = null!;
 
-    [JsonProperty("playmode")]
+    [JsonPropertyName("playmode")]
     public string Playmode { get; set; } = null!;
 
-    [JsonProperty("playstyle")]
+    [JsonPropertyName("playstyle")]
     public string[] Playstyle { get; set; } = null!;
 
-    [JsonProperty("post_count")]
+    [JsonPropertyName("post_count")]
     public int PostCount { get; set; }
     
-    [JsonProperty("profile_order")]
+    [JsonPropertyName("profile_order")]
     public string[] ProfileOrder { get; set; } = null!;
 
-    [JsonProperty("title")]
+    [JsonPropertyName("title")]
     public string Title { get; set; } = null!;
 
-    [JsonProperty("title_url")]
+    [JsonPropertyName("title_url")]
     public string TitleUrl { get; set; } = null!;
 
-    [JsonProperty("twitter")]
+    [JsonPropertyName("twitter")]
     public string Twitter { get; set; } = null!;
 
-    [JsonProperty("country")]
+    [JsonPropertyName("country")]
     public Country Country { get; set; }
     
-    [JsonProperty("cover")]
+    [JsonPropertyName("cover")]
     public Cover Cover { get; set; }
     
-    [JsonProperty("statistics")]
+    [JsonPropertyName("statistics")]
     public Statistics UserStats { get; set; }
 }
 
 public struct Kudosu
 {
-    [JsonProperty("total")]
+    [JsonPropertyName("total")]
     public int Total { get; set; }
     
-    [JsonProperty("available")]
+    [JsonPropertyName("available")]
     public int Available { get; set; }
 }
 
 public struct Country
 {
-    [JsonProperty("code")]
+    [JsonPropertyName("code")]
     public string Code { get; set; }
     
-    [JsonProperty("name")]
+    [JsonPropertyName("name")]
     public string Name { get; set; }
 }
 
 public struct Cover
 {
-    [JsonProperty("custom_url")]
+    [JsonPropertyName("custom_url")]
     public string CustomUrl { get; set; }
     
-    [JsonProperty("url")]
+    [JsonPropertyName("url")]
     public string Url { get; set; }
     
-    [JsonProperty("id")]
+    [JsonPropertyName("id")]
     public int Id { get; set; }
 }
 
 public struct Statistics
 {
-    [JsonProperty("count_100")]
+    [JsonPropertyName("count_100")]
     public int Count100 { get; set; }
     
-    [JsonProperty("count_300")]
+    [JsonPropertyName("count_300")]
     public int Count300 { get; set; }
     
-    [JsonProperty("count_50")]
+    [JsonPropertyName("count_50")]
     public int Count50 { get; set; }
     
-    [JsonProperty("count_miss")]
+    [JsonPropertyName("count_miss")]
     public int CountMiss { get; set; }
     
-    [JsonProperty("level")]
+    [JsonPropertyName("level")]
     public Level Level { get; set; }
     
-    [JsonProperty("global_rank")]
+    [JsonPropertyName("global_rank")]
     public int GlobalRank { get; set; }
     
-    [JsonProperty("global_rank_exp")]
+    [JsonPropertyName("global_rank_exp")]
     public int GlobalRankExp { get; set; }
     
-    [JsonProperty("pp")]
+    [JsonPropertyName("pp")]
     public float PP { get; set; }
     
-    [JsonProperty("pp_exp")]
+    [JsonPropertyName("pp_exp")]
     public float PPExp { get; set; }
     
-    [JsonProperty("ranked_score")]
+    [JsonPropertyName("ranked_score")]
     public int RankedScore { get; set; }
     
-    [JsonProperty("hit_accuracy")]
+    [JsonPropertyName("hit_accuracy")]
     public float HitAccuracy { get; set; }
     
-    [JsonProperty("play_count")]
+    [JsonPropertyName("play_count")]
     public int PlayCount { get; set; }
     
-    [JsonProperty("play_time")]
+    [JsonPropertyName("play_time")]
     public int PlayTime { get; set; }
     
-    [JsonProperty("total_score")]
+    [JsonPropertyName("total_score")]
     public int TotalScore { get; set; }
     
-    [JsonProperty("total_hits")]
+    [JsonPropertyName("total_hits")]
     public int TotalHits { get; set; }
     
-    [JsonProperty("maximum_combo")]
+    [JsonPropertyName("maximum_combo")]
     public int MaxCombo { get; set; }
     
-    [JsonProperty("replays_watched_by_others")]
+    [JsonPropertyName("replays_watched_by_others")]
     public int ReplaysViewedByOthers { get; set; }
     
-    [JsonProperty("is_ranked")]
+    [JsonPropertyName("is_ranked")]
     public bool IsRanked { get; set; }
     
-    [JsonProperty("grade_counts")]
+    [JsonPropertyName("grade_counts")]
     public GradeCounts GradeCounts { get; set; }
     
-    [JsonProperty("country_rank")]
+    [JsonPropertyName("country_rank")]
     public int CountryRank { get; set; }
     
-    [JsonProperty("rank")]
+    [JsonPropertyName("rank")]
     public Rank Rank { get; set; }
 }
 
 public struct Level
 {
-    [JsonProperty("current")]
+    [JsonPropertyName("current")]
     public int Current { get; set; }
     
-    [JsonProperty("progress")]
+    [JsonPropertyName("progress")]
     public int Progress { get; set; }
 }
 
 public struct GradeCounts {
-    [JsonProperty("ss")]
+    [JsonPropertyName("ss")]
     public int SS { get; set; }
     
-    [JsonProperty("ssh")]
+    [JsonPropertyName("ssh")]
     public int SSH { get; set; }
     
-    [JsonProperty("s")]
+    [JsonPropertyName("s")]
     public int S { get; set; }
     
-    [JsonProperty("a")]
+    [JsonPropertyName("a")]
     public int A { get; set; }
 }
 
 public struct Rank
 {
-    [JsonProperty("country")]
+    [JsonPropertyName("country")]
     public int Country { get; set; }
 }

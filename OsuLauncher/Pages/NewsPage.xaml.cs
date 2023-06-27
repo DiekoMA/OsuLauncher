@@ -5,12 +5,19 @@ public partial class NewsPage : Page
     public NewsPage()
     {
         InitializeComponent();
-        // OsuClient client = new OsuClient("");
-        // var newsListings = client.GetNewsListingsAsync();
-        //
-        // foreach (var newsPiece in newsListings.Result.Data)
-        // {
-        //     NewsListBox.Items.Add(newsPiece.Title);
-        // }
+        try
+        {
+            OsuClient client = new OsuClient();
+            var listings = client.GetNewsListingsAsync().Result;
+            foreach (var newsListing in listings.)
+            {
+                NewsListBox.Items.Add(newsListing.Data.Title);
+            }
+        }
+        catch (Exception e)
+        {
+            Growl.Error(e.Message);
+            MessageBox.Show(e.Message);
+        }
     }
 }

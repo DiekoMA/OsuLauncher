@@ -4,7 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:OsuLauncher.Dialogs"
-        Background="{x:Null}"
+        Background="#00000000"
         AllowsTransparency="True"
         xmlns:hc="https://handyorg.github.io/handycontrol"
         mc:Ignorable="d"
@@ -23,9 +23,6 @@
         ShowInTaskbar="False"
         Height="450" Width="800">
     <Grid>
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <TextBlock Name="KeynameText" Foreground="White" VerticalAlignment="Center"/>
-            <TextBlock Text="Press any key to change the binding... &#x0a;Hit ESC to cancel" Foreground="Gold" FontSize="30" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        </StackPanel>
+        <TextBlock Text="Press any key to change the binding... &#x0a;Hit ESC to cancel" Foreground="Gold" FontSize="30" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
 </hc:Window>

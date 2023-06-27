@@ -1,39 +1,41 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections;
+using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace API.Objects;
 
-public class News
+public class NewsPost
 {
-    [JsonProperty("id")]
-    public int ID { get; set; }
+    [JsonPropertyName("id")]
+    public int Id { get; set; }
     
-    [JsonProperty("author")]
-    public string Author { get; set; }
+    [JsonPropertyName("author")]
+    public string? Author { get; set; }
     
-    [JsonProperty("edit_url")]
-    public string EditUrl { get; set; }
+    [JsonPropertyName("edit_url")]
+    public string? EditUrl { get; set; }
     
-    [JsonProperty("first_image")]
-    public string FirstImageUrl { get; set; }
+    [JsonPropertyName("first_image")]
+    public string? FirstImageUrl { get; set; }
     
-    [JsonProperty("published_at")]
+    [JsonPropertyName("published_at")]
     public DateTime PublishedAt { get; set; }
     
-    [JsonProperty("updated_at")]
+    [JsonPropertyName("updated_at")]
     public DateTime UpdatedAt { get; set; }
     
-    [JsonProperty("slug")]
-    public string Slug { get; set; }
+    [JsonPropertyName("slug")]
+    public string? Slug { get; set; }
     
-    [JsonProperty("title")]
-    public string Title { get; set; }
+    [JsonPropertyName("title")]
+    public string? Title { get; set; }
     
-    [JsonProperty("preview")]
-    public string Preview { get; set; }
+    [JsonPropertyName("preview")]
+    public string? Preview { get; set; }
 }
 
 public class NewsResponse
 {
-    [JsonProperty("news_posts")]
-    public List<News> Data { get; set; }
+    [JsonPropertyName("news_posts")]
+    public NewsResponse? Data { get; set; }
 }

@@ -1,48 +1,91 @@
-﻿using API.Objects;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using Refit;
+﻿using System.Net.Http.Headers;
+using API.Objects;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace API;
 
 public class OsuClient
 {
     private string _token;
-    private readonly IOsuClient _client;
-    public static RefitSettings Settings = new RefitSettings()
-    {
-        ContentSerializer = new NewtonsoftJsonContentSerializer(new JsonSerializerSettings
-        {
-            ContractResolver = new DefaultContractResolver()
-            {
-                NamingStrategy = new SnakeCaseNamingStrategy()
-            }
-        })
-    };
+    public bool IsAuthenticated { get; private set; }
+    private HttpClient _client;
+    private readonly string baseUrl = "https://osu.ppy.sh/api";
+
     /// <summary>
     /// Instantiate without a token to use Non OAUTH Methods.
     /// </summary>
-    /// <param name="options"></param>
-    public OsuClient(string token = "")
+    /// <param name="token"></param>
+    public OsuClient()
     {
-        _token = token;
-        _client = RestService.For<IOsuClient>("https://osu.ppy.sh/api/v2", Settings);
+        _client = new HttpClient();
     }
     
-    public bool IsAuthenticated()
+    public async Task<bool> TryAuthenticateAsync(string token, bool refresh = false)
     {
-        if (GetAuthenticatedUserAsync() != null)
-            return true;
-        return false;
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        try
+        {
+            _ = await GetAuthenticatedUserAsync();
+            IsAuthenticated = true;
+        }
+        catch (Exception e)
+        {
+            _client.DefaultRequestHeaders.Authorization = null;
+            IsAuthenticated = false;
+        }
+
+        return IsAuthenticated;
     }
-    
+
     /// <summary>
     /// Does not require Authentication
     /// </summary>
     /// <returns></returns>
-    public async Task<NewsResponse> GetNewsListingsAsync()
+    public async Task<NewsResponse?> GetNewsListingsAsync()
     {
-        return await _client.GetNewsListingsAsync();
+        var request = new HttpRequestMessage
+        {
+            Method = HttpMethod.Get,
+            RequestUri = new Uri($"{baseUrl}/v2/news"),
+            Headers =
+            {
+                { "Accept", "application/json" }
+            },
+        };
+
+        using var response = await _client.SendAsync(request);
+        response.EnsureSuccessStatusCode();
+        var newsListings = JsonSerializer.Deserialize<NewsResponse>(response.Content.ReadAsStringAsync().Result ?? throw new InvalidOperationException(), new JsonSerializerOptions
+        {
+            NumberHandling = JsonNumberHandling.AllowReadingFromString
+        });
+        return newsListings.Data;
+    }
+    
+    /// <summary>
+    /// Authentication is required.
+    /// </summary>
+    /// <returns></returns>
+    public async Task<User?> GetAuthenticatedUserAsync()
+    {
+        var request = new HttpRequestMessage
+        {
+            Method = HttpMethod.Get,
+            RequestUri = new Uri($"{baseUrl}/v2/me/osu"),
+            Headers =
+            {
+                { "Accept", "application/json" },
+            },
+        };
+
+        using var response = await _client.SendAsync(request);
+        response.EnsureSuccessStatusCode();
+        var authedUserResponse = JsonSerializer.Deserialize<User>(response.Content.ReadAsStringAsync().Result ?? throw new InvalidOperationException(), new JsonSerializerOptions
+        {
+            NumberHandling = JsonNumberHandling.AllowReadingFromString,
+        });
+        return authedUserResponse;
     }
 
     /// <summary>
@@ -50,28 +93,24 @@ public class OsuClient
     /// </summary>
     /// <param name="userId"></param>
     /// <returns></returns>
-    public async Task<User> GetUserAsync(int userId)
+    public async Task<User?> GetUserAsync(int userID)
     {
-        return await _client.GetUserAsync(_token, userId);
-    }
+        var request = new HttpRequestMessage
+        {
+            Method = HttpMethod.Get,
+            RequestUri = new Uri($"{baseUrl}/v2/{userID}/osu?key=maxime"),
+            Headers =
+            {
+                { "Accept", "application/json" },
+            },
+        };
 
-    /// <summary>
-    /// Authentication is required.
-    /// </summary>
-    /// <returns></returns>
-    public async Task<User> GetAuthenticatedUserAsync()
-    {
-        return await _client.GetAuthenticatedUserAsync(_token);
-    }
-    
-    /// <summary>
-    /// Authentication is required.
-    /// </summary>
-    /// <param name="locale">The language code</param>
-    /// <param name="path">The wiki path</param>
-    /// <returns></returns>
-    public async Task<Wiki> GetWikiAsync(string locale, string path)
-    {
-        return await _client.GetWikiAsync(_token, locale, path);
+        using var response = await _client.SendAsync(request);
+        response.EnsureSuccessStatusCode();
+        var userResponse = JsonSerializer.Deserialize<User>(response.Content.ReadAsStringAsync().Result ?? throw new InvalidOperationException(), new JsonSerializerOptions
+        {
+            NumberHandling = JsonNumberHandling.AllowReadingFromString
+        });
+        return userResponse;
     }
 }

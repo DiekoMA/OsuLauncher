@@ -1,4 +1,7 @@
-﻿namespace OsuLauncher
+﻿using Onova;
+using Onova.Services;
+
+namespace OsuLauncher
 {
     /// <summary>
     /// Interaction logic for App.xaml
