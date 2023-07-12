@@ -16,6 +16,16 @@ This idea originally came from wanting to have a way to unify everything without
 ## Does this bypass supporter ?
 No it does not and we do not condone that in anyway, Beatmap downloads are gotten from trusted mirror sites.
 
+# Screenshots
+## Home Page
+![Screenshot](docs/Images/30J3Stlb6K.png)
+
+## General Settings Page
+![Screenshot](docs/Images/OONT7FnOlv.png)
+
+## osu! Game Settings
+![Screenshot](docs/Images/0sc1B4b58k.png)
+
 # Support
   <noscript><a href="https://liberapay.com/DiekoMA/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a></noscript>
   
