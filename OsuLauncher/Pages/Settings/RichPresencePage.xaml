@@ -1,0 +1,33 @@
+﻿<Page x:Class="OsuLauncher.Pages.RichPresencePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:OsuLauncher.Pages"
+      mc:Ignorable="d"
+      xmlns:hc="https://handyorg.github.io/handycontrol"
+      MinHeight="450" MinWidth="800">
+    <StackPanel>
+        <CheckBox Name="CustomRpcCB" Content="Enable Osu Launcher Rich Presence" Checked="CustomRpcCB_OnChecked" Margin="4"/>
+        
+        <Border BorderBrush="Black" BorderThickness="2" Margin="4">
+            <StackPanel Margin="4">
+                <TextBlock Text="PLAYING A GAME" FontWeight="Bold"/>
+                <StackPanel Orientation="Horizontal" Margin="4">
+                    <hc:ImageBlock Width="90" Height="90" HorizontalAlignment="Left"/>
+                    <StackPanel>
+                        <TextBlock Text="Song Name" FontWeight="Regular"/>
+                        <TextBlock Text="Song Star Rating" FontWeight="Regular"/>
+                        <TextBlock Text="Song " FontWeight="Regular"/>
+                        <TextBlock Text="User State (In Menu, In Game) " FontWeight="Regular"/>
+                    </StackPanel>
+                    
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Right">
+                    <Button Content="Beatmap" Margin="4" hc:BorderElement.CornerRadius="2"/>
+                    <Button Content="Profile" Margin="4" hc:BorderElement.CornerRadius="2"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </StackPanel>
+</Page>

@@ -1,6 +1,4 @@
-﻿using Configuration = SharpConfig.Configuration;
-
-namespace OsuLauncher.Helpers;
+﻿namespace OsuLauncher.Helpers;
 
 public static class ConfigHelper
 {

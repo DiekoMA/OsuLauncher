@@ -11,6 +11,7 @@
         <ListBox hc:BorderElement.CornerRadius="1" DockPanel.Dock="Left">
             <ListBoxItem Name="GeneralLbItem" Content="General"/>
             <ListBoxItem Name="GameLbItem" Content="Game Settings"/>
+            <ListBoxItem Name="RpcLbItem" Content="Rich Presence"/>
         </ListBox>
         <Frame Name="SettingsFrame" NavigationUIVisibility="Hidden" hc:BorderElement.CornerRadius="1" DockPanel.Dock="Right"/>
     </DockPanel>

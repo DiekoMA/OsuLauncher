@@ -1,39 +1,32 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace OsuLauncher
+﻿namespace OsuLauncher
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow
     {
-        private OsuClient? _client;
-        private string tokenLocation;
+        private readonly string _clientId;
+        private readonly string _clientSecret;
+        private DiscordRpcClient rpcClient;
         public MainWindow()
         {
             InitializeComponent();
-            tokenLocation = Path.Combine(Directory.GetCurrentDirectory(), "token.secret");
-            if (File.Exists(tokenLocation))
+            HomePage homePage = new HomePage();
+            MainFrame.Content = homePage;
+            // GeneralSettings generalSettingsPage = new GeneralSettings();
+            // generalSettingsPage.UpdateUIEvent += GeneralSettingsPageOnUpdateUIEvent;
+            var assembly = Assembly.GetExecutingAssembly();
+            using var stream = assembly.GetManifestResourceStream("OsuLauncher.appsettings.json");
+            using var reader = new StreamReader(stream!);
+            var config = System.Text.Json.JsonSerializer.Deserialize<SecretsConfiguration>(reader.ReadToEnd(), new JsonSerializerOptions
             {
-                _client = new OsuClient();
-            }
-            RetrieveUserInfo();
+                NumberHandling = JsonNumberHandling.AllowReadingFromString
+            });
+            _clientId = config!.ClientId;
+            _clientSecret = config.ClientSecret;
             PlayButton.Click += PlayButtonOnClick;
-            NewsNavButton.Click += (sender, args) => MainFrame.Content = new NewsPage();
+            HomeNavButton.Click += (sender, args) => MainFrame.Content = homePage;//new HomePage();
             SettingsNavButton.Click += (sender, args) => MainFrame.Content = new SettingsPage();
-            BeatmapNavButton.Click += (sender, args) =>
-            {
-                if (AppUtils.Config.GetBoolItem("User_Preference", "beatmapmirroroptin"))
-                {
-                    MainFrame.Content = new BeatmapPage();   
-                }
-                else
-                {
-                    Growl.Info("This has been disabled for your safety, you can reenable it in the settings");
-                }
-            };
-
             AccountNavButton.Click += (sender, args) =>
             {
                 try
@@ -51,18 +44,24 @@ namespace OsuLauncher
                 {
                     MessageBox.Show(e.Message);
                 }
-                
             };
-
             // CollectionsNavButton.Click += (sender, args) => MainFrame.Content = new CollectionsPage();
-            /*ReplaysNavButton.Click += (sender, args) => MainFrame.Content = new ReplaysPage();*/
+        }
+        
+        private async void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            var osuClient = await ApiHelper.Instance.RetrieveClient();
+            RetrieveUserInfo(osuClient);
         }
 
-        private async void RetrieveUserInfo()
-        {
-            await _client.TryAuthenticateAsync(File.ReadAllText(tokenLocation));
+        // private void GeneralSettingsPageOnUpdateUIEvent()
+        // {
+        //     RetrieveUserInfo();
+        // }
 
-            if (!_client.IsAuthenticated)
+        private async void RetrieveUserInfo(OsuClient osuClient)
+        {
+            if (!osuClient.IsAuthenticated)
             {
                 Growl.Error("Client is not authenticated");
                 
@@ -70,10 +69,11 @@ namespace OsuLauncher
                 PPRankText.Text = $"PP Count: Unavailable please log in";
                 AccuracyText.Text = $"Accuracy: Unavailable please log in";
                 LevelText.Text = $"Lv Unavailable please log in";
+                InitiateTokenRefresh(osuClient);
             }
             else
             {
-                var authedUser = await _client.GetAuthenticatedUserAsync();
+                var authedUser = await osuClient.GetAuthenticatedUserAsync();
             
                 AvatarBlock.Source = new BitmapImage(new Uri(authedUser.AvatarUrl));
                 UsernameText.Text = $"Player Name: {authedUser?.Username}";
@@ -83,7 +83,7 @@ namespace OsuLauncher
             }
         }
 
-        private async void InitiateTokenRefresh()
+        private async void InitiateTokenRefresh(OsuClient osuClient)
         {
             try
             {
@@ -93,8 +93,8 @@ namespace OsuLauncher
 
                 var formData = new Dictionary<string, string>
                 {
-                    { "client_id", "21770" },
-                    { "client_secret", "CDMaHyAmbtex7f5Oxl3iUA7POwPESfCjkoP1fG3D" },
+                    { "client_id", _clientId },
+                    { "client_secret", _clientSecret },
                     { "grant_type", "refresh_token" },
                     { "refresh_token", refreshToken },
                 };
@@ -115,7 +115,7 @@ namespace OsuLauncher
 
                 await File.WriteAllTextAsync(Path.Combine(Directory.GetCurrentDirectory(), "refreshtoken.secret"), tokenResponse.RefreshToken);
                 await File.WriteAllTextAsync(Path.Combine(Directory.GetCurrentDirectory(), "token.secret"), tokenResponse.AccessToken);
-                RetrieveUserInfo();
+                RetrieveUserInfo(osuClient);
             }
             catch (Exception e)
             {
@@ -135,13 +135,31 @@ namespace OsuLauncher
                 if (pname.Length == 0)
                 {
                     Process.Start(Path.Combine(AppUtils.Config.GetStringItem("preferences", "gamedir"), "osu!.exe"));
-                    this.Hide();
+                    Hide();
+                    if (AppUtils.Config.GetBoolItem("preferences", "customRpc"))
+                    {
+                        rpcClient = new DiscordRpcClient("1117114635821268992");
+                        rpcClient.Initialize();
+                        
+                        rpcClient.SetPresence(new RichPresence()
+                        {
+                            Details = "Osu",
+                            State = "",
+                        });	
+                        
+                    }
                 }
                 else
                 {
                     Growl.Info("There is already an instance of osu! running.");
                 }
             }
+        }
+
+        private void MainWindow_OnClosing(object? sender, CancelEventArgs e)
+        {
+            if (rpcClient.IsInitialized)
+                rpcClient.Dispose();
         }
     }
 }

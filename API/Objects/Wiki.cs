@@ -1,30 +1,30 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace API.Objects;
 
 public class Wiki
 {
-    [JsonProperty("available_locales")]
+    [JsonPropertyName("available_locales")]
     public string[] AvailabeLocales { get; set; } = null!;
 
-    [JsonProperty("layout")]
+    [JsonPropertyName("layout")]
     public string Layout { get; set; } = null!;
 
-    [JsonProperty("locale")]
+    [JsonPropertyName("locale")]
     public string Locale { get; set; } = null!;
 
-    [JsonProperty("markdown")]
+    [JsonPropertyName("markdown")]
     public string Content { get; set; } = null!;
 
-    [JsonProperty("path")]
+    [JsonPropertyName("path")]
     public string Path { get; set; } = null!;
 
-    [JsonProperty("subtitle")]
+    [JsonPropertyName("subtitle")]
     public string Subtitle { get; set; } = null!;
 
-    [JsonProperty("tags")]
+    [JsonPropertyName("tags")]
     public string[] Tags { get; set; } = null!;
 
-    [JsonProperty("title")]
+    [JsonPropertyName("title")]
     public string Title { get; set; } = null!;
 }

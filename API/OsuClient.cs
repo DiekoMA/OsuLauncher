@@ -42,7 +42,7 @@ public class OsuClient
     /// Does not require Authentication
     /// </summary>
     /// <returns></returns>
-    public async Task<NewsResponse?> GetNewsListingsAsync()
+    public async Task<List<NewsPost>?> GetNewsListingsAsync()
     {
         var request = new HttpRequestMessage
         {

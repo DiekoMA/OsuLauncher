@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Text.Json.Serialization;
-using Newtonsoft.Json;
 
 namespace API.Objects;
 
@@ -37,5 +36,5 @@ public class NewsPost
 public class NewsResponse
 {
     [JsonPropertyName("news_posts")]
-    public NewsResponse? Data { get; set; }
+    public List<NewsPost>? Data { get; set; }
 }

@@ -8,10 +8,19 @@
       xmlns:hc="https://handyorg.github.io/handycontrol"
       MinHeight="450" MinWidth="800">
     <StackPanel>
-        <TextBlock Text="App Settings" FontWeight="Bold" Margin="3"/>
+        <hc:SimpleText Text="App Settings" Margin="3"/>
         <hc:TextBox Name="GameDirectoryBox" hc:InfoElement.Title="Game Directory" hc:InfoElement.TitlePlacement="Left" hc:InfoElement.Placeholder="C:\Users\AppData\Local\osu!" Margin="4"/>
         <hc:TextBox Name="SongsDirectoryBox" hc:InfoElement.Title="Songs Directory" hc:InfoElement.TitlePlacement="Left" hc:InfoElement.Placeholder="C:\Users\AppData\Local\osu!\Songs" Margin="4"/>
         <hc:TextBox Name="MCOsuDirectoryBox" hc:InfoElement.Title="Training Client Directory" hc:InfoElement.TitlePlacement="Left" hc:InfoElement.Placeholder="C:\Program Files (x86)\Steam\steamapps\common\McOsu" Margin="4"/>
+        <hc:ElementGroup Margin="4">
+            <TextBlock Text="Theme" VerticalAlignment="Center"/>
+            <ComboBox Name="ThemeCb">
+                <ComboBoxItem Content="System Theme"/>
+                <ComboBoxItem Content="Dark Theme"/>
+                <ComboBoxItem Content="Nord Theme"/>
+                <ComboBoxItem Content="Light Theme"/>
+            </ComboBox>
+        </hc:ElementGroup>
         <CheckBox Name="UpdateCB" Content="Check for updates on launch" Margin="4"/>
         <CheckBox Name="DialogOptCB" Content="Use 3rd party beatmap sites" Checked="DialogOptCB_OnChecked" Unchecked="DialogOptCB_OnUnchecked" Margin="4"/>
         <TextBlock Name="LoginText" Margin="4"/>

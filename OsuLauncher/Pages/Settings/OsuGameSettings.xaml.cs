@@ -23,7 +23,6 @@ public partial class OsuGameSettings
                         SkinCB.Items.Remove(" ");
                         SkinCB.Items.Add(skin.Name);
                     }
-                    
                     DisableMouseBtnCB.Checked += (sender, args) => _configHelper.EditValue("MouseDisableButtons", "1");
                     DisableMouseBtnCB.Unchecked += (sender, args) => _configHelper.EditValue("MouseDisableButtons", "0");
                     DisableMouseWheelCB.Checked += (sender, args) => _configHelper.EditValue("MouseDisableWheel", "1");
@@ -38,11 +37,13 @@ public partial class OsuGameSettings
                     LeftClickKeybindButton.Click += LeftClickKeybindButtonOnClick;
                     RightClickKeybindButton.Click += RightClickKeybindButtonOnClick;
                     SmokeKeybindButton.Click += SmokeKeybindButtonOnClick;
+                    MouseSpeedBox.ValueChanged += (sender, args) =>
+                        _configHelper.EditValue("MouseSpeed", args.Info.ToString());
                     CurrentSkinText.Text = _configHelper.ReadString("Skin");
                     MasterVolumeSlider.Value = _configHelper.ReadInt("VolumeUniversal");
                     EffectsVolumeSlider.Value = _configHelper.ReadInt("VolumeEffect");
                     MusicVolumeSlider.Value = _configHelper.ReadInt("VolumeMusic");
-                    //MouseSensitivitySlider.Value = configHelper.ReadDouble("MouseSpeed");
+                    MouseSpeedBox.Value = _configHelper.ReadDouble("MouseSpeed");
                     LeftClickKeybindButton.Content = _configHelper.ReadString("keyOsuLeft");
                     RightClickKeybindButton.Content = _configHelper.ReadString("keyOsuRight");
                     SmokeKeybindButton.Content = _configHelper.ReadString("keyOsuSmoke");

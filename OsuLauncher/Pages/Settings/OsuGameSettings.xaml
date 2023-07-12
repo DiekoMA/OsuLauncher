@@ -30,6 +30,10 @@
                 </ComboBox>
             </hc:ElementGroup>
         </hc:ElementGroup>
+        <hc:ElementGroup Margin="4">
+            <TextBlock Text="Mouse Speed" VerticalAlignment="Center"/>
+            <hc:NumericUpDown Name="MouseSpeedBox"/>
+        </hc:ElementGroup>
         <!-- <hc:ElementGroup Margin="4"> -->
         <!--     <TextBlock Text="Mouse Sensitivity"/> -->
         <!--     <Slider Name="MouseSensitivitySlider" Maximum="100"/> -->
@@ -38,7 +42,6 @@
         <CheckBox Name="DisableMouseWheelCB" Content="Disable mouse wheel" Margin="4"/>
         <CheckBox Name="DiscordRpcCB" Content="Discord Rich Presence" Margin="4"/>
         <CheckBox Name="ShowFPSCB" Content="Show FPS" Margin="4"/>
-        <CheckBox Name="OsuLauncherRPCB" Content="Use Osulauncher RPC" ToolTip="Use OsuLaunchers Rich presence instead of osu's" Margin="4"/>
         <CheckBox Name="StartFullscreenCB" Content="Start in fullscreen" Margin="4"/>
         
         <!-- <hc:ElementGroup VerticalAlignment="Center"> -->
