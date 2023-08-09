@@ -11,6 +11,8 @@ public partial class RichPresencePage : Page
         var osuCfg = Path.Combine(ConfigHelper.GetStringItem("preferences", "gamedir"),
             $"osu!.{Environment.UserName}.cfg");
         _configHelper = new OsuConfigHelper(osuCfg);
+        if (AppUtils.Config.GetBoolItem("preferences", "checkforupdates"))
+            CustomRpcCB.IsChecked = true;
     }
 
     private void CustomRpcCB_OnChecked(object sender, RoutedEventArgs e)

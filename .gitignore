@@ -14,3 +14,9 @@ OsuLauncher/Pages/WikiPage.xaml.cs
 OsuLauncher/Pages/Settings/AccountSettings.xaml.cs
 
 OsuLauncher/appsettings.json
+
+*.bin
+*.vs
+
+.vs/ProjectSettings.json
+

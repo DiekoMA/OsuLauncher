@@ -1,6 +1,6 @@
-﻿namespace OsuLauncher.Pages.Settings;
+﻿using API;
 
-public delegate void UpdateUIEventHandler();
+namespace OsuLauncher.Pages.Settings;
 
 public partial class GeneralSettings
 {
@@ -8,8 +8,6 @@ public partial class GeneralSettings
     private string clientId;
     private string clientSecret;
     private string redirectUrl;
-    
-    public event UpdateUIEventHandler UpdateUIEvent;
 
     public GeneralSettings()
     {
@@ -17,7 +15,7 @@ public partial class GeneralSettings
         var assembly = Assembly.GetExecutingAssembly();
         using (var stream = assembly.GetManifestResourceStream("OsuLauncher.appsettings.json"))
         {
-            using (var reader = new StreamReader(stream))
+            using (StreamReader reader = new StreamReader(stream))
             {
                 var config = System.Text.Json.JsonSerializer.Deserialize<SecretsConfiguration>(reader.ReadToEnd());
                 clientId = config.ClientId;
@@ -25,10 +23,16 @@ public partial class GeneralSettings
                 redirectUrl = config.RedirectUrl;
             }
         }
+
+        MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
         GameDirectoryBox.Text = AppUtils.Config.GetStringItem("preferences", "gamedir");
         SongsDirectoryBox.Text = AppUtils.Config.GetStringItem("preferences", "songsdir");
-        GameDirectoryBox.TextChanged += (sender, args) =>  AppUtils.Config.SaveStringItem("preferences", "gamedir",GameDirectoryBox.Text); 
-        SongsDirectoryBox.TextChanged += (sender, args) => AppUtils.Config.SaveStringItem("preferences", "songsdir",SongsDirectoryBox.Text);
+        SongsDirectoryBox.Text = AppUtils.Config.GetStringItem("preferences", "trainingclientdir");
+        if (AppUtils.Config.GetBoolItem("preferences", "checkforupdates"))
+            UpdateCB.IsChecked = true;
+        GameDirectoryBox.TextChanged += (sender, args) => AppUtils.Config.SaveStringItem("preferences", "gamedir", GameDirectoryBox.Text);
+        SongsDirectoryBox.TextChanged += (sender, args) => AppUtils.Config.SaveStringItem("preferences", "songsdir", SongsDirectoryBox.Text);
+        MCOsuDirectoryBox.TextChanged += (sender, args) => AppUtils.Config.SaveStringItem("preferences", "trainingclientdir", SongsDirectoryBox.Text);
         ThemeCb.Text = AppUtils.Config.GetStringItem("preferences", "theme_base").ToString();
         ThemeCb.SelectionChanged += (sender, args) =>
         {
@@ -38,30 +42,30 @@ public partial class GeneralSettings
                     ThemeManager.Current.UsingSystemTheme = true;
                     ThemeManager.Current.AccentColor = SystemParameters.WindowGlassBrush;
                     AppUtils.Config.SaveStringItem("preferences", "theme_base", "System");
-                    AppUtils.Config.SaveStringItem("preferences", "theme_accent", SystemParameters.WindowGlassBrush.ToString()); 
+                    AppUtils.Config.SaveStringItem("preferences", "theme_accent", SystemParameters.WindowGlassBrush.ToString());
                     break;
-                
+
                 case 1:
                     ThemeManager.Current.ApplicationTheme = ApplicationTheme.Dark;
                     ThemeManager.Current.AccentColor = SystemParameters.WindowGlassBrush;
-                    AppUtils.Config.SaveStringItem("preferences", "theme_base", "Dark"); 
-                    AppUtils.Config.SaveStringItem("preferences", "theme_accent", SystemParameters.WindowGlassBrush.ToString()); 
+                    AppUtils.Config.SaveStringItem("preferences", "theme_base", "Dark");
+                    AppUtils.Config.SaveStringItem("preferences", "theme_accent", SystemParameters.WindowGlassBrush.ToString());
                     break;
-                
+
                 case 2:
                     var converter = new BrushConverter();
-                    var brush = (Brush)converter.ConvertFromString("#2E3440");
+                    var brush = converter.ConvertFromString("#2E3440") as Brush;
                     ThemeManager.Current.ApplicationTheme = ApplicationTheme.Dark;
                     ThemeManager.Current.AccentColor = brush;
-                    AppUtils.Config.SaveStringItem("preferences", "theme_base", "Nord"); 
-                    AppUtils.Config.SaveStringItem("preferences", "theme_accent", brush.ToString()); 
+                    AppUtils.Config.SaveStringItem("preferences", "theme_base", "Nord");
+                    AppUtils.Config.SaveStringItem("preferences", "theme_accent", brush.ToString());
                     break;
-                
+
                 case 3:
                     ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light;
                     ThemeManager.Current.AccentColor = SystemParameters.WindowGlassBrush;
-                    AppUtils.Config.SaveStringItem("preferences", "theme_base", "Light"); 
-                    AppUtils.Config.SaveStringItem("preferences", "theme_accent", SystemParameters.WindowGlassBrush.ToString()); 
+                    AppUtils.Config.SaveStringItem("preferences", "theme_base", "Light");
+                    AppUtils.Config.SaveStringItem("preferences", "theme_accent", SystemParameters.WindowGlassBrush.ToString());
                     break;
             }
         };
@@ -75,7 +79,7 @@ public partial class GeneralSettings
                 {
                     UseShellExecute = true
                 });
-                
+
                 HttpListener listener = new HttpListener();
                 listener.Prefixes.Add("http://localhost:7040/callback/");
                 listener.Start();
@@ -94,14 +98,13 @@ public partial class GeneralSettings
                     var authCode = tokenRegex.Match(code).Value;
                     InitiateTokenSwap(authCode);
                     listener.Stop();
-                    UpdateUIEvent.Invoke();
                 }
             }
             catch (Exception e)
             {
                 Log.Error(e.Message);
             }
-            
+
         };
     }
 
@@ -114,7 +117,7 @@ public partial class GeneralSettings
     {
         AppUtils.Config.SaveBool("User_Preference", "beatmapmirroroptin", false);
     }
-    
+
     private async void InitiateTokenSwap(string code)
     {
         try
@@ -143,21 +146,41 @@ public partial class GeneralSettings
             {
                 throw new Exception("Failed to swap osu! API tokens.");
             }
-                
+
             response.EnsureSuccessStatusCode();
             var json = await response.Content.ReadAsStringAsync();
-            
+
             TokenResponse tokenResponse = System.Text.Json.JsonSerializer.Deserialize<TokenResponse>(json, new JsonSerializerOptions
             {
                 NumberHandling = JsonNumberHandling.AllowReadingFromString
             }) ?? throw new InvalidOperationException();
-        
-            await File.WriteAllTextAsync(Path.Combine(Directory.GetCurrentDirectory(), "refreshtoken.secret"), tokenResponse.RefreshToken);
-            await File.WriteAllTextAsync(Path.Combine(Directory.GetCurrentDirectory(), "token.secret"), tokenResponse.AccessToken);
+
+            //await File.WriteAllTextAsync(Path.Combine(Directory.GetCurrentDirectory(), "refreshtoken.secret"), tokenResponse.RefreshToken);
+            var tokenJson = System.Text.Json.JsonSerializer.Serialize<TokenResponse>(tokenResponse, new JsonSerializerOptions
+            {
+                NumberHandling = JsonNumberHandling.AllowReadingFromString,
+                WriteIndented = true,
+            });
+            await File.WriteAllTextAsync(Path.Combine(Directory.GetCurrentDirectory(), "token.secret"), tokenJson);
+
+            await Application.Current.Dispatcher.InvokeAsync(async () =>
+            {
+                MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+                var tempClient = await ApiHelper.Instance.RetrieveClient();
+                var authedUser = await tempClient.GetAuthenticatedUserAsync();
+
+                mainWindow.AvatarBlock.Source = new BitmapImage(new Uri(authedUser.AvatarUrl));
+                mainWindow.UsernameText.Text = $"Player Name: {authedUser?.Username}";
+                mainWindow.PPRankText.Text = $"PP Count: {authedUser?.UserStats.PP.ToString()}";
+                mainWindow.AccuracyText.Text = $"Accuracy: {authedUser?.UserStats.HitAccuracy}";
+                mainWindow.LevelText.Text = $"Lv {authedUser?.UserStats.Level.Current}";
+            });
         }
         catch (Exception e)
         {
-            MessageBox.Show(e.Message);
+            Growl.Error(e.Source);
+            Growl.Error(e.InnerException.StackTrace);
+            Growl.Error(e.Message);
         }
     }
 }

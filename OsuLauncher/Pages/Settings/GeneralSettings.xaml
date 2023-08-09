@@ -22,7 +22,7 @@
             </ComboBox>
         </hc:ElementGroup>
         <CheckBox Name="UpdateCB" Content="Check for updates on launch" Margin="4"/>
-        <CheckBox Name="DialogOptCB" Content="Use 3rd party beatmap sites" Checked="DialogOptCB_OnChecked" Unchecked="DialogOptCB_OnUnchecked" Margin="4"/>
+        <!-- <CheckBox Name="DialogOptCB" Content="Use 3rd party beatmap sites" Checked="DialogOptCB_OnChecked" Unchecked="DialogOptCB_OnUnchecked" Margin="4"/> -->
         <TextBlock Name="LoginText" Margin="4"/>
         <Button Name="InitAuthButton" Content="Login" hc:BorderElement.CornerRadius="1" HorizontalAlignment="Left" Margin="5"/>
     </StackPanel>

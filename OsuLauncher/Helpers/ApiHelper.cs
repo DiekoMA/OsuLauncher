@@ -16,9 +16,19 @@ public sealed class ApiHelper
 
     public async Task<OsuClient> RetrieveClient()
     {
-        await _client.TryAuthenticateAsync(File.ReadAllText(tokenLocation));
+        if (File.Exists(tokenLocation))
+        {
+            var tokenResponse = System.Text.Json.JsonSerializer.Deserialize<TokenResponse>(File.ReadAllText(GetTokenLocation()), new System.Text.Json.JsonSerializerOptions
+            {
+                NumberHandling = JsonNumberHandling.AllowReadingFromString
+            });
+            await _client.TryAuthenticateAsync(tokenResponse.AccessToken);
+            return _client;
+        }
+
         return _client;
     }
+
+    public string GetTokenLocation() => tokenLocation;
 }
-    
-    
+

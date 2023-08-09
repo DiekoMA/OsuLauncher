@@ -20,8 +20,8 @@ public class OsuClient
     {
         _client = new HttpClient();
     }
-    
-    public async Task<bool> TryAuthenticateAsync(string token, bool refresh = false)
+
+    public async Task<bool> TryAuthenticateAsync(string token)
     {
         _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         try
@@ -62,7 +62,7 @@ public class OsuClient
         });
         return newsListings.Data;
     }
-    
+
     /// <summary>
     /// Authentication is required.
     /// </summary>
