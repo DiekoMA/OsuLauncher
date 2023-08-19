@@ -1,7 +1,4 @@
-﻿using System.Windows.Controls;
-using System.Windows.Media.Imaging;
-
-namespace OsuLauncher.Pages;
+﻿namespace OsuLauncher.Pages;
 
 public partial class AccountPage : Page
 {
@@ -9,13 +6,15 @@ public partial class AccountPage : Page
     public AccountPage()
     {
         InitializeComponent();
-        osuClient = ApiHelper.Instance.RetrieveClient().Result;
+        GetUserInfo();
     }
     public async void GetUserInfo()
     {
+        osuClient = await ApiHelper.Instance.RetrieveClient();
         if (osuClient.IsAuthenticated)
         {
             var authedUser = await osuClient.GetAuthenticatedUserAsync();
+            //authedUser.UserStats.GlobalRank;
             AvatarBlock.Source = new BitmapImage(new Uri(authedUser.AvatarUrl));
             UsernameText.Text = authedUser.Username;
             PPRankText.Text = Math.Round(authedUser.UserStats.PP).ToString();

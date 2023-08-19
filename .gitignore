@@ -17,6 +17,12 @@ OsuLauncher/appsettings.json
 
 *.bin
 *.vs
-
+*Properties
 .vs/ProjectSettings.json
 
+
+OsuLauncher/Properties/Settings.Designer.cs
+
+OsuLauncher/Properties/Settings.settings
+
+Installer/

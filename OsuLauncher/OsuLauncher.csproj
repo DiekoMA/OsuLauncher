@@ -10,6 +10,7 @@
         <RuntimeIdentifier>win-x64</RuntimeIdentifier>
       <UserSecretsId>bec6151d-44c2-46aa-b322-55950f501a7c</UserSecretsId>
       <Configurations>Debug;Release;Github Release</Configurations>
+      <AssemblyVersion></AssemblyVersion>
   </PropertyGroup>
 
     <ItemGroup>
@@ -50,6 +51,21 @@
     <ItemGroup>
       <None Remove="appsettings.json" />
       <EmbeddedResource Include="appsettings.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Properties\AppSettings.Designer.cs">
+        <DesignTimeSharedInput>True</DesignTimeSharedInput>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>AppSettings.settings</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="Properties\AppSettings.settings">
+        <Generator>SettingsSingleFileGenerator</Generator>
+        <LastGenOutput>AppSettings.Designer.cs</LastGenOutput>
+      </None>
     </ItemGroup>
 
 </Project>

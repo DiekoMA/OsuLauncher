@@ -8,34 +8,9 @@
         protected override void OnStartup(StartupEventArgs e)
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
-            var log = new LoggerConfiguration()
-                .WriteTo.File("log.txt")
-                .CreateLogger();
-            var configFile = Path.Combine(Directory.GetCurrentDirectory(), "settings.cfg");
-            var defaultOsuDir =
-                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "osu!");
-            if (Directory.Exists(defaultOsuDir))
-            {
-                AppUtils.Config.SaveStringItem("preferences", "gamedir", defaultOsuDir);
-            }
-            if (!File.Exists(configFile))
-            {
-                try
-                {
-                    File.Create(configFile);
-                    if (Directory.Exists(defaultOsuDir))
-                    {
-                        AppUtils.Config.SaveStringItem("preferences", "gamedir", defaultOsuDir);
-                    }
-                }
-                catch (Exception exception)
-                {
-                    Growl.Error(exception.Message + "Has been logged");
-                    Log.Error(exception.Message);
-                }
-            }
-
-            switch (AppUtils.Config.GetStringItem("preferences", "theme_base"))
+            Log.Logger = new LoggerConfiguration().WriteTo.File("log.txt").CreateLogger();
+            Log.Information("Application started succesfully");
+            switch (AppSettings.Default.ThemeBase)
             {
                 case "System":
                     ThemeManager.Current.UsingSystemTheme = true;

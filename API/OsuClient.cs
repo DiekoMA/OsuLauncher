@@ -34,7 +34,6 @@ public class OsuClient
             _client.DefaultRequestHeaders.Authorization = null;
             IsAuthenticated = false;
         }
-
         return IsAuthenticated;
     }
 

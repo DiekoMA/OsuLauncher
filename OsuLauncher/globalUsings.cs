@@ -6,6 +6,7 @@ global using OsuLauncher.Pages;
 global using OsuLauncher.Models;
 global using OsuLauncher.Helpers;
 global using OsuLauncher.Dialogs;
+global using OsuLauncher.Properties;
 global using OsuLauncher.Pages.Settings;
 
 //Native Dependencies
@@ -19,7 +20,6 @@ global using System.Net.Http;
 global using System.Windows.Media;
 global using System.Reflection;
 global using System.Windows.Media.Imaging;
-global using System.Net.NetworkInformation;
 global using System.Text.Json.Serialization;
 global using System.Diagnostics;
 global using System.Globalization;
@@ -29,12 +29,11 @@ global using System.Collections.Generic;
 global using System.Text.RegularExpressions;
 global using MessageBox = System.Windows.MessageBox;
 global using JsonSerializerOptions = System.Text.Json.JsonSerializerOptions;
+global using AutoUpdaterDotNET;
 
 //External Dependencies
 global using Serilog;
 global using DiscordRPC;
-global using SharpConfig;
-global using Newtonsoft.Json;
 global using CollectionManager;
 global using DiscordRPC.Logging;
 global using HandyControl.Themes;

@@ -8,19 +8,19 @@ public partial class RichPresencePage : Page
     public RichPresencePage()
     {
         InitializeComponent();
-        var osuCfg = Path.Combine(ConfigHelper.GetStringItem("preferences", "gamedir"),
+        var osuCfg = Path.Combine(AppSettings.Default.GameDirectory,
             $"osu!.{Environment.UserName}.cfg");
         _configHelper = new OsuConfigHelper(osuCfg);
-        if (AppUtils.Config.GetBoolItem("preferences", "checkforupdates"))
+        if (AppSettings.Default.UseCustomRPC)
             CustomRpcCB.IsChecked = true;
     }
 
     private void CustomRpcCB_OnChecked(object sender, RoutedEventArgs e)
     {
-        if (ConfigHelper.GetStringItem("preferences", "gamedir") != string.Empty)
+        if (AppSettings.Default.GameDirectory != string.Empty)
         {
             _configHelper.EditValue("DiscordRichPresence", "0");
-            AppUtils.Config.SaveBool("preferences", "customRpc", true);
+            AppSettings.Default.UseCustomRPC = true;
         }
     }
 }

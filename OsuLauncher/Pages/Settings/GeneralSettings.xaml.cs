@@ -1,6 +1,4 @@
-﻿using API;
-
-namespace OsuLauncher.Pages.Settings;
+﻿namespace OsuLauncher.Pages.Settings;
 
 public partial class GeneralSettings
 {
@@ -25,15 +23,15 @@ public partial class GeneralSettings
         }
 
         MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
-        GameDirectoryBox.Text = AppUtils.Config.GetStringItem("preferences", "gamedir");
-        SongsDirectoryBox.Text = AppUtils.Config.GetStringItem("preferences", "songsdir");
-        SongsDirectoryBox.Text = AppUtils.Config.GetStringItem("preferences", "trainingclientdir");
-        if (AppUtils.Config.GetBoolItem("preferences", "checkforupdates"))
+        GameDirectoryBox.Text = AppSettings.Default.GameDirectory;
+        SongsDirectoryBox.Text = AppSettings.Default.SongsDirectory;
+        MCOsuDirectoryBox.Text = AppSettings.Default.TrainingClientDirectory;
+        if (AppSettings.Default.CheckForUpdates)
             UpdateCB.IsChecked = true;
-        GameDirectoryBox.TextChanged += (sender, args) => AppUtils.Config.SaveStringItem("preferences", "gamedir", GameDirectoryBox.Text);
-        SongsDirectoryBox.TextChanged += (sender, args) => AppUtils.Config.SaveStringItem("preferences", "songsdir", SongsDirectoryBox.Text);
-        MCOsuDirectoryBox.TextChanged += (sender, args) => AppUtils.Config.SaveStringItem("preferences", "trainingclientdir", SongsDirectoryBox.Text);
-        ThemeCb.Text = AppUtils.Config.GetStringItem("preferences", "theme_base").ToString();
+        GameDirectoryBox.TextChanged += (sender, args) => AppSettings.Default.GameDirectory = GameDirectoryBox.Text; AppSettings.Default.Save();
+        SongsDirectoryBox.TextChanged += (sender, args) => AppSettings.Default.SongsDirectory = SongsDirectoryBox.Text; AppSettings.Default.Save();
+        MCOsuDirectoryBox.TextChanged += (sender, args) => AppSettings.Default.TrainingClientDirectory = MCOsuDirectoryBox.Text; AppSettings.Default.Save();
+        ThemeCb.Text = AppSettings.Default.ThemeBase;
         ThemeCb.SelectionChanged += (sender, args) =>
         {
             switch (ThemeCb.SelectedIndex)
@@ -41,15 +39,17 @@ public partial class GeneralSettings
                 case 0:
                     ThemeManager.Current.UsingSystemTheme = true;
                     ThemeManager.Current.AccentColor = SystemParameters.WindowGlassBrush;
-                    AppUtils.Config.SaveStringItem("preferences", "theme_base", "System");
-                    AppUtils.Config.SaveStringItem("preferences", "theme_accent", SystemParameters.WindowGlassBrush.ToString());
+                    AppSettings.Default.ThemeBase = "System";
+                    AppSettings.Default.ThemeAccent = SystemParameters.WindowGlassBrush.ToString();
+                    AppSettings.Default.Save();
                     break;
 
                 case 1:
                     ThemeManager.Current.ApplicationTheme = ApplicationTheme.Dark;
                     ThemeManager.Current.AccentColor = SystemParameters.WindowGlassBrush;
-                    AppUtils.Config.SaveStringItem("preferences", "theme_base", "Dark");
-                    AppUtils.Config.SaveStringItem("preferences", "theme_accent", SystemParameters.WindowGlassBrush.ToString());
+                    AppSettings.Default.ThemeBase = "Dark";
+                    AppSettings.Default.ThemeAccent = SystemParameters.WindowGlassBrush.ToString();
+                    AppSettings.Default.Save();
                     break;
 
                 case 2:
@@ -57,19 +57,21 @@ public partial class GeneralSettings
                     var brush = converter.ConvertFromString("#2E3440") as Brush;
                     ThemeManager.Current.ApplicationTheme = ApplicationTheme.Dark;
                     ThemeManager.Current.AccentColor = brush;
-                    AppUtils.Config.SaveStringItem("preferences", "theme_base", "Nord");
-                    AppUtils.Config.SaveStringItem("preferences", "theme_accent", brush.ToString());
+                    AppSettings.Default.ThemeBase = "Nord";
+                    AppSettings.Default.ThemeAccent = brush.ToString();
+                    AppSettings.Default.Save();
                     break;
 
                 case 3:
                     ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light;
                     ThemeManager.Current.AccentColor = SystemParameters.WindowGlassBrush;
-                    AppUtils.Config.SaveStringItem("preferences", "theme_base", "Light");
-                    AppUtils.Config.SaveStringItem("preferences", "theme_accent", SystemParameters.WindowGlassBrush.ToString());
+                    AppSettings.Default.ThemeBase = "Light";
+                    AppSettings.Default.ThemeAccent = SystemParameters.WindowGlassBrush.ToString();
+                    AppSettings.Default.Save();
                     break;
             }
         };
-        UpdateCB.Checked += (sender, args) => AppUtils.Config.SaveBool("preferences", "checkforupdates", true);
+        UpdateCB.Checked += (sender, args) => AppSettings.Default.CheckForUpdates = true; AppSettings.Default.Save();
         InitAuthButton.Click += (sender, args) =>
         {
             try

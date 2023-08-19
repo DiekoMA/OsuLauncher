@@ -1,7 +1,4 @@
-﻿using Onova;
-using Onova.Services;
-
-namespace OsuLauncher;
+﻿namespace OsuLauncher;
 
 /// <summary>
 /// Interaction logic for MainWindow.xaml
@@ -10,11 +7,15 @@ public partial class MainWindow
 {
     private readonly string _clientId;
     private readonly string _clientSecret;
-    private DiscordRpcClient rpcClient;
+    private OsuMemoryReader osuMemoryReader;
     private OsuClient osuClient;
     public MainWindow()
     {
         InitializeComponent();
+        osuMemoryReader = new OsuMemoryReader();
+        AutoUpdater.ExecutablePath = Path.Combine(Directory.GetCurrentDirectory(), "OsuLauncher.exe");
+        AutoUpdater.SetOwner(this);
+        AutoUpdater.Start(AppSettings.Default.UpdateUrl);
         VersionText.Text = Assembly.GetExecutingAssembly().GetName().Version.ToString();
         HomePage homePage = new HomePage();
         MainFrame.Content = homePage;
@@ -25,7 +26,7 @@ public partial class MainWindow
         {
             NumberHandling = JsonNumberHandling.AllowReadingFromString
         });
-        switch (AppUtils.Config.GetStringItem("preferences", "startuppreference"))
+        switch (AppSettings.Default.LaunchPreference)
         {
             case "McOsu":
                 StartupPreferenceCB.SelectedIndex = 0;
@@ -38,12 +39,10 @@ public partial class MainWindow
                 StartupPreferenceCB.SelectedIndex = 1;
                 break;
         }
-        /*rpcClient = new DiscordRpcClient("1117114635821268992");
-        rpcClient.Initialize();*/
         _clientId = config!.ClientId;
         _clientSecret = config.ClientSecret;
         PlayButton.Click += PlayButtonOnClick;
-        HomeNavButton.Click += (sender, args) => MainFrame.Content = homePage;//new HomePage();
+        HomeNavButton.Click += (sender, args) => MainFrame.Content = homePage;
         SettingsNavButton.Click += (sender, args) => MainFrame.Content = new SettingsPage();
         AccountNavButton.Click += (sender, args) =>
         {
@@ -64,22 +63,21 @@ public partial class MainWindow
     {
         osuClient = await ApiHelper.Instance.RetrieveClient();
         if (!osuClient.IsAuthenticated)
-            InitiateTokenRefresh();
+            await InitiateTokenRefresh();
 
-        RetrieveUserInfo();
+        await RetrieveUserInfo();
     }
 
-    public async void RetrieveUserInfo()
+    public async Task RetrieveUserInfo()
     {
         if (!osuClient.IsAuthenticated)
         {
             if (!File.Exists(ApiHelper.Instance.GetTokenLocation()))
             {
-                Growl.Error("Please log in from the settings page");
+                Growl.Error("Please log in from the AppSettings page");
             }
             else
             {
-                Growl.Error("Client is not authenticated");
                 UsernameText.Text = $"Player Name: Unavailable please log in";
                 PPRankText.Text = $"PP Count: Unavailable please log in";
                 AccuracyText.Text = $"Accuracy: Unavailable please log in";
@@ -92,12 +90,12 @@ public partial class MainWindow
 
                 if (tokenResponse.AccessToken == string.Empty)
                 {
-                    Growl.Info("Access token not here");
+                    Growl.Info("Access token not found");
                 }
                 else
                 {
-                    Growl.Info("Do refresh");
-                    InitiateTokenRefresh();
+                    Growl.Info("Token Expired Please login");
+                    await InitiateTokenRefresh();
                 }
             }
         }
@@ -112,7 +110,7 @@ public partial class MainWindow
         }
     }
 
-    private async void InitiateTokenRefresh()
+    private async Task InitiateTokenRefresh()
     {
         try
         {
@@ -147,20 +145,20 @@ public partial class MainWindow
                 WriteIndented = true,
             });
             await File.WriteAllTextAsync(Path.Combine(Directory.GetCurrentDirectory(), "token.secret"), tokenJson);
-            RetrieveUserInfo();
+            await RetrieveUserInfo();
         }
         catch (Exception e)
         {
-            Growl.Error(e.Message);
+            Log.Error(e.Message);
         }
     }
 
-    private void PlayButtonOnClick(object sender, RoutedEventArgs e)
+    private async void PlayButtonOnClick(object sender, RoutedEventArgs e)
     {
         switch (StartupPreferenceCB.SelectedIndex)
         {
             case 0:
-                if (string.IsNullOrEmpty(AppUtils.Config.GetStringItem("preferences", "trainingclientdir")))
+                if (string.IsNullOrEmpty(AppSettings.Default.TrainingClientDirectory))
                     Growl.Error("McOsu Game path is not set!");
 
                 Process[] mcOsuProcess = Process.GetProcessesByName("McEngine");
@@ -175,32 +173,30 @@ public partial class MainWindow
                 break;
 
             case 1:
-                if (string.IsNullOrEmpty(AppUtils.Config.GetStringItem("preferences", "gamedir")))
+                if (string.IsNullOrEmpty(AppSettings.Default.GameDirectory))
                     Growl.Error("Osu Game path is not set!");
 
                 Process[] osuProcess = Process.GetProcessesByName("osu!");
                 if (osuProcess.Length != 0)
                     Growl.Info("There is already an instance of osu! running.");
 
-
-                Process.Start(Path.Combine(AppUtils.Config.GetStringItem("preferences", "gamedir"), "osu!.exe"));
-                Hide();
-                if (AppUtils.Config.GetBoolItem("preferences", "customRpc"))
+                Process.Start(Path.Combine(AppSettings.Default.GameDirectory, "osu!.exe"));
+                Growl.Info("Launched");
+                var currentBeatmap = osuMemoryReader.GetCurrentBeatmap().Result;
+                Growl.Info(currentBeatmap.Beatmap.Id.ToString());
+                if (AppSettings.Default.UseCustomRPC)
                 {
-                    rpcClient.SetPresence(new RichPresence()
-                    {
-                        Details = "Osu",
-                        State = "",
-                    });
+
+                    //await AppUtils.RPC.Start(currentBeatmap.Beatmap.Id.ToString());
                 }
                 break;
         }
     }
 
-    private void MainWindow_OnClosing(object? sender, CancelEventArgs e)
+    private async void MainWindow_OnClosing(object? sender, CancelEventArgs e)
     {
-        /*if (rpcClient.IsInitialized)
-            rpcClient.Dispose();*/
+        await AppUtils.RPC.Stop();
+        Log.CloseAndFlush();
     }
 
     private void StartupPreferenceCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -208,11 +204,13 @@ public partial class MainWindow
         switch (StartupPreferenceCB.SelectedIndex)
         {
             case 0:
-                AppUtils.Config.SaveStringItem("preferences", "startuppreference", "McOsu");
+                AppSettings.Default.LaunchPreference = "McOsu";
+                AppSettings.Default.Save();
                 break;
 
             case 1:
-                AppUtils.Config.SaveStringItem("preferences", "startuppreference", "osu");
+                AppSettings.Default.LaunchPreference = "osu";
+                AppSettings.Default.Save();
                 break;
         }
     }
