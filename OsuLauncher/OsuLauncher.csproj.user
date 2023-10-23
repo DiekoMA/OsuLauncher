@@ -3,4 +3,20 @@
   <PropertyGroup>
     <_LastSelectedProfileId>C:\Users\Mayowa\Documents\Projects\Full Time Projects\OsuLauncher\OsuLauncher\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Update="Pages\LocalBeatmapsPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\Settings\RichPresenceSettings.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\LocalBeatmapsPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Settings\RichPresenceSettings.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
 </Project>

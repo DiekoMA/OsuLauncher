@@ -10,6 +10,10 @@ public partial class GeneralSettings
     public GeneralSettings()
     {
         InitializeComponent();
+    }
+
+    private void UserControl_Loaded(object sender, RoutedEventArgs e)
+    {
         var assembly = Assembly.GetExecutingAssembly();
         using (var stream = assembly.GetManifestResourceStream("OsuLauncher.appsettings.json"))
         {

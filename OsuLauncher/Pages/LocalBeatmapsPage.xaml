@@ -1,0 +1,50 @@
+﻿<Page x:Class="OsuLauncher.Pages.LocalBeatmapsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:OsuLauncher.Pages"
+      xmlns:hc="https://handyorg.github.io/handycontrol"
+      mc:Ignorable="d" 
+      MinHeight="450" 
+      MinWidth="800"
+      Title="LocalBeatmapsPage">
+
+    <Grid>
+
+        <TabControl Grid.Row="1">
+            <TabItem Header="Songs">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Menu Grid.Row="0">
+                        <MenuItem Name="RefreshSongListBtn" Header="Refresh"/>
+                        <MenuItem Name="DeleteSongListBtn" Header="Delete"/>
+                        <MenuItem Name="LocateSongListBtn" Header="Locate"/>
+                    </Menu>
+                    <hc:SearchBar Grid.Row="1" Margin="4"/>
+                    <ListBox Name="SongsList" Grid.Row="2"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Collections">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Menu Grid.Row="0">
+                        <MenuItem Header="Refresh"/>
+                        <MenuItem Header="Add"/>
+                        <MenuItem Header="Delete"/>
+                    </Menu>
+                    <ListBox Name="CollectionList" Grid.Row="1"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Page>

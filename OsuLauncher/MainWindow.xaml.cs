@@ -42,9 +42,9 @@ public partial class MainWindow
         _clientId = config!.ClientId;
         _clientSecret = config.ClientSecret;
         PlayButton.Click += PlayButtonOnClick;
-        HomeNavButton.Click += (sender, args) => MainFrame.Content = homePage;
-        SettingsNavButton.Click += (sender, args) => MainFrame.Content = new SettingsPage();
-        AccountNavButton.Click += (sender, args) =>
+        HomeNavButton.Selected += (sender, args) => MainFrame.Content = homePage;
+        SettingsNavButton.Selected += (sender, args) => MainFrame.Content = new SettingsPage();
+        AccountNavButton.Selected += (sender, args) =>
         {
             try
             {
@@ -56,7 +56,7 @@ public partial class MainWindow
                 MessageBox.Show(e.Message);
             }
         };
-        CollectionsNavButton.Click += (sender, args) => MainFrame.Content = new CollectionsPage();
+        LocalBeatmapsNavButton.Selected += (sender, args) => MainFrame.Content = new LocalBeatmapsPage();
     }
 
     private async void MainWindow_OnLoaded(object sender, RoutedEventArgs e)

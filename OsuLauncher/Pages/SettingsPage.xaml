@@ -5,14 +5,19 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:OsuLauncher.Pages"
       mc:Ignorable="d"
-      xmlns:hc="https://handyorg.github.io/handycontrol"
+      xmlns:uc="clr-namespace:OsuLauncher.Pages.Settings"
       MinHeight="450" MinWidth="800">
-    <DockPanel>
-        <ListBox hc:BorderElement.CornerRadius="1" DockPanel.Dock="Left">
-            <ListBoxItem Name="GeneralLbItem" Content="General"/>
-            <ListBoxItem Name="GameLbItem" Content="Game Settings"/>
-            <ListBoxItem Name="RpcLbItem" Content="Rich Presence"/>
-        </ListBox>
-        <Frame Name="SettingsFrame" NavigationUIVisibility="Hidden" hc:BorderElement.CornerRadius="1" DockPanel.Dock="Right"/>
-    </DockPanel>
+
+    <TabControl>
+        <TabItem Header="General" Name="GeneralTabItem">
+            <uc:GeneralSettings/>
+        </TabItem>
+        <TabItem Header="Osu! Settings">
+            <uc:OsuGameSettings/>
+        </TabItem>
+        <TabItem Header="Rich Presence">
+            
+        </TabItem>
+    </TabControl>
+    
 </Page>

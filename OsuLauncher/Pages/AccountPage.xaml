@@ -8,20 +8,32 @@
       mc:Ignorable="d"
       Title="AccountPage" MinHeight="450" MinWidth="800">
     <DockPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+        </Grid>
         <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5">
             <hc:ImageBlock Name="AvatarBlock" Width="100" Height="100"/>
             <StackPanel>
-                <TextBlock Name="UsernameText" FontSize="10"/>
-                <TextBlock Name="AccuracyText" FontSize="10"/>
-                <!-- ReSharper disable once InconsistentNaming -->
-                <TextBlock Name="PPRankText" FontSize="10"/>
-                <TextBlock Name="LevelText" FontSize="10"/>
+                
             </StackPanel>
-            
+
         </StackPanel>
         <TabControl>
-            <TabItem Header="Top Plays">
-                
+            <TabItem Header="me!">
+                <RichTextBox Name="ProfileDescriptionBox"/>
+            </TabItem>
+            <TabItem Header="Favourite Beatmaps">
+
+            </TabItem>
+            <TabItem Header="Recent">
+
             </TabItem>
         </TabControl>
     </DockPanel>

@@ -10,7 +10,7 @@ public partial class AccountPage : Page
     }
     public async void GetUserInfo()
     {
-        osuClient = await ApiHelper.Instance.RetrieveClient();
+        /*osuClient = await ApiHelper.Instance.RetrieveClient();
         if (osuClient.IsAuthenticated)
         {
             var authedUser = await osuClient.GetAuthenticatedUserAsync();
@@ -20,6 +20,6 @@ public partial class AccountPage : Page
             PPRankText.Text = Math.Round(authedUser.UserStats.PP).ToString();
             AccuracyText.Text = Math.Round(authedUser.UserStats.HitAccuracy).ToString();
             LevelText.Text = authedUser.UserStats.Level.Current.ToString();
-        }
+        }*/
     }
 }
