@@ -19,6 +19,7 @@
       <PackageReference Include="DiscordRichPresence" Version="1.2.1.24" />
       <PackageReference Include="Downloader" Version="3.0.4" />
       <PackageReference Include="HandyControls" Version="3.4.5" />
+      <PackageReference Include="MahApps.Metro.IconPacks" Version="4.11.0" />
       <PackageReference Include="MahApps.Metro.IconPacks.BoxIcons" Version="4.11.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="7.0.0" />
@@ -29,6 +30,7 @@
       <PackageReference Include="OsuMemoryDataProvider" Version="0.10.0" />
       <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
       <PackageReference Include="sharpconfig" Version="3.2.9.1" />
+      <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="8.0.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -49,10 +51,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Update="Properties\AppSettings.Designer.cs">
+      <Compile Update="Properties\LauncherSettings.Designer.cs">
         <DesignTimeSharedInput>True</DesignTimeSharedInput>
         <AutoGen>True</AutoGen>
-        <DependentUpon>AppSettings.settings</DependentUpon>
+        <DependentUpon>LauncherSettings.settings</DependentUpon>
       </Compile>
     </ItemGroup>
 
@@ -60,6 +62,10 @@
       <None Update="Properties\AppSettings.settings">
         <Generator>SettingsSingleFileGenerator</Generator>
         <LastGenOutput>AppSettings.Designer.cs</LastGenOutput>
+      </None>
+      <None Update="Properties\LauncherSettings.settings">
+        <Generator>SettingsSingleFileGenerator</Generator>
+        <LastGenOutput>LauncherSettings.Designer.cs</LastGenOutput>
       </None>
     </ItemGroup>
 

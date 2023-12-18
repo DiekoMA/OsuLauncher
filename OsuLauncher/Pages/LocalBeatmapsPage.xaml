@@ -17,7 +17,7 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="35"/>
-                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="40"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
@@ -26,7 +26,7 @@
                         <MenuItem Name="DeleteSongListBtn" Header="Delete"/>
                         <MenuItem Name="LocateSongListBtn" Header="Locate"/>
                     </Menu>
-                    <hc:SearchBar Grid.Row="1" Margin="4"/>
+                    <hc:TextBox Name="SongSearchBox" TextChanged="SearchBar_TextChanged" Grid.Row="1" Margin="4"/>
                     <ListBox Name="SongsList" Grid.Row="2"/>
                 </Grid>
             </TabItem>

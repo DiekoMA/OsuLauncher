@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace OsuLauncher.Models;
+﻿namespace OsuLauncher.Models;
 
 public class SecretsConfiguration
 {

@@ -18,11 +18,11 @@ public sealed class ApiHelper
     {
         if (File.Exists(tokenLocation))
         {
-            var tokenResponse = System.Text.Json.JsonSerializer.Deserialize<TokenResponse>(File.ReadAllText(GetTokenLocation()), new System.Text.Json.JsonSerializerOptions
-            {
-                NumberHandling = JsonNumberHandling.AllowReadingFromString
-            });
-            await _client.TryAuthenticateAsync(tokenResponse.AccessToken);
+            byte[] readEncryptedToken = File.ReadAllBytes("token.secret");
+            byte[] decryptedToken = ProtectedData.Unprotect(readEncryptedToken, null, DataProtectionScope.CurrentUser);
+            var decryptedAccesstoken = JsonSerializer.Deserialize<TokenResponse>(decryptedToken);
+
+            await _client.TryAuthenticateAsync(decryptedAccesstoken.AccessToken);
             return _client;
         }
 

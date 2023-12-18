@@ -9,15 +9,20 @@
       MinHeight="450" MinWidth="800">
 
     <TabControl>
-        <TabItem Header="General" Name="GeneralTabItem">
+        <TabItem Header="General">
             <uc:GeneralSettings/>
         </TabItem>
         <TabItem Header="Osu! Settings">
             <uc:OsuGameSettings/>
         </TabItem>
         <TabItem Header="Rich Presence">
-            
+            <uc:RichPresenceSettings/>
+        </TabItem>
+        <TabItem Header="Optimisations">
+            <uc:OptimisationSettings/>
+        </TabItem>
+        <TabItem Header="Backup">
+            <uc:BackupSettings/>
         </TabItem>
     </TabControl>
-    
 </Page>

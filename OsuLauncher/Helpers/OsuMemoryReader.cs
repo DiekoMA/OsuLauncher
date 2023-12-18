@@ -1,11 +1,6 @@
-﻿using System.Runtime.InteropServices;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Threading;
-using OsuMemoryDataProvider;
+﻿using OsuMemoryDataProvider;
 using OsuMemoryDataProvider.OsuMemoryModels;
 using OsuMemoryDataProvider.OsuMemoryModels.Direct;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Header;
 
 namespace OsuLauncher.Helpers;
 

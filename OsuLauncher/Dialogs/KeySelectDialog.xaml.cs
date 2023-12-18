@@ -1,7 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Input;
-
-namespace OsuLauncher.Dialogs;
+﻿namespace OsuLauncher.Dialogs;
 
 public partial class KeySelectDialog
 {

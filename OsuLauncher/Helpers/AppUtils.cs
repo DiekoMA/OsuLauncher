@@ -1,6 +1,4 @@
-﻿using System.Net.Sockets;
-
-namespace OsuLauncher.Helpers;
+﻿namespace OsuLauncher.Helpers;
 
 public static class AppUtils
 {

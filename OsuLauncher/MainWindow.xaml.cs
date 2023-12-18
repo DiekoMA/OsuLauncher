@@ -15,7 +15,7 @@ public partial class MainWindow
         osuMemoryReader = new OsuMemoryReader();
         AutoUpdater.ExecutablePath = Path.Combine(Directory.GetCurrentDirectory(), "OsuLauncher.exe");
         AutoUpdater.SetOwner(this);
-        AutoUpdater.Start(AppSettings.Default.UpdateUrl);
+        AutoUpdater.Start(LauncherSettings.Default.UpdateUrl);
         VersionText.Text = Assembly.GetExecutingAssembly().GetName().Version.ToString();
         HomePage homePage = new HomePage();
         MainFrame.Content = homePage;
@@ -26,7 +26,7 @@ public partial class MainWindow
         {
             NumberHandling = JsonNumberHandling.AllowReadingFromString
         });
-        switch (AppSettings.Default.LaunchPreference)
+        switch (LauncherSettings.Default.LaunchPreference)
         {
             case "McOsu":
                 StartupPreferenceCB.SelectedIndex = 0;
@@ -42,9 +42,10 @@ public partial class MainWindow
         _clientId = config!.ClientId;
         _clientSecret = config.ClientSecret;
         PlayButton.Click += PlayButtonOnClick;
-        HomeNavButton.Selected += (sender, args) => MainFrame.Content = homePage;
-        SettingsNavButton.Selected += (sender, args) => MainFrame.Content = new SettingsPage();
-        AccountNavButton.Selected += (sender, args) =>
+        HomeNavButton.Click += (sender, args) => MainFrame.Content = homePage;
+        SettingsNavButton.Click += (sender, args) => MainFrame.Content = new SettingsPage();
+        OnlineBeatmapsNavButton.Click += (sender, args) => MainFrame.Content = new BeatmapExplorePage();
+        /*AccountNavButton.Click += (sender, args) =>
         {
             try
             {
@@ -55,8 +56,8 @@ public partial class MainWindow
             {
                 MessageBox.Show(e.Message);
             }
-        };
-        LocalBeatmapsNavButton.Selected += (sender, args) => MainFrame.Content = new LocalBeatmapsPage();
+        };*/
+        LocalBeatmapsNavButton.Click += (sender, args) => MainFrame.Content = new LocalBeatmapsPage();
     }
 
     private async void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
@@ -78,21 +79,15 @@ public partial class MainWindow
             }
             else
             {
-                UsernameText.Text = $"Player Name: Unavailable please log in";
-                PPRankText.Text = $"PP Count: Unavailable please log in";
-                AccuracyText.Text = $"Accuracy: Unavailable please log in";
-                LevelText.Text = $"Lv Unavailable please log in";
+                byte[] readEncryptedTokenResponse = File.ReadAllBytes("token.secret");
+                byte[] decryptedTokenResponse = ProtectedData.Unprotect(readEncryptedTokenResponse, null, DataProtectionScope.CurrentUser);
+                var decryptedAccesstoken = JsonSerializer.Deserialize<TokenResponse>(decryptedTokenResponse);
 
-                var tokenResponse = System.Text.Json.JsonSerializer.Deserialize<TokenResponse>(File.ReadAllText(ApiHelper.Instance.GetTokenLocation()), new JsonSerializerOptions
-                {
-                    NumberHandling = JsonNumberHandling.AllowReadingFromString
-                });
-
-                if (tokenResponse.AccessToken == string.Empty)
+                if (decryptedAccesstoken.AccessToken == string.Empty)
                 {
                     Growl.Info("Access token not found");
                 }
-                else
+                else if (await osuClient.ValidateToken(decryptedAccesstoken.AccessToken))
                 {
                     Growl.Info("Token Expired Please login");
                     await InitiateTokenRefresh();
@@ -103,10 +98,6 @@ public partial class MainWindow
         {
             var authedUser = await osuClient.GetAuthenticatedUserAsync();
             AvatarBlock.Source = new BitmapImage(new Uri(authedUser.AvatarUrl));
-            UsernameText.Text = $"Player Name: {authedUser?.Username}";
-            PPRankText.Text = $"PP Count: {authedUser?.UserStats.PP.ToString()}";
-            AccuracyText.Text = $"Accuracy: {authedUser?.UserStats.HitAccuracy}";
-            LevelText.Text = $"Lv {authedUser?.UserStats.Level.Current}";
         }
     }
 
@@ -116,22 +107,27 @@ public partial class MainWindow
         {
             using var client = new HttpClient();
             var request = new HttpRequestMessage(HttpMethod.Post, "https://osu.ppy.sh/oauth/token");
-            var token = File.ReadAllText(ApiHelper.Instance.GetTokenLocation());
-            TokenResponse tokenResponse = System.Text.Json.JsonSerializer.Deserialize<TokenResponse>(token, new JsonSerializerOptions
+            /*var token = File.ReadAllText(ApiHelper.Instance.GetTokenLocation());*/
+            /*TokenResponse tokenResponse = System.Text.Json.JsonSerializer.Deserialize<TokenResponse>(token, new JsonSerializerOptions
             {
                 NumberHandling = JsonNumberHandling.AllowReadingFromString,
-            });
+            });*/
+
+            byte[] readEncryptedTokenResponse = File.ReadAllBytes("token.secret");
+            byte[] decryptedTokenResponse = ProtectedData.Unprotect(readEncryptedTokenResponse, null, DataProtectionScope.CurrentUser);
+            var decryptedAccesstoken = JsonSerializer.Deserialize<TokenResponse>(decryptedTokenResponse);
+
             var formData = new Dictionary<string, string>
             {
                 { "client_id", _clientId },
                 { "client_secret", _clientSecret },
                 { "grant_type", "refresh_token" },
-                { "refresh_token", tokenResponse.RefreshToken },
+                { "refresh_token", decryptedAccesstoken.RefreshToken },
             };
 
             request.Content = new FormUrlEncodedContent(formData);
             var response = await client.SendAsync(request);
-
+            response.EnsureSuccessStatusCode();
             if (!response.IsSuccessStatusCode)
             {
                 throw new Exception("Failed to swap osu! API tokens.");
@@ -139,12 +135,22 @@ public partial class MainWindow
 
             var json = await response.Content.ReadAsStringAsync();
 
-            var tokenJson = System.Text.Json.JsonSerializer.Serialize<TokenResponse>(tokenResponse, new JsonSerializerOptions
+            /*var tokenJson = System.Text.Json.JsonSerializer.Serialize<TokenResponse>(tokenResponse, new JsonSerializerOptions
             {
                 NumberHandling = JsonNumberHandling.AllowReadingFromString,
                 WriteIndented = true,
-            });
-            await File.WriteAllTextAsync(Path.Combine(Directory.GetCurrentDirectory(), "token.secret"), tokenJson);
+            });*/
+
+            TokenResponse tokenResponse = System.Text.Json.JsonSerializer.Deserialize<TokenResponse>(response.Content.ReadAsStringAsync().Result, new JsonSerializerOptions
+            {
+                NumberHandling = JsonNumberHandling.AllowReadingFromString
+            }) ?? throw new InvalidOperationException();
+
+            var tokenResponseLocal = JsonSerializer.SerializeToUtf8Bytes(tokenResponse);
+            byte[] encryptedToken = ProtectedData.Protect(tokenResponseLocal, null, DataProtectionScope.CurrentUser);
+
+            File.WriteAllBytes("token.secret", encryptedToken);
+            //await File.WriteAllTextAsync(Path.Combine(Directory.GetCurrentDirectory(), "token.secret"), tokenJson);
             await RetrieveUserInfo();
         }
         catch (Exception e)
@@ -158,7 +164,7 @@ public partial class MainWindow
         switch (StartupPreferenceCB.SelectedIndex)
         {
             case 0:
-                if (string.IsNullOrEmpty(AppSettings.Default.TrainingClientDirectory))
+                if (string.IsNullOrEmpty(LauncherSettings.Default.TrainingClientDirectory))
                     Growl.Error("McOsu Game path is not set!");
 
                 Process[] mcOsuProcess = Process.GetProcessesByName("McEngine");
@@ -173,20 +179,19 @@ public partial class MainWindow
                 break;
 
             case 1:
-                if (string.IsNullOrEmpty(AppSettings.Default.GameDirectory))
+                if (string.IsNullOrEmpty(LauncherSettings.Default.GameDirectory))
                     Growl.Error("Osu Game path is not set!");
 
                 Process[] osuProcess = Process.GetProcessesByName("osu!");
                 if (osuProcess.Length != 0)
                     Growl.Info("There is already an instance of osu! running.");
 
-                Process.Start(Path.Combine(AppSettings.Default.GameDirectory, "osu!.exe"));
+                Process.Start(Path.Combine(LauncherSettings.Default.GameDirectory, "osu!.exe"));
                 Growl.Info("Launched");
                 var currentBeatmap = osuMemoryReader.GetCurrentBeatmap().Result;
                 Growl.Info(currentBeatmap.Beatmap.Id.ToString());
-                if (AppSettings.Default.UseCustomRPC)
+                if (LauncherSettings.Default.UseCustomRPC)
                 {
-
                     //await AppUtils.RPC.Start(currentBeatmap.Beatmap.Id.ToString());
                 }
                 break;
@@ -204,13 +209,13 @@ public partial class MainWindow
         switch (StartupPreferenceCB.SelectedIndex)
         {
             case 0:
-                AppSettings.Default.LaunchPreference = "McOsu";
-                AppSettings.Default.Save();
+                LauncherSettings.Default.LaunchPreference = "McOsu";
+                LauncherSettings.Default.Save();
                 break;
 
             case 1:
-                AppSettings.Default.LaunchPreference = "osu";
-                AppSettings.Default.Save();
+                LauncherSettings.Default.LaunchPreference = "osu";
+                LauncherSettings.Default.Save();
                 break;
         }
     }

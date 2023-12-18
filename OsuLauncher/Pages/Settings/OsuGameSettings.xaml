@@ -9,7 +9,6 @@
       MinHeight="450" MinWidth="800">
     <hc:ScrollViewer>
         <StackPanel>
-            <TextBlock Text="Osu Settings" FontWeight="Bold" Margin="3"/>
             <hc:ElementGroup Margin="4">
                 <TextBlock Text="Master Volume" VerticalAlignment="Center"/>
                 <Slider Name="MasterVolumeSlider" Maximum="100" />
@@ -53,28 +52,62 @@
             <!-- </hc:ElementGroup> -->
 
             <TextBlock Text="Keybindings" FontWeight="SemiBold" Margin="6"/>
-            <TextBlock Text="osu!" FontWeight="Regular" Margin="6"/>
-            <DockPanel Margin="4" LastChildFill="False">
+            
+            <TextBlock Text="osu!" FontWeight="Bold" Margin="6"/>
+            <hc:ElementGroup Margin="4">
                 <TextBlock Text="Left Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                <Button Name="LeftClickKeybindButton" Width="150" hc:BorderElement.CornerRadius="1" DockPanel.Dock="Right"/>
-            </DockPanel>
-            <DockPanel Margin="4" LastChildFill="False">
+                <Button Name="LeftClickKeybindButton" Width="150" hc:BorderElement.CornerRadius="1" HorizontalAlignment="Right"/>
+            </hc:ElementGroup>
+            <hc:ElementGroup Margin="4">
                 <TextBlock Text="Right Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                <Button Name="RightClickKeybindButton" Width="150" hc:BorderElement.CornerRadius="1" DockPanel.Dock="Right"/>
-            </DockPanel>
-            <DockPanel Margin="4" LastChildFill="False">
+                <Button Name="RightClickKeybindButton" Width="150" hc:BorderElement.CornerRadius="1" HorizontalAlignment="Right"/>
+            </hc:ElementGroup>
+            <hc:ElementGroup Margin="4">
                 <TextBlock Text="Smoke" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                <Button Name="SmokeKeybindButton" Width="150" hc:BorderElement.CornerRadius="1" DockPanel.Dock="Right"/>
-            </DockPanel>
-            <TextBlock Text="osu!Taiko" FontWeight="Regular" Margin="6"/>
-            <DockPanel Margin="4" LastChildFill="False">
-                <TextBlock Text="Left Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                <Button Name="TaikoLeftClickKeybindButton" Width="150" hc:BorderElement.CornerRadius="1" DockPanel.Dock="Right"/>
-            </DockPanel>
-            <DockPanel Margin="4" LastChildFill="False">
-                <TextBlock Text="Right Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                <Button Name="TaikoRightClickKeybindButton" Width="150" hc:BorderElement.CornerRadius="1" DockPanel.Dock="Right"/>
-            </DockPanel>
+                <Button Name="SmokeKeybindButton" Width="150" hc:BorderElement.CornerRadius="1" HorizontalAlignment="Right"/>
+            </hc:ElementGroup>
+            
+            <TextBlock Text="osu!taiko" FontWeight="Bold" Margin="6"/>
+            <hc:ElementGroup Margin="4" >
+                <TextBlock Text="Drum Centre (Left)" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <Button Name="TaikoDrumCentreLeftKeybindButton" Width="150" hc:BorderElement.CornerRadius="1" HorizontalAlignment="Right"/>
+            </hc:ElementGroup>
+            <hc:ElementGroup Margin="4">
+                <TextBlock Text="Drum Centre (Right)" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <Button Name="TaikoDrumCentreRightKeybindButton" Width="150" hc:BorderElement.CornerRadius="1" HorizontalAlignment="Right"/>
+            </hc:ElementGroup>
+            <hc:ElementGroup Margin="4">
+                <TextBlock Text="Drum Rim (Left)" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <Button Name="TaikoDrumRimLeftKeybindButton" Width="150" hc:BorderElement.CornerRadius="1" HorizontalAlignment="Right"/>
+            </hc:ElementGroup>
+            <hc:ElementGroup Margin="4">
+                <TextBlock Text="Drum Rim (Right)" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <Button Name="TaikoDrumRimRightKeybindButton" Width="150" hc:BorderElement.CornerRadius="1" HorizontalAlignment="Right"/>
+            </hc:ElementGroup>
+
+            <TextBlock Text="osu!catch" FontWeight="Bold" Margin="6"/>
+            <hc:ElementGroup Margin="4" >
+                <TextBlock Text="Move Left" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <Button Name="CatchMoveLeftKeybindButton" Width="150" hc:BorderElement.CornerRadius="1" HorizontalAlignment="Right"/>
+            </hc:ElementGroup>
+            <hc:ElementGroup Margin="4" >
+                <TextBlock Text="Move Right" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <Button Name="CatchMoveRightKeybindButton" Width="150" hc:BorderElement.CornerRadius="1" HorizontalAlignment="Right"/>
+            </hc:ElementGroup>
+            <hc:ElementGroup Margin="4" >
+                <TextBlock Text="Dash! (2x movement speed)" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <Button Name="DashKeybindButton" Width="150" hc:BorderElement.CornerRadius="1" HorizontalAlignment="Right"/>
+            </hc:ElementGroup>
+
+            <TextBlock Text="osu!mania" FontWeight="Bold" Margin="6"/>
+            <hc:ElementGroup Margin="4" >
+                <TextBlock Text="Increase Speed" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <Button Name="IncreaseSpeedKeybindButton" Width="150" hc:BorderElement.CornerRadius="1" HorizontalAlignment="Right"/>
+            </hc:ElementGroup>
+            <hc:ElementGroup Margin="4" >
+                <TextBlock Text="Decrease Speed" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <Button Name="DecreaseSpeedKeybindButtonKeybindButton" Width="150" hc:BorderElement.CornerRadius="1" HorizontalAlignment="Right"/>
+            </hc:ElementGroup>
         </StackPanel>
     </hc:ScrollViewer>
 </UserControl>

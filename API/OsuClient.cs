@@ -1,5 +1,6 @@
 ﻿using System.Net.Http.Headers;
 using API.Objects;
+using System.Net;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -7,10 +8,12 @@ namespace API;
 
 public class OsuClient
 {
+    private bool tokenValid;
     private string _token;
     public bool IsAuthenticated { get; private set; }
     private HttpClient _client;
     private readonly string baseUrl = "https://osu.ppy.sh/api";
+    private JsonSerializerOptions serializerOptions;
 
     /// <summary>
     /// Instantiate without a token to use Non OAUTH Methods.
@@ -19,6 +22,36 @@ public class OsuClient
     public OsuClient()
     {
         _client = new HttpClient();
+        serializerOptions = new JsonSerializerOptions
+        {
+            AllowTrailingCommas = true,
+            PropertyNameCaseInsensitive = true,
+        };
+    }
+
+    public async Task<bool> ValidateToken(string token) 
+    {
+        var request = new HttpRequestMessage
+        {
+            Method = HttpMethod.Get,
+            RequestUri = new Uri($"{baseUrl}/v2/news"),
+            Headers =
+            {
+                { "Accept", "application/json" }
+            },
+        };
+
+        using var response = await _client.SendAsync(request);
+        response.EnsureSuccessStatusCode();
+        if (response.StatusCode == HttpStatusCode.OK)
+        {
+            tokenValid = true;
+        }
+        else
+        {
+            tokenValid = false;
+        }
+        return tokenValid;
     }
 
     public async Task<bool> TryAuthenticateAsync(string token)

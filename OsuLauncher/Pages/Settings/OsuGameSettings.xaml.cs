@@ -6,10 +6,10 @@ public partial class OsuGameSettings
     public OsuGameSettings()
     {
         InitializeComponent();
-        var osuCfg = Path.Combine(AppSettings.Default.GameDirectory,
+        var osuCfg = Path.Combine(LauncherSettings.Default.GameDirectory,
                 $"osu!.{Environment.UserName}.cfg");
         _configHelper = new OsuConfigHelper(osuCfg);
-        if (AppSettings.Default.GameDirectory != string.Empty)
+        if (LauncherSettings.Default.GameDirectory != string.Empty)
         {
             try
             {
@@ -35,6 +35,15 @@ public partial class OsuGameSettings
                 LeftClickKeybindButton.Click += LeftClickKeybindButtonOnClick;
                 RightClickKeybindButton.Click += RightClickKeybindButtonOnClick;
                 SmokeKeybindButton.Click += SmokeKeybindButtonOnClick;
+                TaikoDrumCentreLeftKeybindButton.Click += TaikoDrumCentreLeftKeybindButton_Click;
+                TaikoDrumCentreRightKeybindButton.Click += TaikoDrumCentreRightKeybindButton_Click;
+                TaikoDrumRimLeftKeybindButton.Click += TaikoDrumRimLeftKeybindButton_Click;
+                TaikoDrumRimRightKeybindButton.Click += TaikoDrumRimRightKeybindButton_Click;
+                CatchMoveLeftKeybindButton.Click += CatchMoveLeftKeybindButton_Click;
+                CatchMoveRightKeybindButton.Click += CatchMoveRightKeybindButton_Click;
+                DashKeybindButton.Click += DashKeybindButton_Click;
+                IncreaseSpeedKeybindButton.Click += IncreaseSpeedKeybindButton_Click;
+                DecreaseSpeedKeybindButtonKeybindButton.Click += DecreaseSpeedKeybindButtonKeybindButton_Click;
                 MouseSpeedBox.ValueChanged += (sender, args) =>
                     _configHelper.EditValue("MouseSpeed", args.Info.ToString());
                 CurrentSkinText.Text = _configHelper.ReadString("Skin");
@@ -45,6 +54,15 @@ public partial class OsuGameSettings
                 LeftClickKeybindButton.Content = _configHelper.ReadString("keyOsuLeft");
                 RightClickKeybindButton.Content = _configHelper.ReadString("keyOsuRight");
                 SmokeKeybindButton.Content = _configHelper.ReadString("keyOsuSmoke");
+                TaikoDrumCentreLeftKeybindButton.Content = _configHelper.ReadString("keyTaikoInnerLeft");
+                TaikoDrumCentreRightKeybindButton.Content = _configHelper.ReadString("keyTaikoInnerRight");
+                TaikoDrumRimLeftKeybindButton.Content = _configHelper.ReadString("keyTaikoOuterLeft");
+                TaikoDrumRimRightKeybindButton.Content = _configHelper.ReadString("keyTaikoOuterRight");
+                CatchMoveLeftKeybindButton.Content = _configHelper.ReadString("keyFruitsLeft");
+                CatchMoveRightKeybindButton.Content = _configHelper.ReadString("keyFruitsRight");
+                DashKeybindButton.Content = _configHelper.ReadString("keyFruitsDash");
+                IncreaseSpeedKeybindButton.Content = _configHelper.ReadString("keyIncreaseSpeed");
+                DecreaseSpeedKeybindButtonKeybindButton.Content = _configHelper.ReadString("keyDecreaseSpeed");
                 if (_configHelper.ReadInt("MouseDisableButtons") != 0)
                     DisableMouseWheelCB.IsChecked = true;
                 if (_configHelper.ReadInt("MouseDisableWheel") != 0)
@@ -65,6 +83,46 @@ public partial class OsuGameSettings
         {
             Growl.Error("Please remember to set your game path.");
         }
+    }
+
+    private void DecreaseSpeedKeybindButtonKeybindButton_Click(object sender, RoutedEventArgs e)
+    {
+        KeySelectDialog keySelectDialog = new KeySelectDialog();
+        keySelectDialog.ShowDialog();
+        SmokeKeybindButton.Content = keySelectDialog.newKey;
+        _configHelper.EditValue("keyDecreaseSpeed", keySelectDialog.newKey.ToString());
+    }
+
+    private void IncreaseSpeedKeybindButton_Click(object sender, RoutedEventArgs e)
+    {
+        KeySelectDialog keySelectDialog = new KeySelectDialog();
+        keySelectDialog.ShowDialog();
+        SmokeKeybindButton.Content = keySelectDialog.newKey;
+        _configHelper.EditValue("keyIncreaseSpeed", keySelectDialog.newKey.ToString());
+    }
+
+    private void DashKeybindButton_Click(object sender, RoutedEventArgs e)
+    {
+        KeySelectDialog keySelectDialog = new KeySelectDialog();
+        keySelectDialog.ShowDialog();
+        SmokeKeybindButton.Content = keySelectDialog.newKey;
+        _configHelper.EditValue("keyFruitsDash", keySelectDialog.newKey.ToString());
+    }
+
+    private void CatchMoveRightKeybindButton_Click(object sender, RoutedEventArgs e)
+    {
+        KeySelectDialog keySelectDialog = new KeySelectDialog();
+        keySelectDialog.ShowDialog();
+        SmokeKeybindButton.Content = keySelectDialog.newKey;
+        _configHelper.EditValue("keyFruitsRight", keySelectDialog.newKey.ToString());
+    }
+
+    private void CatchMoveLeftKeybindButton_Click(object sender, RoutedEventArgs e)
+    {
+        KeySelectDialog keySelectDialog = new KeySelectDialog();
+        keySelectDialog.ShowDialog();
+        SmokeKeybindButton.Content = keySelectDialog.newKey;
+        _configHelper.EditValue("keyFruitsLeft", keySelectDialog.newKey.ToString());
     }
 
     private void SkinCBOnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -94,6 +152,38 @@ public partial class OsuGameSettings
         keySelectDialog.ShowDialog();
         LeftClickKeybindButton.Content = keySelectDialog.newKey;
         _configHelper.EditValue("keyOsuLeft", keySelectDialog.newKey.ToString());
+    }
+
+    private void TaikoDrumRimRightKeybindButton_Click(object sender, RoutedEventArgs e)
+    {
+        KeySelectDialog keySelectDialog = new KeySelectDialog();
+        keySelectDialog.ShowDialog();
+        TaikoDrumRimRightKeybindButton.Content = keySelectDialog.newKey;
+        _configHelper.EditValue("keyTaikoOuterRight", keySelectDialog.newKey.ToString());
+    }
+
+    private void TaikoDrumRimLeftKeybindButton_Click(object sender, RoutedEventArgs e)
+    {
+        KeySelectDialog keySelectDialog = new KeySelectDialog();
+        keySelectDialog.ShowDialog();
+        TaikoDrumRimLeftKeybindButton.Content = keySelectDialog.newKey;
+        _configHelper.EditValue("keyTaikoOuterLeft", keySelectDialog.newKey.ToString());
+    }
+
+    private void TaikoDrumCentreRightKeybindButton_Click(object sender, RoutedEventArgs e)
+    {
+        KeySelectDialog keySelectDialog = new KeySelectDialog();
+        keySelectDialog.ShowDialog();
+        TaikoDrumCentreRightKeybindButton.Content = keySelectDialog.newKey;
+        _configHelper.EditValue("keyTaikoInnerRight", keySelectDialog.newKey.ToString());
+    }
+
+    private void TaikoDrumCentreLeftKeybindButton_Click(object sender, RoutedEventArgs e)
+    {
+        KeySelectDialog keySelectDialog = new KeySelectDialog();
+        keySelectDialog.ShowDialog();
+        TaikoDrumCentreLeftKeybindButton.Content = keySelectDialog.newKey;
+        _configHelper.EditValue("keyTaikoInnerLeft", keySelectDialog.newKey.ToString());
     }
 
     private void MusicVolumeSliderOnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
