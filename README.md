@@ -1,4 +1,4 @@
-<h1 align="center">Osu Launcher</h2>
+<h1 align="center">Osu Launcher - This project is being rebuilt from the ground up, it may take a while</h2>
 <h3 align="center">A fully featured launcher for Osu!</h3>
 
 <p align="center">
