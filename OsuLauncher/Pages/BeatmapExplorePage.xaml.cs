@@ -6,9 +6,12 @@
 public partial class BeatmapExplorePage : Page
 {
     BeatmapClient beatmapClient;
+    BeatmapSet currentDownloadingBeatmap;
+    List<BeatmapDownload> beatmapQueue;
     public BeatmapExplorePage()
     {
         InitializeComponent();
+        beatmapQueue = new List<BeatmapDownload>();
     }
 
     private async void SearchBar_SearchStarted(object sender, HandyControl.Data.FunctionEventArgs<string> e)
@@ -25,21 +28,36 @@ public partial class BeatmapExplorePage : Page
 
     private async void BeatmapList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
-        var selectedBeatmap = (BeatmapSet)BeatmapList.SelectedItem;
-
-        var downloadOpt = new DownloadConfiguration()
+        if (BeatmapList.SelectedItem != null)
         {
-            ChunkCount = 8, // file parts to download, default value is 1
-            ParallelDownload = true // download parts of file as parallel or not. Default value is false
-        };
+            if (beatmapQueue == null)
+            {
+                beatmapQueue = new List<BeatmapDownload>();
+            }
 
-        var downloader = new DownloadService(downloadOpt);
+            var selectedBeatmap = (BeatmapSet)BeatmapList.SelectedItem;
+            BeatmapDownload beatmapDownload = new BeatmapDownload();
+            beatmapDownload.Title = selectedBeatmap.Title;
+            QueueList.DataContext = new BeatmapDownload();
+            QueueList.Items.Add(beatmapDownload);
 
-        string file = Path.Combine("C:\\Users\\Mayowa\\Downloads\\test", $"{selectedBeatmap.Id} {selectedBeatmap.Artist} - {selectedBeatmap.Title}.osz");
-        string url = $"https://chimu.moe/d/{selectedBeatmap.Id}";
-        await downloader.DownloadFileTaskAsync(url, file);
+            var downloadOpt = new DownloadConfiguration()
+            {
+                ChunkCount = 1, // file parts to download, default value is 1
+                ParallelDownload = true // download parts of file as parallel or not. Default value is false
+            };
 
-        
-        Growl.Info(selectedBeatmap.Title);
+            var downloader = new DownloadService(downloadOpt);
+            string file = Path.Combine("C:\\Users\\Mayowa\\Documents\\test", $"{selectedBeatmap.Id} {selectedBeatmap.Artist} - {selectedBeatmap.Title}.osz");
+            string url = $"https://chimu.moe/d/{selectedBeatmap.Id}";
+            await downloader.DownloadFileTaskAsync(url, file);
+        }
+
+    }
+
+    public class BeatmapDownload
+    {
+        public string Title { get; set; }
+        public int Progress { get; set; }
     }
 }

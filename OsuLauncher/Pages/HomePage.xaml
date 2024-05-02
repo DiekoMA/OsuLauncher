@@ -8,37 +8,5 @@
       mc:Ignorable="d"
       Loaded="HomePage_OnLoaded"
       MinHeight="450" MinWidth="800">
-    <DockPanel>
-        <ListBox Name="NewsBox">
-            <ListBox.Style>
-                <Style 
-                       TargetType="ListBox"
-                       BasedOn="{StaticResource {x:Type ListBox}}">
-                    <Style.Triggers>
-                        <Trigger Property="HasItems" Value="False">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate>
-                                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="30">No News to display or the Api is down</TextBlock>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </ListBox.Style>
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Vertical">
-                        <Image Source="{Binding FirstImageUrl}" MinHeight="35" MinWidth="50"/>
-                        <StackPanel>
-                            <TextBlock Text="{Binding Title}"/>
-                            <TextBlock Text="{Binding Author, StringFormat='By {0}'}"/>
-                            <TextBlock Text="{Binding PublishedAt, StringFormat='Published at {0}'}"/>
-                        </StackPanel>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-    </DockPanel>
+    
 </Page>

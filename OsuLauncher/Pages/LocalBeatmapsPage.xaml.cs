@@ -24,18 +24,6 @@ public partial class LocalBeatmapsPage : Page
         {
             
         };
-        /*DirectoryInfo songsDirectory = new DirectoryInfo(LauncherSettings.Default.SongsDirectory);
-        List<string> fileNames = new List<string>();
-        List<string> cleanedNames = new List<string>();
-        string pattern = @"^\d+\s";
-        foreach (var fileName in songsDirectory.GetDirectories())
-        {
-            string cleanedName = Regex.Replace(fileName.Name, pattern, "");
-            cleanedNames.Add(cleanedName);
-        }
-        
-        SongsList.ItemsSource = cleanedNames;
-        SongsList.Items.Filter = FilterResults;*/
     }
     private bool FilterResults(object obj)
     {

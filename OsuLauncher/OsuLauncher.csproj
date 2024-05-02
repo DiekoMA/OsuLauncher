@@ -16,6 +16,7 @@
     <ItemGroup>
       <PackageReference Include="Autoupdater.NET.Official" Version="1.8.2" />
       <PackageReference Include="CollectionManager" Version="1.0.9" />
+      <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
       <PackageReference Include="DiscordRichPresence" Version="1.2.1.24" />
       <PackageReference Include="Downloader" Version="3.0.4" />
       <PackageReference Include="HandyControls" Version="3.4.5" />
@@ -39,6 +40,23 @@
 
     <ItemGroup>
       <Page Update="Pages\AccountPage.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+      <Page Update="MVVM\Views\HomeView.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
+      <Page Update="MVVM\Views\BeatmapsView.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
+      <Page Update="MVVM\Views\SettingsView.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
+      <Page Update="MVVM\Views\CollectionsView.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
+      <Page Update="MVVM\Views\MainWindow.xaml">
         <Generator>MSBuild:Compile</Generator>
         <XamlRuntime>Wpf</XamlRuntime>
         <SubType>Designer</SubType>
@@ -67,6 +85,10 @@
         <Generator>SettingsSingleFileGenerator</Generator>
         <LastGenOutput>LauncherSettings.Designer.cs</LastGenOutput>
       </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="MVVM\" />
     </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace API.Objects;
@@ -36,5 +37,5 @@ public class NewsPost
 public class NewsResponse
 {
     [JsonPropertyName("news_posts")]
-    public List<NewsPost>? Data { get; set; }
+    public ObservableCollection<NewsPost>? Data { get; set; }
 }

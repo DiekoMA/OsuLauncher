@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Headers;
+﻿using System.Collections.ObjectModel;
+using System.Net.Http.Headers;
 using API.Objects;
 using System.Net;
 using System.Text.Json;
@@ -74,7 +75,7 @@ public class OsuClient
     /// Does not require Authentication
     /// </summary>
     /// <returns></returns>
-    public async Task<List<NewsPost>?> GetNewsListingsAsync()
+    public async Task<ObservableCollection<NewsPost>?> GetNewsListingsAsync()
     {
         var request = new HttpRequestMessage
         {

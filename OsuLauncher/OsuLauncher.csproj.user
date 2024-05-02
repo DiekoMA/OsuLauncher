@@ -13,9 +13,6 @@
     <Compile Update="Pages\Settings\BackupSettings.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pages\Settings\OptimisationSettings.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Pages\Settings\RichPresenceSettings.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -28,9 +25,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\Settings\BackupSettings.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Pages\Settings\OptimisationSettings.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\Settings\RichPresenceSettings.xaml">

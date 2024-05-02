@@ -68,7 +68,7 @@ public static class AppUtils
     {
         public static async Task Start(string state)
         {
-            rpcClient = new DiscordRpcClient(AppSettings.Default.RichPresenceClientId);
+            rpcClient = new DiscordRpcClient(LauncherSettings.Default.RichPresenceClientId);
             rpcClient.Initialize();
             rpcClient.SetPresence(new RichPresence()
             {
@@ -85,8 +85,8 @@ public static class AppUtils
 
         public static async Task Stop()
         {
-            if (rpcClient.IsInitialized && !rpcClient.IsDisposed)
-                rpcClient.Dispose();
+            /*if (rpcClient.IsInitialized && !rpcClient.IsDisposed)
+                rpcClient.Dispose();*/
         }
     }
 }

@@ -7,7 +7,6 @@ global using OsuLauncher.Models;
 global using OsuLauncher.Helpers;
 global using OsuLauncher.Dialogs;
 global using OsuLauncher.Properties;
-global using OsuLauncher.Pages.Settings;
 
 //Native Dependencies
 global using System;
@@ -48,6 +47,8 @@ global using Window = HandyControl.Controls.Window;
 global using Microsoft.Extensions.Configuration;
 global using Configuration = SharpConfig.Configuration;
 global using Downloader;
+global using CommunityToolkit.Mvvm;
+global using CommunityToolkit.Mvvm.ComponentModel;
 /*global using OsuMemoryReader = OsuMemoryDataProvider;
 global using OsuMemoryDataProvider.OsuMemoryModels;
 global using OsuMemoryDataProvider.OsuMemoryModels.Direct;*/

@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:OsuLauncher"
              xmlns:hc="https://handyorg.github.io/handycontrol"
-             StartupUri="MainWindow.xaml" >
+             xmlns:viewModels="clr-namespace:OsuLauncher.ViewModels"
+             xmlns:views="clr-namespace:OsuLauncher.Views">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -12,6 +13,15 @@
                 <!-- Other merged dictionaries here -->
             </ResourceDictionary.MergedDictionaries>
             <!-- Other app resources here -->
+            <DataTemplate DataType="{x:Type viewModels:HomeViewModel}">
+                <views:HomeView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:BeatmapViewModel}">
+                <views:BeatmapsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:SettingsViewModel}">
+                <views:SettingsView/>
+            </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

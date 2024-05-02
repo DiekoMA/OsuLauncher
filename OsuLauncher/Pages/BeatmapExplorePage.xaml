@@ -17,13 +17,48 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5">
-            <hc:SearchBar Name="SearchBox" MinWidth="740" hc:BorderElement.CornerRadius="1" HorizontalAlignment="Left" SearchStarted="SearchBar_SearchStarted" Margin="5"/>
-            <Button Width="50" Height="50" HorizontalAlignment="Right" hc:BorderElement.CornerRadius="1" Margin="5"> 
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Stretch">
+            <hc:SearchBar Name="SearchBox" MinWidth="740" hc:InfoElement.Placeholder="Ascension To Heaven" hc:BorderElement.CornerRadius="1" HorizontalAlignment="Stretch" SearchStarted="SearchBar_SearchStarted" Margin="5"/>
+            <Button Width="50" Height="50" HorizontalAlignment="Right" hc:BorderElement.CornerRadius="1" Style="{StaticResource ButtonCustom}"> 
                 <iconPacks:PackIconControl Kind="{x:Static iconPacks:PackIconMaterialKind.Filter}"/>
             </Button>
+            <ToggleButton Name="DownloadListButton" Width="50" Height="50" HorizontalAlignment="Right" hc:BorderElement.CornerRadius="1">
+                <iconPacks:PackIconControl Kind="{x:Static iconPacks:PackIconMaterialKind.Download}"/>
+            </ToggleButton>
         </StackPanel>
 
+        <Popup Name="DownloadsPopup" PlacementTarget="{Binding ElementName=DownloadListButton}" IsOpen="{Binding IsChecked, ElementName=DownloadListButton}" hc:BorderElement.CornerRadius="1">
+            <ListBox Name="QueueList" hc:BorderElement.CornerRadius="1" Width="340">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBoxItem">
+                                    <ContentPresenter />
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <hc:ElementGroup Orientation="Vertical">
+                            <hc:ElementGroup Orientation="Horizontal">
+                                <TextBlock Text="{Binding Title}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="3"/>
+                                <Button Width="50" Height="50" hc:BorderElement.CornerRadius="1" Style="{StaticResource ButtonCustom}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="3">
+                                    <iconPacks:PackIconControl Kind="{x:Static iconPacks:PackIconMaterialKind.Pause}"/>
+                                </Button>
+                                <Button Width="50" Height="50" hc:BorderElement.CornerRadius="1" Style="{StaticResource ButtonCustom}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="3">
+                                    <iconPacks:PackIconControl Kind="{x:Static iconPacks:PackIconMaterialKind.Cancel}"/>
+                                </Button>
+                            </hc:ElementGroup>
+                            <ProgressBar Value="{Binding Progress}" Tag="{Binding Progress}" hc:BorderElement.CornerRadius="1"/>
+                        </hc:ElementGroup>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Popup>
+        
         <ListBox Name="BeatmapList" Grid.Row="1" Grid.Column="1">
             <ListBox.ItemTemplate>
                 <DataTemplate>

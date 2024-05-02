@@ -13,12 +13,6 @@ public partial class MainWindow
     {
         InitializeComponent();
         osuMemoryReader = new OsuMemoryReader();
-        AutoUpdater.ExecutablePath = Path.Combine(Directory.GetCurrentDirectory(), "OsuLauncher.exe");
-        AutoUpdater.SetOwner(this);
-        AutoUpdater.Start(LauncherSettings.Default.UpdateUrl);
-        VersionText.Text = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-        HomePage homePage = new HomePage();
-        MainFrame.Content = homePage;
         var assembly = Assembly.GetExecutingAssembly();
         using var stream = assembly.GetManifestResourceStream("OsuLauncher.appsettings.json");
         using var reader = new StreamReader(stream!);
@@ -26,7 +20,7 @@ public partial class MainWindow
         {
             NumberHandling = JsonNumberHandling.AllowReadingFromString
         });
-        switch (LauncherSettings.Default.LaunchPreference)
+        /*switch (LauncherSettings.Default.LaunchPreference)
         {
             case "McOsu":
                 StartupPreferenceCB.SelectedIndex = 0;
@@ -38,13 +32,10 @@ public partial class MainWindow
             default:
                 StartupPreferenceCB.SelectedIndex = 1;
                 break;
-        }
-        _clientId = config!.ClientId;
-        _clientSecret = config.ClientSecret;
-        PlayButton.Click += PlayButtonOnClick;
-        HomeNavButton.Click += (sender, args) => MainFrame.Content = homePage;
-        SettingsNavButton.Click += (sender, args) => MainFrame.Content = new SettingsPage();
-        OnlineBeatmapsNavButton.Click += (sender, args) => MainFrame.Content = new BeatmapExplorePage();
+        }*/
+        /*HomeNavButton.Click += (sender, args) => MainFrame.Navigate(new Uri("Pages/HomePage.xaml", UriKind.RelativeOrAbsolute));
+        SettingsNavButton.Click += (sender, args) => MainFrame.Navigate(new Uri("Pages/SettingsPage.xaml", UriKind.RelativeOrAbsolute));
+        OnlineBeatmapsNavButton.Click += (sender, args) => MainFrame.Navigate(new Uri("Pages/BeatmapExplorePage.xaml", UriKind.RelativeOrAbsolute));*/
         /*AccountNavButton.Click += (sender, args) =>
         {
             try
@@ -57,16 +48,16 @@ public partial class MainWindow
                 MessageBox.Show(e.Message);
             }
         };*/
-        LocalBeatmapsNavButton.Click += (sender, args) => MainFrame.Content = new LocalBeatmapsPage();
+        //LocalBeatmapsNavButton.Click += (sender, args) => MainFrame.Content = new LocalBeatmapsPage();
     }
 
     private async void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
     {
-        osuClient = await ApiHelper.Instance.RetrieveClient();
+        /*osuClient = await ApiHelper.Instance.RetrieveClient();
         if (!osuClient.IsAuthenticated)
             await InitiateTokenRefresh();
 
-        await RetrieveUserInfo();
+        await RetrieveUserInfo();*/
     }
 
     public async Task RetrieveUserInfo()
@@ -97,7 +88,7 @@ public partial class MainWindow
         else
         {
             var authedUser = await osuClient.GetAuthenticatedUserAsync();
-            AvatarBlock.Source = new BitmapImage(new Uri(authedUser.AvatarUrl));
+            //AvatarBlock.Source = new BitmapImage(new Uri(authedUser.AvatarUrl));
         }
     }
 
@@ -161,7 +152,7 @@ public partial class MainWindow
 
     private async void PlayButtonOnClick(object sender, RoutedEventArgs e)
     {
-        switch (StartupPreferenceCB.SelectedIndex)
+        /*switch (StartupPreferenceCB.SelectedIndex)
         {
             case 0:
                 if (string.IsNullOrEmpty(LauncherSettings.Default.TrainingClientDirectory))
@@ -195,28 +186,12 @@ public partial class MainWindow
                     //await AppUtils.RPC.Start(currentBeatmap.Beatmap.Id.ToString());
                 }
                 break;
-        }
+        }*/
     }
 
     private async void MainWindow_OnClosing(object? sender, CancelEventArgs e)
     {
         await AppUtils.RPC.Stop();
         Log.CloseAndFlush();
-    }
-
-    private void StartupPreferenceCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        switch (StartupPreferenceCB.SelectedIndex)
-        {
-            case 0:
-                LauncherSettings.Default.LaunchPreference = "McOsu";
-                LauncherSettings.Default.Save();
-                break;
-
-            case 1:
-                LauncherSettings.Default.LaunchPreference = "osu";
-                LauncherSettings.Default.Save();
-                break;
-        }
     }
 }

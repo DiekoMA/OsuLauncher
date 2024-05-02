@@ -3,11 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:local="clr-namespace:OsuLauncher"
         mc:Ignorable="d"
         Loaded="MainWindow_OnLoaded"
         xmlns:hc="https://handyorg.github.io/handycontrol"
+        xmlns:views="clr-namespace:OsuLauncher.Views"
+        xmlns:vm="clr-namespace:OsuLauncher.ViewModels"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         WindowStartupLocation="CenterScreen"
         Closing="MainWindow_OnClosing"
         hc:BorderElement.CornerRadius="1"
@@ -28,7 +30,7 @@
 
         <StackPanel Grid.Column="0">
             <Image Source="{Binding AvatarUrl}" Margin="0,0,4,0" Name="AvatarBlock" HorizontalAlignment="Center" MinWidth="50" MaxHeight="50"/>
-            <Button Name="HomeNavButton" MinWidth="135" MinHeight="40" HorizontalContentAlignment="Left" hc:BorderElement.CornerRadius="1" Margin="3">
+            <Button Command="{Binding NavigateToHomeCommand}" MinWidth="135" MinHeight="40" HorizontalContentAlignment="Left" hc:BorderElement.CornerRadius="1" Margin="3">
                 <hc:ElementGroup Orientation="Horizontal" Layout="Stack" HorizontalAlignment="Left">
                     <iconPacks:PackIconControl Kind="{x:Static iconPacks:PackIconMaterialKind.Home}" HorizontalAlignment="Left" Margin="4"/>
                     <TextBlock Text="Home" VerticalAlignment="Center"/>
@@ -40,19 +42,19 @@
                     <TextBlock Text="Notifications" VerticalAlignment="Center"/>
                 </hc:ElementGroup>
             </Button>
-            <Button Name="LocalBeatmapsNavButton" MinWidth="135" MinHeight="40" HorizontalContentAlignment="Left" hc:BorderElement.CornerRadius="1" Margin="3">
+            <Button Command="{Binding NavigateToSettingsCommand}" MinWidth="135" MinHeight="40" HorizontalContentAlignment="Left" hc:BorderElement.CornerRadius="1" Margin="3">
                 <hc:ElementGroup Orientation="Horizontal" Layout="Stack">
                     <iconPacks:PackIconControl Kind="{x:Static iconPacks:PackIconMaterialKind.Library}" HorizontalAlignment="Left" Margin="4"/>
                     <TextBlock Text="My Collection" VerticalAlignment="Center"/>
                 </hc:ElementGroup>
             </Button>
-            <Button Name="OnlineBeatmapsNavButton" MinWidth="135" MinHeight="40" HorizontalContentAlignment="Left" hc:BorderElement.CornerRadius="1" Margin="3">
+            <Button Command="{Binding NavigateToBeatmapsCommand}" MinWidth="135" MinHeight="40" HorizontalContentAlignment="Left" hc:BorderElement.CornerRadius="1" Margin="3">
                 <hc:ElementGroup Orientation="Horizontal" Layout="Stack">
                     <iconPacks:PackIconControl Kind="{x:Static iconPacks:PackIconMaterialKind.Download}" HorizontalAlignment="Left" Margin="4"/>
                     <TextBlock Text="Beatmaps" VerticalAlignment="Center"/>
                 </hc:ElementGroup>
             </Button>
-            <Button Name="SettingsNavButton" MinWidth="135" MinHeight="40" HorizontalContentAlignment="Left" hc:BorderElement.CornerRadius="1" Margin="3">
+            <Button Command="{Binding NavigateToSettingsCommand}" MinWidth="135" MinHeight="40" HorizontalContentAlignment="Left" hc:BorderElement.CornerRadius="1" Margin="3">
                 <hc:ElementGroup Orientation="Horizontal" Layout="Stack" HorizontalAlignment="Left">
                     <iconPacks:PackIconControl Kind="{x:Static iconPacks:PackIconMaterialKind.Cog}" HorizontalAlignment="Left" Margin="4"/>
                     <TextBlock Text="Settings" VerticalAlignment="Center"/>
@@ -67,15 +69,16 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="75"/>
             </Grid.RowDefinitions>
-            <Frame Name="MainFrame" hc:BorderElement.CornerRadius="0" Grid.Row="0" NavigationUIVisibility="Hidden"/>
+            
 
+            <ContentControl Content="{Binding Navigation.CurrentView}" Grid.Row="0"/>
             <StackPanel Orientation="Horizontal" Grid.Row="1">
                 <StackPanel Orientation="Vertical">
-                    <ComboBox Name="StartupPreferenceCB" SelectionChanged="StartupPreferenceCB_SelectionChanged" Height="25" MinWidth="50" VerticalAlignment="Bottom" Margin="4,0,1,0" hc:BorderElement.CornerRadius="1">
+                    <ComboBox Name="StartupPreferenceCB" SelectedItem="{Binding SelectedStartupMode}" Height="25" MinWidth="50" VerticalAlignment="Bottom" Margin="4,0,1,0" hc:BorderElement.CornerRadius="1">
                         <ComboBoxItem Content="McOsu"/>
                         <ComboBoxItem Content="osu!"/>
                     </ComboBox>
-                    <Button Name="PlayButton" Content="Play" Foreground="White" Background="#eb69a3" HorizontalAlignment="Left" MinHeight="50" Width="100" hc:BorderElement.CornerRadius="0" Margin="4,0,1,0"/>
+                    <Button Name="PlayButton" IsEnabled="{Binding CanLaunch}" Content="Play" Foreground="White" Background="#eb69a3" HorizontalAlignment="Left" MinHeight="50" Width="100" hc:BorderElement.CornerRadius="0" Margin="4,0,1,0"/>
                 </StackPanel>
             </StackPanel>
         </Grid>
