@@ -12,7 +12,7 @@
     </UserControl.DataContext>
     
     <DockPanel>
-        <ListBox Name="NewsBox">
+        <ListBox Name="NewsBox" ItemsSource="{Binding NewsPosts}">
             <ListBox.Style>
                 <Style 
                     TargetType="ListBox"

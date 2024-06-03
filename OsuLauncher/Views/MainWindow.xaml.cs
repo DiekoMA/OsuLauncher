@@ -5,22 +5,11 @@
 /// </summary>
 public partial class MainWindow
 {
-    private readonly string _clientId;
-    private readonly string _clientSecret;
-    private OsuMemoryReader osuMemoryReader;
-    private OsuClient osuClient;
     public MainWindow()
     {
         InitializeComponent();
-        osuMemoryReader = new OsuMemoryReader();
-        var assembly = Assembly.GetExecutingAssembly();
-        using var stream = assembly.GetManifestResourceStream("OsuLauncher.appsettings.json");
-        using var reader = new StreamReader(stream!);
-        var config = System.Text.Json.JsonSerializer.Deserialize<SecretsConfiguration>(reader.ReadToEnd(), new JsonSerializerOptions
-        {
-            NumberHandling = JsonNumberHandling.AllowReadingFromString
-        });
-        /*switch (LauncherSettings.Default.LaunchPreference)
+
+        /*/*switch (LauncherSettings.Default.LaunchPreference)
         {
             case "McOsu":
                 StartupPreferenceCB.SelectedIndex = 0;
@@ -32,10 +21,10 @@ public partial class MainWindow
             default:
                 StartupPreferenceCB.SelectedIndex = 1;
                 break;
-        }*/
+        }#1#
         /*HomeNavButton.Click += (sender, args) => MainFrame.Navigate(new Uri("Pages/HomePage.xaml", UriKind.RelativeOrAbsolute));
         SettingsNavButton.Click += (sender, args) => MainFrame.Navigate(new Uri("Pages/SettingsPage.xaml", UriKind.RelativeOrAbsolute));
-        OnlineBeatmapsNavButton.Click += (sender, args) => MainFrame.Navigate(new Uri("Pages/BeatmapExplorePage.xaml", UriKind.RelativeOrAbsolute));*/
+        OnlineBeatmapsNavButton.Click += (sender, args) => MainFrame.Navigate(new Uri("Pages/BeatmapExplorePage.xaml", UriKind.RelativeOrAbsolute));#1#
         /*AccountNavButton.Click += (sender, args) =>
         {
             try
@@ -47,7 +36,7 @@ public partial class MainWindow
             {
                 MessageBox.Show(e.Message);
             }
-        };*/
+        };#1#
         //LocalBeatmapsNavButton.Click += (sender, args) => MainFrame.Content = new LocalBeatmapsPage();
     }
 
@@ -57,7 +46,7 @@ public partial class MainWindow
         if (!osuClient.IsAuthenticated)
             await InitiateTokenRefresh();
 
-        await RetrieveUserInfo();*/
+        await RetrieveUserInfo();#1#
     }
 
     public async Task RetrieveUserInfo()
@@ -98,11 +87,11 @@ public partial class MainWindow
         {
             using var client = new HttpClient();
             var request = new HttpRequestMessage(HttpMethod.Post, "https://osu.ppy.sh/oauth/token");
-            /*var token = File.ReadAllText(ApiHelper.Instance.GetTokenLocation());*/
+            /*var token = File.ReadAllText(ApiHelper.Instance.GetTokenLocation());#1#
             /*TokenResponse tokenResponse = System.Text.Json.JsonSerializer.Deserialize<TokenResponse>(token, new JsonSerializerOptions
             {
                 NumberHandling = JsonNumberHandling.AllowReadingFromString,
-            });*/
+            });#1#
 
             byte[] readEncryptedTokenResponse = File.ReadAllBytes("token.secret");
             byte[] decryptedTokenResponse = ProtectedData.Unprotect(readEncryptedTokenResponse, null, DataProtectionScope.CurrentUser);
@@ -130,7 +119,7 @@ public partial class MainWindow
             {
                 NumberHandling = JsonNumberHandling.AllowReadingFromString,
                 WriteIndented = true,
-            });*/
+            });#1#
 
             TokenResponse tokenResponse = System.Text.Json.JsonSerializer.Deserialize<TokenResponse>(response.Content.ReadAsStringAsync().Result, new JsonSerializerOptions
             {
@@ -186,12 +175,13 @@ public partial class MainWindow
                     //await AppUtils.RPC.Start(currentBeatmap.Beatmap.Id.ToString());
                 }
                 break;
-        }*/
+        }#1#
     }
 
     private async void MainWindow_OnClosing(object? sender, CancelEventArgs e)
     {
         await AppUtils.RPC.Stop();
         Log.CloseAndFlush();
+    }*/
     }
 }

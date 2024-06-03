@@ -2,7 +2,6 @@
 global using API;
 global using API.Objects;
 global using OsuLauncher;
-global using OsuLauncher.Pages;
 global using OsuLauncher.Models;
 global using OsuLauncher.Helpers;
 global using OsuLauncher.Dialogs;

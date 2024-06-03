@@ -1,0 +1,104 @@
+﻿ <hc:Window x:Class="OsuLauncher.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OsuLauncher"
+        mc:Ignorable="d"
+        Title="osu! Spark"
+        xmlns:hc="https://handyorg.github.io/handycontrol"
+        xmlns:views="clr-namespace:OsuLauncher.Views"
+        xmlns:vm="clr-namespace:OsuLauncher.ViewModels"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        WindowStartupLocation="CenterScreen"
+        xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
+        md:DialogServiceViews.IsRegistered="True"
+        Height="600" Width="1066">
+     
+     <hc:Window.DataContext>
+         <vm:MainWindowViewModel/>
+     </hc:Window.DataContext>
+     
+     <Grid>
+         <Grid.RowDefinitions>
+             <RowDefinition Height="Auto"/>
+             <RowDefinition Height="*"/>
+         </Grid.RowDefinitions>
+         
+         <DockPanel Grid.Row="0">
+             <StackPanel Orientation="Horizontal" DockPanel.Dock="Left" VerticalAlignment="Stretch"  Margin="3">
+                 <Button VerticalAlignment="Center" Command="{Binding NavigateToHomeCommand}" Margin="4" hc:BorderElement.CornerRadius="2">
+                     <StackPanel Orientation="Horizontal">
+                         <iconPacks:MaterialDesign Kind="Home" Height="15" Width="15"/>
+                         <TextBlock VerticalAlignment="Center" FontWeight="Bold" Text="Home" Margin="4,0,4,0"/>
+                     </StackPanel>
+                 </Button>
+                 <Button  Command="{Binding NavigateToCollectionsCommand}" Margin="4" hc:BorderElement.CornerRadius="2">
+                     <StackPanel Orientation="Horizontal">
+                         <iconPacks:PackIconControl VerticalAlignment="Center" Kind="{x:Static iconPacks:PackIconMaterialKind.Home}"/>
+                         <TextBlock VerticalAlignment="Center" FontWeight="Bold" Text="Collection" Margin="4,0,4,0"/>
+                     </StackPanel>
+                 </Button>
+                 <Button Command="{Binding NavigateToHomeCommand}" Margin="4" hc:BorderElement.CornerRadius="2">
+                     <StackPanel Orientation="Horizontal">
+                         <iconPacks:PackIconControl VerticalAlignment="Center" Kind="{x:Static iconPacks:PackIconMaterialKind.AccountGroup}"/>
+                         <TextBlock VerticalAlignment="Center" FontWeight="Bold" Text="Friends" Margin="4,0,4,0"/>
+                     </StackPanel>
+                 </Button>
+             </StackPanel>
+             <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="6">
+                 <Button Command="{Binding ShowNotificationsCommand}" Margin="4" hc:BorderElement.CornerRadius="2">
+                     <iconPacks:MaterialDesign Kind="Alarm" Height="15" Width="15"/>
+                 </Button>
+                 <Button Command="{Binding ShowSettingsCommand}" Margin="4" hc:BorderElement.CornerRadius="2">
+                     <iconPacks:MaterialDesign Kind="Settings" Height="15" Width="15"/>
+                 </Button>
+                 <Button Command="{Binding NavigateToAccountCommand}" Margin="4" hc:BorderElement.CornerRadius="2">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Image Source="{Binding AuthedUser.AvatarUrl}" Width="20" Height="20"/>
+                        <TextBlock Text="{Binding AuthedUser.Title}"/>
+                        <TextBlock Text="{Binding AuthedUser.Username}"/>
+                    </StackPanel>
+                </Button>
+             </StackPanel>
+             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                 <hc:SearchBar VerticalAlignment="Center" Margin="0,5,0,5" Width="250"></hc:SearchBar>
+                 <hc:SplitButton IsEnabled="{Binding CanLaunch}" Height="30" Content="Play" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" Background="#eb69a3" HorizontalAlignment="Left" Width="100" hc:BorderElement.CornerRadius="2" Margin="4,5,4,5">
+                     <hc:SplitButton.DropDownContent>
+                         <StackPanel>
+                             <MenuItem Header="Repair" Command="{Binding RunOsuRepairCommand}" CommandParameter="Command1"/>
+                             <MenuItem Header="Update" Command="{Binding RunOsuUpdateCommand}" CommandParameter="Command2"/>
+                             <MenuItem Header="Training" Command="{Binding RunMcOsuClientCommand}" CommandParameter="Command3"/>
+                         </StackPanel>
+                     </hc:SplitButton.DropDownContent>
+                 </hc:SplitButton>
+             </StackPanel>
+         </DockPanel>
+         
+         <!--<StackPanel Grid.Row="0" DockPanel.Dock="Top" Background="#1c1c1c" VerticalAlignment="Stretch">
+             <TextBlock Text="osu! Sparkk" Foreground="White"/>
+             <hc:ElementGroup HorizontalAlignment="Right" VerticalAlignment="Stretch">
+                 <Button Content="{iconPacks:Material Kind=WindowMinimize}" Foreground="White" Command="{Binding MinimizeCommand}" Style="{StaticResource ButtonCustom}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                 <Button Content="{iconPacks:Material Kind=WindowClose}" Foreground="White" Command="{Binding CloseCommand}" Style="{StaticResource ButtonCustom}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+             </hc:ElementGroup>
+         </StackPanel>-->
+         
+         <Frame Name="NavFrame" NavigationUIVisibility="Hidden" Content="{Binding CurrentPage}" Grid.Row="1"/>
+
+                <!--<StackPanel Orientation="Horizontal" Grid.Row="1">
+                    <StackPanel Orientation="Vertical">
+                        <ComboBox Name="StartupPreferenceCB" SelectedItem="{Binding SelectedStartupMode}" Height="25" MinWidth="100" MaxWidth="100" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="4,0,1,0" hc:BorderElement.CornerRadius="1">
+                            <ComboBoxItem Content="McOsu"/>
+                            <ComboBoxItem Content="osu!"/>
+                        </ComboBox>
+                        
+                    </StackPanel>
+                    <hc:ElementGroup>
+                        <TextBlock Text="{Binding AuthedUser.Username}"/>
+                        <TextBlock Text="{Binding AuthedUser.UserStats.Level}"/>
+                        <TextBlock Text="{Binding AuthedUser.Username}"/>
+                    </hc:ElementGroup>
+                </StackPanel>-->
+     </Grid>
+     
+</hc:Window>

@@ -23,6 +23,10 @@
         ShowInTaskbar="False"
         Height="450" Width="800">
     <Grid>
-        <TextBlock Text="Press any key to change the binding... &#x0a;Hit ESC to cancel" Foreground="Gold" FontSize="30" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="399*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="Press any key to change the binding... &#x0a;Hit ESC to cancel" Foreground="Gold" FontSize="30" FontWeight="SemiBold" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="140,0,0,0"/>
     </Grid>
 </hc:Window>

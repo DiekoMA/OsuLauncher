@@ -4,15 +4,16 @@
              xmlns:local="clr-namespace:OsuLauncher"
              xmlns:hc="https://handyorg.github.io/handycontrol"
              xmlns:viewModels="clr-namespace:OsuLauncher.ViewModels"
-             xmlns:views="clr-namespace:OsuLauncher.Views">
+             xmlns:views="clr-namespace:OsuLauncher.Views"
+             StartupUri="Views/MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <hc:ThemeResources/>
+                <hc:ThemeResources RequestedTheme="Dark" AccentColor="HotPink"/>
                 <hc:Theme/>
                 <!-- Other merged dictionaries here -->
             </ResourceDictionary.MergedDictionaries>
-            <!-- Other app resources here -->
+            <!--~1~ Other app resources here @1@
             <DataTemplate DataType="{x:Type viewModels:HomeViewModel}">
                 <views:HomeView/>
             </DataTemplate>
@@ -21,7 +22,7 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewModels:SettingsViewModel}">
                 <views:SettingsView/>
-            </DataTemplate>
+            </DataTemplate>-->
         </ResourceDictionary>
     </Application.Resources>
 </Application>

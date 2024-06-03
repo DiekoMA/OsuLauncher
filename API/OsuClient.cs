@@ -57,6 +57,7 @@ public class OsuClient
 
     public async Task<bool> TryAuthenticateAsync(string token)
     {
+        _token = token;
         _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         try
         {
@@ -113,12 +114,34 @@ public class OsuClient
         };
 
         using var response = await _client.SendAsync(request);
-        response.EnsureSuccessStatusCode();
-        var authedUserResponse = JsonSerializer.Deserialize<User>(response.Content.ReadAsStringAsync().Result ?? throw new InvalidOperationException(), new JsonSerializerOptions
+        if (!response.IsSuccessStatusCode)
         {
-            NumberHandling = JsonNumberHandling.AllowReadingFromString,
-        });
-        return authedUserResponse;
+            // Handle the case where the request is not successful
+            return null; // Or throw a custom exception
+        }
+
+        var responseContent = await response.Content.ReadAsStringAsync();
+        if (string.IsNullOrEmpty(responseContent))
+        {
+            // Handle the case where response content is empty
+            return null; // Or throw a custom exception
+        }
+
+        // Deserialize the response content to User object
+        try
+        {
+            var authedUserResponse = JsonSerializer.Deserialize<User>(responseContent, new JsonSerializerOptions
+            {
+                NumberHandling = JsonNumberHandling.AllowReadingFromString,
+            });
+            return authedUserResponse;
+        }
+        catch (JsonException ex)
+        {
+            // Handle deserialization error
+            Console.WriteLine($"Error deserializing JSON: {ex.Message}");
+            return null; // Or throw a custom exception
+        }
     }
 
     /// <summary>

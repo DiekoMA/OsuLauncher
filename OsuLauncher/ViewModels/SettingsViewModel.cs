@@ -1,17 +1,27 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using System.Collections.ObjectModel;
+using System.Linq;
+using CommunityToolkit.Mvvm.Input;
+using OsuLauncher.Services;
+using RestSharp;
 using Beatmap = API.Objects.Beatmap;
+using User = API.Objects.User;
+using RestSharp.Authenticators;
 
 namespace OsuLauncher.ViewModels;
 
 public partial class SettingsViewModel : ViewModelBase
 {
     #region Generic
-
-    private OsuClient osuClient;
     private IConfigurationRoot config;
     private OsuConfigHelper _configHelper;
+    private string clientId;
+    private readonly string clientSecret;
+    private readonly string redirectUrl;
+    
     [ObservableProperty] private bool _loggedIn;
     #endregion
+
+    [ObservableProperty] private User _authedUser;
     
     #region AppSettings
     [ObservableProperty] private string? _gameDirectory;
@@ -34,20 +44,31 @@ public partial class SettingsViewModel : ViewModelBase
     [ObservableProperty] private bool _rpc;
     [ObservableProperty] private bool _showFps;
     [ObservableProperty] private bool _fullscreen;
+    [ObservableProperty] private string _keyOsuLeft;
+    [ObservableProperty] private List<string> _skins;
+    [ObservableProperty] private IOsuService _osu;
     #endregion
 
-    public SettingsViewModel()
+    private async void Auth()
     {
-        var osuCfg = Path.Combine(LauncherSettings.Default.GameDirectory,
+        AuthedUser = await Osu.Client.GetAuthenticatedUserAsync() ?? throw new InvalidOperationException();
+    }
+    
+    public SettingsViewModel(/*IOsuService osuClient*/)
+    {
+        //Osu = osuClient;
+        //Auth();
+        var osuCfg = Path.Combine(AppSettings.Default.GameDirectory,
             $"osu!.{Environment.UserName}.cfg");
         _configHelper = new OsuConfigHelper(osuCfg);
         _loggedIn = true;
-        AutoUpdate = LauncherSettings.Default.CheckForUpdates;
-        OfflineMode = LauncherSettings.Default.OfflineStartup;
-        BeatmapOpt = LauncherSettings.Default.BeatmapOpt;
-        GameDirectory = LauncherSettings.Default.GameDirectory;
-        SongsDirectory = LauncherSettings.Default.SongsDirectory;
-        TrainingClientDirectory = LauncherSettings.Default.TrainingClientDirectory;
+        Skins = Directory.GetDirectories(Path.Combine(AppSettings.Default.GameDirectory, "Skins")).ToList() ?? new List<string>();
+        AutoUpdate = AppSettings.Default.CheckForUpdates;
+        OfflineMode = AppSettings.Default.OfflineStartup;
+        BeatmapOpt = AppSettings.Default.BeatmapOpt;
+        GameDirectory = AppSettings.Default.GameDirectory;
+        SongsDirectory = AppSettings.Default.SongsDirectory;
+        TrainingClientDirectory = AppSettings.Default.TrainingClientDirectory;
         MouseSensitivity = _configHelper.ReadFloat("MouseSpeed");
         MouseWheel = _configHelper.ReadInt("MouseDisableWheel") != 0;
         MouseButton = _configHelper.ReadInt("MouseDisableButtons") != 0;
@@ -56,13 +77,14 @@ public partial class SettingsViewModel : ViewModelBase
         Fullscreen = _configHelper.ReadInt("Fullscreen") != 0;
         MasterVolume = _configHelper.ReadInt("VolumeUniversal");
         EffectsVolume = _configHelper.ReadInt("VolumeEffect");
-
+        KeyOsuLeft = _configHelper.ReadString("keyOsuLeft");
         var assembly = Assembly.GetExecutingAssembly();
         using var stream = assembly.GetManifestResourceStream("OsuLauncher.appsettings.json");
         using StreamReader sr = new StreamReader(stream);
         var config = JsonSerializer.Deserialize<SecretsConfiguration>(sr.ReadToEnd());
-        osuClient = new OsuClient();
-        config.ClientId = "";
+        clientId = config.ClientId;
+        clientSecret = config.ClientSecret;
+        redirectUrl = config.RedirectUrl;
     }
 
     #region GameValueCommands
@@ -80,15 +102,24 @@ public partial class SettingsViewModel : ViewModelBase
     [RelayCommand] private void EnableFullscreen() => _configHelper.EditValue("Fullscreen", "1");
     [RelayCommand] private void DisableFullscreen() => _configHelper.EditValue("Fullscreen", "0");
     
+    [RelayCommand] private void AdjustMasterVolume() => _configHelper.EditValue("VolumeUniversal", MasterVolume.ToString());
+    [RelayCommand] private void AdjustEffectsVolume() => _configHelper.EditValue("VolumeEffect", EffectsVolume.ToString());
+    [RelayCommand] private void AdjustMusicVolume() => _configHelper.EditValue("VolumeMusic", EffectsVolume.ToString());
+    
     [RelayCommand] private void EnableAutoUpdate() {LauncherSettings.Default.CheckForUpdates = true; LauncherSettings.Default.Save();}
     [RelayCommand] private void DisableAutoUpdate() {LauncherSettings.Default.CheckForUpdates = false; LauncherSettings.Default.Save();}
     [RelayCommand] private void EnableOfflineMode() {LauncherSettings.Default.OfflineStartup = true; LauncherSettings.Default.Save();}
     [RelayCommand] private void DisableOfflineMode() {LauncherSettings.Default.OfflineStartup = false; LauncherSettings.Default.Save();}
     [RelayCommand] private void EnableBeatmapOpt() {LauncherSettings.Default.BeatmapOpt = true; LauncherSettings.Default.Save();}
     [RelayCommand] private void DisableBeatmapOpt() {LauncherSettings.Default.BeatmapOpt = false; LauncherSettings.Default.Save();}
+    [RelayCommand] private void ChangeSensitivity() => _configHelper.EditValue("MouseSpeed", MouseSensitivity.ToString());
 
     [RelayCommand]
-    private void ChangeSensitivity() => _configHelper.EditValue("MouseSpeed", MouseSensitivity.ToString());
+    private void BindLeftClickOsu()
+    {
+        var newKey = Console.ReadKey(true);
+        _configHelper.EditValue("keyOsuLeft", newKey.Key.ToString());
+    }
     #endregion
     
     [RelayCommand]
@@ -103,39 +134,82 @@ public partial class SettingsViewModel : ViewModelBase
         LauncherSettings.Default.OfflineStartup = !OfflineMode;
         LauncherSettings.Default.Save();
     }
+
+    [RelayCommand]
+    public void SetTheme()
+    {
+        switch (CurrentTheme)
+        {
+            case "System":
+                break;
+            
+            case "Light":
+                ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light;
+                break;
+            
+            case "Dark":
+                ThemeManager.Current.ApplicationTheme = ApplicationTheme.Dark;
+                break;
+            
+            case "Nord":
+                ThemeManager.Current.ApplicationTheme = ApplicationTheme.Dark;
+                ThemeManager.Current.AccentColor = Brushes.Navy;
+                break;
+            
+            case "Osu":
+                ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light;
+                ThemeManager.Current.AccentColor = Brushes.HotPink;
+                break;
+            
+            case "Yotsuba":
+                ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light;
+                ThemeManager.Current.AccentColor = Brushes.Orange;
+                break;
+        }
+    }
     
     [RelayCommand]
-    public void InitiateAuth()
+    public async Task InitiateAuth()
     {
+        var scope = "public identify friends.read";
+        var state = GenerateRandomString();
         var startInfo = new ProcessStartInfo
         {
             UseShellExecute = true,
             FileName =
-                $"https://osu.ppy.sh/oauth/authorize?client_id={config["clientId"]}&redirect_uri=http%3A%2F%2Flocalhost%3A7040%2Fcallback&response_type=code&scope=public+identify+friends.read&state=randomval"
+                $"https://osu.ppy.sh/oauth/authorize?client_id={clientId}&redirect_uri=http%3A%2F%2Flocalhost%3A7040%2Fcallback&response_type=code&scope=public+identify+friends.read&state={state}"
         };
         Process.Start(startInfo);
-        HttpListener listener = new HttpListener();
+        using var listener = new HttpListener();
         listener.Prefixes.Add("http://localhost:7040/callback/");
         listener.Start();
-        while (true)
-        {
-            HttpListenerContext context = listener.GetContext();
-            string responseText = "Authentication complete";
-            byte[] responseBytes = System.Text.Encoding.UTF8.GetBytes(responseText);
-            context.Response.ContentLength64 = responseBytes.Length;
-            context.Response.OutputStream.Write(responseBytes, 0, responseBytes.Length);
-            context.Response.Close();
-            var code = context.Request.Url?.AbsoluteUri;
-            var tokenRegex = new Regex("(?<=code=)(.*)(?=&state)");
-            if (!tokenRegex.IsMatch(code))
-                return;
-            var authCode = tokenRegex.Match(code).Value;
-            InitiateTokenSwap(authCode);
-            listener.Stop();
-        }
+        
+        var context = listener.GetContext();
+        string responseText = "Authentication complete";
+        byte[] responseBytes = System.Text.Encoding.UTF8.GetBytes(responseText);
+        context.Response.ContentLength64 = responseBytes.Length;
+        context.Response.OutputStream.Write(responseBytes, 0, responseBytes.Length);
+        var code = context.Request.QueryString["code"];
+        context.Response.Close();
+        await InitiateTokenSwap(code!);
     }
 
-    private async void InitiateTokenSwap(string code)
+    private string GenerateRandomString()
+    {
+        using (var randomNumberGenerator = new RNGCryptoServiceProvider())
+        {
+            //  2. Allocate an array to hold the random bytes
+            var randomBytes = new byte[12];
+
+            //  3. Generate random bytes
+            randomNumberGenerator.GetBytes(randomBytes);
+
+            //  4. Convert random bytes to a string using Base64 encoding (URL safe)
+            return Convert.ToBase64String(randomBytes);
+        }
+    }
+    
+    private async Task InitiateTokenSwap(string code)
     {
         using var client = new HttpClient();
         var request = new HttpRequestMessage
@@ -148,11 +222,11 @@ public partial class SettingsViewModel : ViewModelBase
             },
             Content = new FormUrlEncodedContent(new Dictionary<string, string>
             {
-                { "client_id", config["clientId"]! },
-                { "client_secret", config["clientSecret"]! },
+                { "client_id", clientId },
+                { "client_secret", clientSecret },
                 { "code", code },
                 { "grant_type", "authorization_code" },
-                { "redirect_uri", config["redirectUrl"]! }
+                { "redirect_uri", redirectUrl }
             })
         };
 
@@ -164,19 +238,28 @@ public partial class SettingsViewModel : ViewModelBase
 
         response.EnsureSuccessStatusCode();
 
-        TokenResponse tokenResponse = System.Text.Json.JsonSerializer.Deserialize<TokenResponse>(response.Content.ReadAsStringAsync().Result, new JsonSerializerOptions
+        var tokenResponse = JsonSerializer.Deserialize<TokenResponse>(response.Content.ReadAsStringAsync().Result, new JsonSerializerOptions
         {
             NumberHandling = JsonNumberHandling.AllowReadingFromString
         }) ?? throw new InvalidOperationException();
 
-        var tokenResponseLocal = JsonSerializer.SerializeToUtf8Bytes(tokenResponse);
-        byte[] encryptedToken = ProtectedData.Protect(tokenResponseLocal, null, DataProtectionScope.CurrentUser);
+        var tokenJson = JsonSerializer.Serialize<TokenResponse>(tokenResponse, new JsonSerializerOptions
+        {
+            NumberHandling = JsonNumberHandling.AllowReadingFromString,
+            WriteIndented = true
+        });
 
-        File.WriteAllBytes("token.secret", encryptedToken);
+        await File.WriteAllTextAsync("token.secret", tokenJson);
+        //Osu.Client = await ApiHelper.Instance.RetrieveClient();
+        
+        //AuthedUser = await Osu.Client.GetAuthenticatedUserAsync() ?? throw new InvalidOperationException();
 
-        osuClient = await ApiHelper.Instance.RetrieveClient();
-        var authedUser = await osuClient.GetAuthenticatedUserAsync();
+        //LoggedIn = Osu.Client.IsAuthenticated;
+    }
 
-        LoggedIn = true;
+    [RelayCommand]
+    public void LaunchSettingsDialog()
+    {
+        Dialog.Show(new SettingsDialog());
     }
 }

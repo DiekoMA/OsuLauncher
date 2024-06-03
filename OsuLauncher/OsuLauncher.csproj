@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net6.0-windows</TargetFramework>
+        <TargetFramework>net8.0-windows7.0</TargetFramework>
         <Nullable>enable</Nullable>
         <UseWPF>true</UseWPF>
         <PublishSingleFile>true</PublishSingleFile>
@@ -27,8 +27,10 @@
       <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="7.0.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
       <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+      <PackageReference Include="MvvmDialogs" Version="9.1.2" />
       <PackageReference Include="Onova" Version="2.6.10" />
       <PackageReference Include="OsuMemoryDataProvider" Version="0.10.0" />
+      <PackageReference Include="RestSharp" Version="110.2.0" />
       <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
       <PackageReference Include="sharpconfig" Version="3.2.9.1" />
       <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="8.0.0" />
@@ -36,31 +38,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\API\API.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Page Update="Pages\AccountPage.xaml">
-        <Generator>MSBuild:Compile</Generator>
-        <XamlRuntime>Wpf</XamlRuntime>
-        <SubType>Designer</SubType>
-      </Page>
-      <Page Update="MVVM\Views\HomeView.xaml">
-        <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Update="MVVM\Views\BeatmapsView.xaml">
-        <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Update="MVVM\Views\SettingsView.xaml">
-        <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Update="MVVM\Views\CollectionsView.xaml">
-        <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Update="MVVM\Views\MainWindow.xaml">
-        <Generator>MSBuild:Compile</Generator>
-        <XamlRuntime>Wpf</XamlRuntime>
-        <SubType>Designer</SubType>
-      </Page>
     </ItemGroup>
 
     <ItemGroup>
@@ -88,7 +65,18 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="MVVM\" />
+      <Page Update="Views\BeatmapsView.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
+      <Page Update="Views\CollectionsView.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
+      <Page Update="Views\HomeView.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
+      <Page Update="Views\MainWindow.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
     </ItemGroup>
 
 </Project>

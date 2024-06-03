@@ -146,10 +146,10 @@ public struct Statistics
     public Level Level { get; set; }
     
     [JsonPropertyName("global_rank")]
-    public int GlobalRank { get; set; }
+    public int? GlobalRank { get; set; }
     
     [JsonPropertyName("global_rank_exp")]
-    public int GlobalRankExp { get; set; }
+    public int? GlobalRankExp { get; set; }
     
     [JsonPropertyName("pp")]
     public float PP { get; set; }
