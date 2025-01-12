@@ -1,8 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using HandyControl.Tools;
-using Beatmap = API.Objects.Beatmap;
-
-namespace OsuLauncher.ViewModels;
+﻿namespace OsuLauncher.ViewModels;
 
 public partial class BeatmapViewModel : ViewModelBase
 {

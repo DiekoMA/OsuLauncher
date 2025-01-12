@@ -2,14 +2,18 @@
 global using API;
 global using API.Objects;
 global using OsuLauncher;
+global using OsuLauncher.Views;
 global using OsuLauncher.Models;
 global using OsuLauncher.Helpers;
 global using OsuLauncher.Dialogs;
+global using OsuLauncher.Services;
 global using OsuLauncher.Properties;
+global using User = API.Objects.User;
 
 //Native Dependencies
 global using System;
 global using System.IO;
+global using System.Linq;
 global using System.Threading.Tasks;
 global using System.ComponentModel;
 global using System.Threading;
@@ -18,6 +22,7 @@ global using System.Security.Cryptography;
 global using System.Text.Json;
 global using System.Windows.Input;
 global using System.Net;
+global using System.Collections.ObjectModel;
 global using System.Net.Http;
 global using System.Windows.Media;
 global using System.Reflection;
@@ -47,6 +52,7 @@ global using Microsoft.Extensions.Configuration;
 global using Configuration = SharpConfig.Configuration;
 global using Downloader;
 global using CommunityToolkit.Mvvm;
+global using CommunityToolkit.Mvvm.Input;
 global using CommunityToolkit.Mvvm.ComponentModel;
 /*global using OsuMemoryReader = OsuMemoryDataProvider;
 global using OsuMemoryDataProvider.OsuMemoryModels;

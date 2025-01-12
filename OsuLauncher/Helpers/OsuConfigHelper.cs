@@ -1,4 +1,6 @@
-﻿namespace OsuLauncher.Helpers;
+﻿using HandyControl.Tools;
+
+namespace OsuLauncher.Helpers;
 
 public class OsuConfigHelper
 {

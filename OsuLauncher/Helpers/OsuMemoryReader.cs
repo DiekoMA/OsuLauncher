@@ -4,6 +4,10 @@ using OsuMemoryDataProvider.OsuMemoryModels.Direct;
 
 namespace OsuLauncher.Helpers;
 
+
+/// <summary>
+/// WIP May, no WILL HAVE BUGS :(
+/// </summary>
 public class OsuMemoryReader
 {
     private int _readDelay = 100;

@@ -18,10 +18,13 @@
       <PackageReference Include="CollectionManager" Version="1.0.9" />
       <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
       <PackageReference Include="DiscordRichPresence" Version="1.2.1.24" />
+      <PackageReference Include="DotNetConfig" Version="1.2.0" />
       <PackageReference Include="Downloader" Version="3.0.4" />
       <PackageReference Include="HandyControls" Version="3.4.5" />
       <PackageReference Include="MahApps.Metro.IconPacks" Version="4.11.0" />
       <PackageReference Include="MahApps.Metro.IconPacks.BoxIcons" Version="4.11.0" />
+      <PackageReference Include="MdXaml" Version="1.27.0" />
+      <PackageReference Include="MdXaml.Html" Version="1.27.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="7.0.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="7.0.0" />
