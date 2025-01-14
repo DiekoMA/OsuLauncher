@@ -7,9 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OsuLauncher", "OsuLauncher\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{C0EFE8E5-2741-4B58-8738-88B4A9854C8B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API TEST APP", "API TEST APP\API TEST APP.csproj", "{027557CD-4338-4FE2-8BB4-C560E2102492}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Installer", "Installer\Installer.csproj", "{BD9B8BDB-51F8-48BC-9265-F8DD248BAC13}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomInstaller", "CustomInstaller\CustomInstaller.csproj", "{3900F15E-8548-4778-B111-8FB67DDB5F7F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,18 +28,12 @@ Global
 		{C0EFE8E5-2741-4B58-8738-88B4A9854C8B}.Github Release|Any CPU.Build.0 = Release|Any CPU
 		{C0EFE8E5-2741-4B58-8738-88B4A9854C8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0EFE8E5-2741-4B58-8738-88B4A9854C8B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{027557CD-4338-4FE2-8BB4-C560E2102492}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{027557CD-4338-4FE2-8BB4-C560E2102492}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{027557CD-4338-4FE2-8BB4-C560E2102492}.Github Release|Any CPU.ActiveCfg = Release|Any CPU
-		{027557CD-4338-4FE2-8BB4-C560E2102492}.Github Release|Any CPU.Build.0 = Release|Any CPU
-		{027557CD-4338-4FE2-8BB4-C560E2102492}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{027557CD-4338-4FE2-8BB4-C560E2102492}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BD9B8BDB-51F8-48BC-9265-F8DD248BAC13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BD9B8BDB-51F8-48BC-9265-F8DD248BAC13}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BD9B8BDB-51F8-48BC-9265-F8DD248BAC13}.Github Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BD9B8BDB-51F8-48BC-9265-F8DD248BAC13}.Github Release|Any CPU.Build.0 = Release|Any CPU
-		{BD9B8BDB-51F8-48BC-9265-F8DD248BAC13}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BD9B8BDB-51F8-48BC-9265-F8DD248BAC13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3900F15E-8548-4778-B111-8FB67DDB5F7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3900F15E-8548-4778-B111-8FB67DDB5F7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3900F15E-8548-4778-B111-8FB67DDB5F7F}.Github Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{3900F15E-8548-4778-B111-8FB67DDB5F7F}.Github Release|Any CPU.Build.0 = Debug|Any CPU
+		{3900F15E-8548-4778-B111-8FB67DDB5F7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3900F15E-8548-4778-B111-8FB67DDB5F7F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

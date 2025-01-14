@@ -2,7 +2,6 @@
 
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net8.0-windows7.0</TargetFramework>
         <Nullable>enable</Nullable>
         <UseWPF>true</UseWPF>
         <PublishSingleFile>true</PublishSingleFile>
@@ -11,6 +10,7 @@
       <UserSecretsId>bec6151d-44c2-46aa-b322-55950f501a7c</UserSecretsId>
       <Configurations>Debug;Release;Github Release</Configurations>
       <AssemblyVersion></AssemblyVersion>
+      <TargetFramework>net8.0-windows7.0</TargetFramework>
   </PropertyGroup>
 
     <ItemGroup>
@@ -25,17 +25,11 @@
       <PackageReference Include="MahApps.Metro.IconPacks.BoxIcons" Version="4.11.0" />
       <PackageReference Include="MdXaml" Version="1.27.0" />
       <PackageReference Include="MdXaml.Html" Version="1.27.0" />
-      <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
-      <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="7.0.0" />
-      <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="7.0.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
       <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
-      <PackageReference Include="MvvmDialogs" Version="9.1.2" />
       <PackageReference Include="Onova" Version="2.6.10" />
       <PackageReference Include="OsuMemoryDataProvider" Version="0.10.0" />
-      <PackageReference Include="RestSharp" Version="110.2.0" />
       <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
-      <PackageReference Include="sharpconfig" Version="3.2.9.1" />
       <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="8.0.0" />
     </ItemGroup>
 
@@ -46,25 +40,6 @@
     <ItemGroup>
       <None Remove="appsettings.json" />
       <EmbeddedResource Include="appsettings.json" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Compile Update="Properties\LauncherSettings.Designer.cs">
-        <DesignTimeSharedInput>True</DesignTimeSharedInput>
-        <AutoGen>True</AutoGen>
-        <DependentUpon>LauncherSettings.settings</DependentUpon>
-      </Compile>
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Update="Properties\AppSettings.settings">
-        <Generator>SettingsSingleFileGenerator</Generator>
-        <LastGenOutput>AppSettings.Designer.cs</LastGenOutput>
-      </None>
-      <None Update="Properties\LauncherSettings.settings">
-        <Generator>SettingsSingleFileGenerator</Generator>
-        <LastGenOutput>LauncherSettings.Designer.cs</LastGenOutput>
-      </None>
     </ItemGroup>
 
     <ItemGroup>

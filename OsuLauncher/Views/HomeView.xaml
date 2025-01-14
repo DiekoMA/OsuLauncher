@@ -49,7 +49,6 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical">
-
                         <StackPanel>
                             <TextBlock Text="{Binding Title}" />
                             <TextBlock Text="{Binding Author, StringFormat='By {0}'}" />
@@ -73,7 +72,8 @@
             <TextBlock Text="{Binding SelectedNewsPost.Preview}" TextWrapping="Wrap" />
             <mdxam:MarkdownScrollViewer
                 Document="{Binding NewsFlowDocument}"
-                VerticalScrollBarVisibility="Visible"
+                HorizontalScrollBarVisibility="Auto"
+                VerticalScrollBarVisibility="Auto"
                 xml:space="preserve" />
         </StackPanel>
     </DockPanel>

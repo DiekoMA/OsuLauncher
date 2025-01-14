@@ -7,7 +7,6 @@ global using OsuLauncher.Models;
 global using OsuLauncher.Helpers;
 global using OsuLauncher.Dialogs;
 global using OsuLauncher.Services;
-global using OsuLauncher.Properties;
 global using User = API.Objects.User;
 
 //Native Dependencies
@@ -49,7 +48,7 @@ global using CollectionManager.DataTypes;
 global using CollectionManager.Modules.FileIO;
 global using Window = HandyControl.Controls.Window;
 global using Microsoft.Extensions.Configuration;
-global using Configuration = SharpConfig.Configuration;
+global using DotNetConfig;
 global using Downloader;
 global using CommunityToolkit.Mvvm;
 global using CommunityToolkit.Mvvm.Input;

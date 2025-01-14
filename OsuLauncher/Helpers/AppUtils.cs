@@ -3,55 +3,28 @@
 public static class AppUtils
 {
     private static DiscordRpcClient rpcClient;
-    public static class Config
+    public static class AppConfig
     {
-        private static Configuration config;
+        private static Config config;
 
-        public static void Initialize()
+        static AppConfig()
         {
-            config = Configuration.LoadFromFile("settings.cfg");
+            config = Config.Build();
         }
 
-        public static void LoadEnv(string filePath)
+        public static void SetString(string section, string key, string value) => config.SetString(section, key, value); 
+
+        public static void SetBoolean(string section, string key, bool value) => config.SetBoolean(section, key, value);
+        
+
+        public static string GetString(string section, string key)
         {
-            if (File.Exists(filePath))
-                return;
-
-            foreach (var line in File.ReadLines(filePath))
-            {
-                var parts = line.Split('=', StringSplitOptions.RemoveEmptyEntries);
-
-                if (parts.Length != 2)
-                    continue;
-
-                Environment.SetEnvironmentVariable(parts[0], parts[1]);
-            }
+            return config.GetString(section, key)!;
         }
 
-        public static void SaveStringItem(string section, string key, string value)
+        public static bool GetBoolean(string section, string key)
         {
-            config[section][key].StringValue = value;
-            config.SaveToFile("settings.cfg");
-        }
-
-        public static void SaveBool(string section, string key, bool value)
-        {
-            config[section][key].BoolValue = value;
-            config.SaveToFile("settings.cfg");
-        }
-
-        public static string GetStringItem(string section, string key)
-        {
-            config = SharpConfig.Configuration.LoadFromFile("settings.cfg");
-            string result = config[section][key].StringValue;
-            return result;
-        }
-
-        public static bool GetBoolItem(string section, string key)
-        {
-            config = SharpConfig.Configuration.LoadFromFile("settings.cfg");
-            bool result = config[section][key].BoolValue;
-            return result;
+            return config.GetBoolean(section, key) ?? false;
         }
     }
 
@@ -64,7 +37,7 @@ public static class AppUtils
         }
     }
 
-    public static class RPC
+    /*public static class RPC
     {
         public static async Task Start(string state)
         {
@@ -86,7 +59,7 @@ public static class AppUtils
         public static async Task Stop()
         {
             /*if (rpcClient.IsInitialized && !rpcClient.IsDisposed)
-                rpcClient.Dispose();*/
+                rpcClient.Dispose();#1#
         }
-    }
+    }*/
 }
