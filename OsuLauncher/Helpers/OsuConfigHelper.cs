@@ -11,12 +11,12 @@ public class OsuConfigHelper
         _osuConfigPath = osuConfigPath;
     }
 
-    public DirectoryInfo[] GetSkins()
+    /*public DirectoryInfo[] GetSkins()
     {
         //var skinDirectory = new DirectoryInfo(Path.Combine(ConfigHelper.GetStringItem("preferences", "gamedir"), "Skins"));
         var skinDirectory = new DirectoryInfo(Path.Combine(LauncherSettings.Default.GameDirectory, "skins"));
         return skinDirectory.GetDirectories();
-    }
+    }*/
     
     public int ReadInt(string key, int defaultValue = 0)
     {

@@ -16,7 +16,7 @@ namespace OsuLauncher
             AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
             Log.Logger = new LoggerConfiguration().WriteTo.File("log.txt").CreateLogger();
             Log.Information("Application started succesfully");
-            switch (AppSettings.Default.ThemeBase)
+            /*switch (AppSettings.Default.ThemeBase)
             {
                 case "System":
                     ThemeManager.Current.UsingSystemTheme = true;
@@ -39,7 +39,7 @@ namespace OsuLauncher
                     ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light;
                     ThemeManager.Current.AccentColor = SystemParameters.WindowGlassBrush;
                     break;
-            }
+            }*/
         }
 
         private void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs e)

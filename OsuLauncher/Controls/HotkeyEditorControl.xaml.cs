@@ -65,7 +65,7 @@ public partial class HotkeyEditorControl : UserControl
 
 public class Hotkey
 {
-    public Key Key { get; }
+    public Key Key { get; set; }
 
     public ModifierKeys Modifiers { get; }
 

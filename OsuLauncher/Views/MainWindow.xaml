@@ -21,116 +21,91 @@
     </hc:Window.DataContext>
 
     <hc:Window.NonClientAreaContent>
-        <DockPanel Grid.Row="0">
-            <StackPanel
-                DockPanel.Dock="Left"
-                Margin="3"
-                Orientation="Horizontal"
-                VerticalAlignment="Stretch">
-                <Button
-                    Command="{Binding NavigateToHomeCommand}"
-                    Margin="4"
-                    VerticalAlignment="Center"
-                    hc:BorderElement.CornerRadius="2">
-                    <StackPanel Orientation="Horizontal">
-                        <iconPacks:MaterialDesign
-                            Height="15"
-                            Kind="Home"
-                            Width="15" />
-                        <TextBlock
-                            FontWeight="Bold"
-                            Margin="4,0,4,0"
-                            Text="Home"
-                            VerticalAlignment="Center" />
-                    </StackPanel>
-                </Button>
-                <Button
-                    Command="{Binding NavigateToCollectionsCommand}"
-                    Margin="4"
-                    hc:BorderElement.CornerRadius="2">
-                    <StackPanel Orientation="Horizontal">
-                        <iconPacks:PackIconControl Kind="{x:Static iconPacks:PackIconMaterialKind.Home}" VerticalAlignment="Center" />
-                        <TextBlock
-                            FontWeight="Bold"
-                            Margin="4,0,4,0"
-                            Text="Collection"
-                            VerticalAlignment="Center" />
-                    </StackPanel>
-                </Button>
-                <Button
-                    Command="{Binding NavigateToHomeCommand}"
-                    Margin="4"
-                    hc:BorderElement.CornerRadius="2">
-                    <StackPanel Orientation="Horizontal">
-                        <iconPacks:PackIconControl Kind="{x:Static iconPacks:PackIconMaterialKind.Group}" VerticalAlignment="Center" />
-                        <TextBlock
-                            FontWeight="Bold"
-                            Margin="4,0,4,0"
-                            Text="Multiplayer"
-                            VerticalAlignment="Center" />
-                    </StackPanel>
-                </Button>
-                <Button
-                    Command="{Binding NavigateToSettingsCommand}"
-                    Margin="4"
-                    hc:BorderElement.CornerRadius="2">
-                    <StackPanel Orientation="Horizontal">
-                        <iconPacks:MaterialDesign
-                            Height="15"
-                            Kind="Settings"
-                            Width="15" />
-                        <TextBlock
-                            FontWeight="Bold"
-                            Margin="4,0,4,0"
-                            Text="Settings"
-                            VerticalAlignment="Center" />
-                    </StackPanel>
-                </Button>
-            </StackPanel>
-            <StackPanel
-                DockPanel.Dock="Right"
-                HorizontalAlignment="Right"
-                Margin="6"
-                Orientation="Horizontal"
-                VerticalAlignment="Center">
-                <StackPanel
-                    HorizontalAlignment="Stretch"
-                    Orientation="Horizontal"
-                    VerticalAlignment="Stretch">
-                    <Image
-                        Height="20"
-                        Source="{Binding AuthedUser.AvatarUrl}"
-                        Width="20" />
-                    <TextBlock Text="{Binding AuthedUser.Title}" />
-                    <TextBlock Text="{Binding AuthedUser.Username}" />
-                </StackPanel>
-            </StackPanel>
-        </DockPanel>
+        <DockPanel Grid.Row="0" />
     </hc:Window.NonClientAreaContent>
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
 
         <Frame
             Content="{Binding CurrentPage}"
-            Grid.Row="1"
+            Grid.Column="0"
             NavigationUIVisibility="Hidden" />
 
         <StackPanel
-            Grid.Row="2"
-            HorizontalAlignment="Right"
-            Orientation="Horizontal">
-            <StackPanel Margin="4,5,4,5" VerticalAlignment="Bottom">
-                <TextBlock FlowDirection="RightToLeft" Text="Server Status: Online" />
-                <TextBlock FlowDirection="RightToLeft" Text="Current Server: Bancho-Main" />
-            </StackPanel>
-            <hc:ComboBox VerticalAlignment="Bottom">
+            Grid.Column="1"
+            Margin="3"
+            Orientation="Vertical"
+            VerticalAlignment="Stretch">
+            <Button
+                Command="{Binding NavigateToHomeCommand}"
+                Margin="4"
+                VerticalAlignment="Center"
+                Width="120"
+                hc:BorderElement.CornerRadius="2">
+                <StackPanel Orientation="Horizontal">
+                    <iconPacks:MaterialDesign
+                        Height="15"
+                        Kind="Home"
+                        Width="15" />
+                    <TextBlock
+                        FontWeight="Bold"
+                        Margin="4,0,4,0"
+                        Text="Home"
+                        VerticalAlignment="Center" />
+                </StackPanel>
+            </Button>
+            <Button
+                Command="{Binding NavigateToUserContentCommand}"
+                Margin="4"
+                Width="120"
+                hc:BorderElement.CornerRadius="2">
+                <StackPanel Orientation="Horizontal">
+                    <iconPacks:PackIconControl Kind="{x:Static iconPacks:PackIconMaterialKind.Home}" VerticalAlignment="Center" />
+                    <TextBlock
+                        FontWeight="Bold"
+                        Margin="4,0,4,0"
+                        Text="Content"
+                        VerticalAlignment="Center" />
+                </StackPanel>
+            </Button>
+            <Button
+                Command="{Binding NavigateToHomeCommand}"
+                Margin="4"
+                Width="120"
+                hc:BorderElement.CornerRadius="2">
+                <StackPanel Orientation="Horizontal">
+                    <iconPacks:PackIconControl Kind="{x:Static iconPacks:PackIconMaterialKind.Group}" VerticalAlignment="Center" />
+                    <TextBlock
+                        FontWeight="Bold"
+                        Margin="4,0,4,0"
+                        Text="Multiplayer"
+                        VerticalAlignment="Center" />
+                </StackPanel>
+            </Button>
+            <Button
+                Command="{Binding NavigateToSettingsCommand}"
+                Margin="4"
+                Width="120"
+                hc:BorderElement.CornerRadius="2">
+                <StackPanel Orientation="Horizontal">
+                    <iconPacks:MaterialDesign
+                        Height="15"
+                        Kind="Settings"
+                        Width="15" />
+                    <TextBlock
+                        FontWeight="Bold"
+                        Margin="4,0,4,0"
+                        Text="Settings"
+                        VerticalAlignment="Center" />
+                </StackPanel>
+            </Button>
+
+            <hc:Divider Height="300" />
+            <hc:ComboBox VerticalAlignment="Bottom" Width="120">
                 <ComboBoxItem Content="MayoWAA1" />
                 <ComboBoxItem Content="MayoWAA1 - Private Server" />
                 <ComboBoxItem Content="MalMelon - MCOsu" />
@@ -142,12 +117,13 @@
                 Content="Play"
                 Foreground="White"
                 Height="50"
-                HorizontalAlignment="Left"
+                HorizontalAlignment="Center"
                 HorizontalContentAlignment="Center"
                 IsEnabled="{Binding CanLaunch}"
                 Margin="4,5,4,5"
+                VerticalAlignment="Bottom"
                 VerticalContentAlignment="Center"
-                Width="100"
+                Width="120"
                 hc:BorderElement.CornerRadius="2">
                 <hc:SplitButton.DropDownContent>
                     <StackPanel>

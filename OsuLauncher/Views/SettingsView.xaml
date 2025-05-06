@@ -304,44 +304,7 @@
                     </StackPanel>
                 </hc:ScrollViewer>
             </TabItem>
-            <TabItem Header="Rich Presence" IsEnabled="False">
-                <StackPanel>
-                    <CheckBox Content="Enable Osu Launcher Rich Presence" Margin="4" />
-
-                    <Border
-                        BorderBrush="Black"
-                        BorderThickness="2"
-                        Margin="4">
-                        <StackPanel Margin="4">
-                            <TextBlock FontWeight="Bold" Text="PLAYING A GAME" />
-                            <StackPanel Margin="4" Orientation="Horizontal">
-                                <hc:ImageBlock
-                                    Height="90"
-                                    HorizontalAlignment="Left"
-                                    Width="90" />
-                                <StackPanel>
-                                    <TextBlock FontWeight="Regular" Text="Song Name" />
-                                    <TextBlock FontWeight="Regular" Text="Song Star Rating" />
-                                    <TextBlock FontWeight="Regular" Text="Song " />
-                                    <TextBlock FontWeight="Regular" Text="User State (In Menu, In Game) " />
-                                </StackPanel>
-
-                            </StackPanel>
-                            <StackPanel HorizontalAlignment="Right">
-                                <Button
-                                    Content="Beatmap"
-                                    Margin="4"
-                                    hc:BorderElement.CornerRadius="2" />
-                                <Button
-                                    Content="Profile"
-                                    Margin="4"
-                                    hc:BorderElement.CornerRadius="2" />
-                            </StackPanel>
-                        </StackPanel>
-                    </Border>
-                </StackPanel>
-            </TabItem>
-            <TabItem Header="Backup" IsEnabled="False">
+            <TabItem Header="Backup">
                 <StackPanel Margin="3" Orientation="Vertical">
                     <hc:TextBox
                         Margin="4"
@@ -351,27 +314,27 @@
                         hc:InfoElement.TitlePlacement="Left" />
                     <CheckBox
                         Content="Skins"
-                        Margin="3"
-                        Name="SkinBackupCheck" />
+                        IsChecked="{Binding BackupSkins}"
+                        Margin="3" />
                     <CheckBox
                         Content="Songs"
-                        Margin="3"
-                        Name="SongBackupCheck" />
+                        IsChecked="{Binding BackupSongs}"
+                        Margin="3" />
                     <CheckBox
                         Content="Settings"
-                        Margin="3"
-                        Name="SettingsBackupCheck" />
+                        IsChecked="{Binding BackupSettings}"
+                        Margin="3" />
                     <CheckBox
                         Content="Scores"
-                        Margin="3"
-                        Name="ScoresBackupCheck" />
+                        IsChecked="{Binding BackupScores}"
+                        Margin="3" />
                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                         <TextBlock
                             Margin="4"
-                            Text="Current Backup Size 1.7GB"
+                            Text="{Binding SongEstimateSize}"
                             VerticalAlignment="Bottom" />
                         <Button
-                            Command="{Binding StartAuthCommand}"
+                            Command="{Binding CreateBackupCommand}"
                             Content="Create Backup"
                             Margin="3" />
                     </StackPanel>

@@ -7,7 +7,7 @@ public partial class BeatmapViewModel : ViewModelBase
     [ObservableProperty] private ObservableCollection<string> _songs;
     public BeatmapViewModel()
     {
-        try
+        /*try
         {
             DirectoryInfo songsDirectory = new DirectoryInfo(LauncherSettings.Default.SongsDirectory);
             List<string> fileNames = new List<string>();
@@ -24,6 +24,6 @@ public partial class BeatmapViewModel : ViewModelBase
         catch (Exception e)
         {
             MessageBox.Show(e.Message);
-        }
+        }*/
     }
 }

@@ -1,0 +1,40 @@
+﻿<UserControl
+    MinHeight="300"
+    MinWidth="300"
+    mc:Ignorable="d"
+    x:Class="OsuLauncher.Views.UserContentView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:local="clr-namespace:OsuLauncher.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:OsuLauncher.ViewModels"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.DataContext>
+        <vm:UserContentViewModel />
+    </UserControl.DataContext>
+    <TabControl TabStripPlacement="Left">
+        <TabItem Header="Songs">
+            <Grid>
+                <TextBlock Text="Songs Page" />
+            </Grid>
+        </TabItem>
+
+        <TabItem Header="Themes">
+            <Grid>
+                <Ribbon>
+                    <RibbonButton Content="Test" />
+                    <RibbonButton Content="Test" />
+                    <RibbonButton Content="Test" />
+                </Ribbon>
+            </Grid>
+        </TabItem>
+
+        <TabItem Header="Collections">
+            <Grid>
+                <TextBlock Text="Collections Page" />
+            </Grid>
+        </TabItem>
+
+    </TabControl>
+</UserControl>

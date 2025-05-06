@@ -1,24 +1,23 @@
-﻿using DotNetConfig;
-using HandyControl.Tools;
-using OsuLauncher.Controls;
-
-namespace OsuLauncher.ViewModels;
+﻿namespace OsuLauncher.ViewModels;
 
 public partial class SettingsViewModel : ViewModelBase
 {
     #region Generic
+
     private IConfigurationRoot config;
     private OsuConfigHelper _configHelper;
     private string clientId;
     private readonly string clientSecret;
     private readonly string redirectUrl;
-    
+
     [ObservableProperty] private bool _loggedIn;
+
     #endregion
 
     [ObservableProperty] private User _authedUser;
-    
+
     #region AppSettings
+
     private string? _gameDirectory;
 
     public string GameDirectory
@@ -31,6 +30,7 @@ public partial class SettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     private string? _songsDirectory;
 
     public string SongsDirectory
@@ -43,6 +43,7 @@ public partial class SettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     private string? _trainingClientDirectory;
 
     public string TrainingClientDirectory
@@ -55,6 +56,7 @@ public partial class SettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     [ObservableProperty] private string _currentTheme;
     private bool _autoUpdate;
 
@@ -68,6 +70,7 @@ public partial class SettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     private bool _offlineMode;
 
     public bool OfflineMode
@@ -80,6 +83,7 @@ public partial class SettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     private bool _beatmapOpt;
 
     public bool BeatmapOpt
@@ -92,6 +96,7 @@ public partial class SettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region GameSettings
@@ -108,6 +113,7 @@ public partial class SettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     private int _musicVolume;
 
     public int MusicVolume
@@ -120,6 +126,7 @@ public partial class SettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     private int _masterVolume;
 
     public int MasterVolume
@@ -132,6 +139,7 @@ public partial class SettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     private int _effectsVolume;
 
     public int EffectsVolume
@@ -144,7 +152,7 @@ public partial class SettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    
+
     private float _mouseSensitivity;
 
     public float MouseSensitivity
@@ -157,7 +165,7 @@ public partial class SettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    
+
     private bool _mouseDisableWheel;
 
     public bool MouseDisableWheel
@@ -170,7 +178,7 @@ public partial class SettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    
+
     private bool _mouseDisableButtons;
 
     public bool MouseDisableButtons
@@ -183,7 +191,7 @@ public partial class SettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    
+
     private bool _showFPS;
 
     public bool ShowFPS
@@ -196,7 +204,7 @@ public partial class SettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    
+
     private bool _fullScreen;
 
     public bool FullScreen
@@ -209,20 +217,22 @@ public partial class SettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     [ObservableProperty] private bool _richPresence;
     [ObservableProperty] private OsuSettingsPreset _currentOsuSettingsPreset;
     [ObservableProperty] private ObservableCollection<OsuSettingsPreset> _osuSettingsPresets;
     [ObservableProperty] private List<string> _skins;
     [ObservableProperty] private IOsuService _osu;
     [ObservableProperty] private ObservableCollection<OsuLauncherProfile> _localProfiles;
+
     #endregion
 
     private async void Auth()
     {
         AuthedUser = await Osu.Client.GetAuthenticatedUserAsync() ?? throw new InvalidOperationException();
     }
-    
-    public SettingsViewModel(/*IOsuService osuClient*/)
+
+    public SettingsViewModel( /*IOsuService osuClient*/)
     {
         //Osu = osuClient;
         //Auth();
@@ -240,16 +250,15 @@ public partial class SettingsViewModel : ViewModelBase
             GameDirectory = AppUtils.AppConfig.GetString("appsettings", "gameDirectory");
             SongsDirectory = AppUtils.AppConfig.GetString("appsettings", "songsDirectory");
             TrainingClientDirectory = AppUtils.AppConfig.GetString("appsettings", "trainingClientDirectory");
-            EffectsVolume = _configHelper.ReadInt("VolumeEffect"); 
+            EffectsVolume = _configHelper.ReadInt("VolumeEffect");
             MouseSensitivity = _configHelper.ReadFloat("MouseSpeed");
             MouseDisableWheel = _configHelper.ReadInt("MouseDisableWheel") != 0;
             MouseDisableButtons = _configHelper.ReadInt("MouseDisableButtons") != 0;
-            RichPresence = _configHelper.ReadInt("DiscordRichPresence") != 0;
             ShowFPS = _configHelper.ReadInt("FpsCounter") != 0;
             FullScreen = _configHelper.ReadInt("Fullscreen") != 0;
             MasterVolume = _configHelper.ReadInt("VolumeUniversal");
             MusicVolume = _configHelper.ReadInt("VolumeMusic");
-            KeyOsuLeft =  _configHelper.ReadString("keyOsuLeft");
+            KeyOsuLeft = _configHelper.ReadString("keyOsuLeft");
             var assembly = Assembly.GetExecutingAssembly();
             using var stream = assembly.GetManifestResourceStream("OsuLauncher.appsettings.json");
             using StreamReader sr = new StreamReader(stream);
@@ -265,31 +274,57 @@ public partial class SettingsViewModel : ViewModelBase
     }
 
     #region GameValueCommands
-    [RelayCommand] private void EnableMouseWheel() => _configHelper.EditValue("MouseDisableWheel", "1");
-    [RelayCommand] private void DisableMouseWheel() => _configHelper.EditValue("MouseDisableWheel", "0");
-    
-    [RelayCommand] private void EnableMouseButton() => _configHelper.EditValue("MouseDisableButtons", "1");
-    [RelayCommand] private void DisableMouseButton() => _configHelper.EditValue("MouseDisableButtons", "0");
-    [RelayCommand] private void EnableRichPresence() => _configHelper.EditValue("DiscordRichPresence", "1");
-    [RelayCommand] private void DisableRichPresence() => _configHelper.EditValue("DiscordRichPresence", "0");
-    
-    [RelayCommand] private void EnableFpsCounter() => _configHelper.EditValue("FpsCounter", "1");
-    [RelayCommand] private void DisableFpsCounter() => _configHelper.EditValue("FpsCounter", "0");
-    
-    [RelayCommand] private void EnableFullscreen() => _configHelper.EditValue("Fullscreen", "1");
-    [RelayCommand] private void DisableFullscreen() => _configHelper.EditValue("Fullscreen", "0");
-    
-    [RelayCommand] private void AdjustMasterVolume() => _configHelper.EditValue("VolumeUniversal", CurrentOsuSettingsPreset.MasterVolume.ToString());
-    [RelayCommand] private void AdjustEffectsVolume() => _configHelper.EditValue("VolumeEffect", CurrentOsuSettingsPreset.EffectsVolume.ToString());
-    [RelayCommand] private void AdjustMusicVolume() => _configHelper.EditValue("VolumeMusic", CurrentOsuSettingsPreset.EffectsVolume.ToString());
-    
+
+    [RelayCommand]
+    private void EnableMouseWheel() => _configHelper.EditValue("MouseDisableWheel", "1");
+
+    [RelayCommand]
+    private void DisableMouseWheel() => _configHelper.EditValue("MouseDisableWheel", "0");
+
+    [RelayCommand]
+    private void EnableMouseButton() => _configHelper.EditValue("MouseDisableButtons", "1");
+
+    [RelayCommand]
+    private void DisableMouseButton() => _configHelper.EditValue("MouseDisableButtons", "0");
+
+    [RelayCommand]
+    private void EnableRichPresence() => _configHelper.EditValue("DiscordRichPresence", "1");
+
+    [RelayCommand]
+    private void DisableRichPresence() => _configHelper.EditValue("DiscordRichPresence", "0");
+
+    [RelayCommand]
+    private void EnableFpsCounter() => _configHelper.EditValue("FpsCounter", "1");
+
+    [RelayCommand]
+    private void DisableFpsCounter() => _configHelper.EditValue("FpsCounter", "0");
+
+    [RelayCommand]
+    private void EnableFullscreen() => _configHelper.EditValue("Fullscreen", "1");
+
+    [RelayCommand]
+    private void DisableFullscreen() => _configHelper.EditValue("Fullscreen", "0");
+
+    [RelayCommand]
+    private void AdjustMasterVolume() =>
+        _configHelper.EditValue("VolumeUniversal", CurrentOsuSettingsPreset.MasterVolume.ToString());
+
+    [RelayCommand]
+    private void AdjustEffectsVolume() =>
+        _configHelper.EditValue("VolumeEffect", CurrentOsuSettingsPreset.EffectsVolume.ToString());
+
+    [RelayCommand]
+    private void AdjustMusicVolume() =>
+        _configHelper.EditValue("VolumeMusic", CurrentOsuSettingsPreset.EffectsVolume.ToString());
+
     /*[RelayCommand] private void EnableAutoUpdate() {LauncherSettings.Default.CheckForUpdates = true; LauncherSettings.Default.Save();}
     [RelayCommand] private void DisableAutoUpdate() {LauncherSettings.Default.CheckForUpdates = false; LauncherSettings.Default.Save();}
     [RelayCommand] private void EnableOfflineMode() {LauncherSettings.Default.OfflineStartup = true; LauncherSettings.Default.Save();}
     [RelayCommand] private void DisableOfflineMode() {LauncherSettings.Default.OfflineStartup = false; LauncherSettings.Default.Save();}
     [RelayCommand] private void EnableBeatmapOpt() {LauncherSettings.Default.BeatmapOpt = true; LauncherSettings.Default.Save();}
     [RelayCommand] private void DisableBeatmapOpt() {LauncherSettings.Default.BeatmapOpt = false; LauncherSettings.Default.Save();}*/
-    [RelayCommand] private void ChangeSensitivity() => _configHelper.EditValue("MouseSpeed", MouseSensitivity.ToString());
+    [RelayCommand]
+    private void ChangeSensitivity() => _configHelper.EditValue("MouseSpeed", MouseSensitivity.ToString());
 
     [RelayCommand]
     private void BindLeftClickOsu()
@@ -297,10 +332,40 @@ public partial class SettingsViewModel : ViewModelBase
         var newKey = Console.ReadKey(true);
         _configHelper.EditValue("keyOsuLeft", newKey.Key.ToString());
     }
+
     #endregion
 
+    #region BackupLogic
+
+    [ObservableProperty] private bool _backupSkins;
+    [ObservableProperty] private bool _backupSongs;
+    [ObservableProperty] private bool _backupSettings;
+    [ObservableProperty] private bool _backupScores;
+    [ObservableProperty] private long _skinEstimateSize;
+    [ObservableProperty] private long _songEstimateSize;
     [RelayCommand]
-    public void SetTheme()
+    private void CreateBackup()
+    {
+        var skinDirectory = new DirectoryInfo(Path.Combine(AppUtils.AppConfig.GetString("appsettings", "gameDirectory"), "Skins"));
+        var songsDirectory = new DirectoryInfo(Path.Combine(AppUtils.AppConfig.GetString("appsettings", "gameDirectory"), "Songs"));
+        var settingsPath = Path.Combine(AppUtils.AppConfig.GetString("appsettings", "gameDirectory"), "");
+        var scoresPath = Path.Combine(AppUtils.AppConfig.GetString("appsettings", "gameDirectory"), "");
+        FileInfo[] skinFiles = skinDirectory.GetFiles();
+        foreach (var file in skinFiles)
+        {
+            SkinEstimateSize = file.Length / 1000 / 1000;
+        }
+        FileInfo[] songFiles = songsDirectory.GetFiles();
+        foreach (var file in songFiles)
+        {
+            SongEstimateSize = file.Length / 1000 / 1000;
+        }
+        MessageBox.Show(SongEstimateSize.ToString());
+    }
+
+    #endregion
+    [RelayCommand]
+    private void SetTheme()
     {
         switch (CurrentTheme)
         {

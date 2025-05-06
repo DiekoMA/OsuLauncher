@@ -30,31 +30,6 @@ public class OsuClient
         };
     }
 
-    public async Task<bool> ValidateToken(string token) 
-    {
-        var request = new HttpRequestMessage
-        {
-            Method = HttpMethod.Get,
-            RequestUri = new Uri($"{baseUrl}/v2/news"),
-            Headers =
-            {
-                { "Accept", "application/json" }
-            },
-        };
-
-        using var response = await _client.SendAsync(request);
-        response.EnsureSuccessStatusCode();
-        if (response.StatusCode == HttpStatusCode.OK)
-        {
-            tokenValid = true;
-        }
-        else
-        {
-            tokenValid = false;
-        }
-        return tokenValid;
-    }
-
     public async Task<bool> TryAuthenticateAsync(string token)
     {
         _token = token;
